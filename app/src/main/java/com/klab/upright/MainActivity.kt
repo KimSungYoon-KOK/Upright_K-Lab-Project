@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.klab.upright.ui.analysis.ViewPagerAdapter
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,5 +22,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_analysis, R.id.navigation_write, R.id.navigation_massage,R.id.navigation_setting))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
     }
 }
