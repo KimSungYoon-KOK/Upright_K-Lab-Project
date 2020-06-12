@@ -3,23 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_analysis">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.klab.upright.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_analysis"
+        android:name="com.klab.upright.ui.analysis.AnalysisFragment"
+        android:label="분석"
+        tools:layout="@layout/fragment_analysis" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.klab.upright.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_write"
+        android:name="com.klab.upright.ui.write.WriteFragment"
+        android:label="일지작성"
+        tools:layout="@layout/fragment_write" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.klab.upright.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_massage"
+        android:name="com.klab.upright.ui.massage.MassageFragment"
+        android:label="마사지"
+        tools:layout="@layout/fragment_massage" />
+
+    <fragment
+        android:id="@+id/navigation_setting"
+        android:name="com.klab.upright.ui.setting.SettingFragment"
+        android:label="설정"
+        tools:layout="@layout/fragment_setting" />
 </navigation>
