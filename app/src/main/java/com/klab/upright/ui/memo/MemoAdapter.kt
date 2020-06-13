@@ -1,7 +1,6 @@
-package com.klab.upright.ui.write
+package com.klab.upright.ui.memo
 
 import android.content.Context
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -11,22 +10,21 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.klab.upright.R
-import kotlinx.android.synthetic.main.item_write.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MyWriteAdapter(val context: Context, val writeList:ArrayList<WriteData>) : RecyclerView.Adapter<MyWriteAdapter.ViewHolder>(){
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyWriteAdapter.ViewHolder {
+class MemoAdapter(val context: Context, val memoList:ArrayList<MemoData>) : RecyclerView.Adapter<MemoAdapter.ViewHolder>(){
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemoAdapter.ViewHolder {
         val v = LayoutInflater.from(context).inflate(R.layout.item_write,parent,false)
         return ViewHolder(v)
     }
 
     override fun getItemCount(): Int {
-        return writeList.size
+        return memoList.size
     }
 
-    override fun onBindViewHolder(holder: MyWriteAdapter.ViewHolder, position: Int) {
-        val writeData = writeList[position]
+    override fun onBindViewHolder(holder: MemoAdapter.ViewHolder, position: Int) {
+        val writeData = memoList[position]
         val date = writeData.date
 
         holder.date.text = date.get(Calendar.YEAR).toString()+"년 "+

@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/navigation_write"
-        android:name="com.klab.upright.ui.write.WriteFragment"
+        android:name="com.klab.upright.ui.memo.MemoFragment"
         android:label="일지작성"
-        tools:layout="@layout/fragment_write" />
+        tools:layout="@layout/fragment_memo" />
 
     <fragment
         android:id="@+id/navigation_massage"

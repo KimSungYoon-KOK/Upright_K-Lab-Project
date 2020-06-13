@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackgroundDark"
+    android:background="@color/colorPrimary"
     tools:context=".ui.massage.MassageFragment">
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="78dp"
+        android:layout_marginTop="60dp"
         android:src="@drawable/hero"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +30,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout_massage"
-        android:layout_width="350dp"
+        android:layout_width="300dp"
         android:layout_height="400dp"
         android:layout_marginTop="70dp"
         android:background="#80F1F9FF"

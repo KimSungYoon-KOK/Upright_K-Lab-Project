@@ -1,4 +1,4 @@
-package com.klab.upright.ui.write
+package com.klab.upright.ui.memo
 
 import android.app.DatePickerDialog
 import android.os.Bundle
@@ -10,14 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.klab.upright.R
-import kotlinx.android.synthetic.main.fragment_pattern.*
-import kotlinx.android.synthetic.main.fragment_write.*
+import kotlinx.android.synthetic.main.fragment_memo.*
 import java.util.*
 
-class WriteFragment : Fragment() {
+class MemoFragment : Fragment() {
 
-    var writeList = arrayListOf<WriteData>()
-    lateinit var adapter: MyWriteAdapter
+    var writeList = arrayListOf<MemoData>()
+    lateinit var adapter: MemoAdapter
     lateinit var writeDate:Calendar
 
     override fun onCreateView(
@@ -25,7 +24,7 @@ class WriteFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_write, container, false)
+        val root = inflater.inflate(R.layout.fragment_memo, container, false)
         return root
     }
 
@@ -38,7 +37,7 @@ class WriteFragment : Fragment() {
         setExample()
         val layoutManager = LinearLayoutManager(context,RecyclerView.VERTICAL,false)
         recyclerView_write.layoutManager = layoutManager
-        adapter = MyWriteAdapter(requireContext(), writeList)
+        adapter = MemoAdapter(requireContext(), writeList)
         recyclerView_write.adapter = adapter
 
         writeDate = Calendar.getInstance()
@@ -60,8 +59,8 @@ class WriteFragment : Fragment() {
     }
 
     fun setExample(){
-        writeList.add(WriteData(Calendar.getInstance(),"1시간 30분","달리기","아픔","오늘은 운동했다"))
-        writeList.add(WriteData(Calendar.getInstance(),"2시간 30분","걷기","안아픔","오늘은 운동했다"))
+        writeList.add(MemoData(Calendar.getInstance(),"1시간 30분","달리기","아픔","오늘은 운동했다"))
+        writeList.add(MemoData(Calendar.getInstance(),"2시간 30분","걷기","안아픔","오늘은 운동했다"))
     }
 
 }
