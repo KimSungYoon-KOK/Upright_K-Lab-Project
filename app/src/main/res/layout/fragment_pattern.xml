@@ -12,32 +12,70 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@color/colorBackgroundDark"
+            android:background="@color/light_blue"
             android:padding="20dp">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="horizontal"
-                android:paddingVertical="5dp"
-                android:paddingHorizontal="15dp"
-                android:background="@drawable/radius_10"
-                android:backgroundTint="@color/light_blue"
                 android:gravity="center_vertical"
                 android:layout_marginBottom="20dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@drawable/radius_10"
+                    android:backgroundTint="@color/white"
+                    android:paddingVertical="5dp"
+                    android:id="@+id/startDate_pattern"
+                    android:paddingHorizontal="10dp">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/calendar"
+                        android:layout_marginEnd="8dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2020.5.1"
+                        android:id="@+id/startText"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2020.05.01 ~ 2020.05.17"
-                    android:id="@+id/date_pattern"
+                    android:text="~"
+                    android:layout_marginHorizontal="10dp"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:layout_marginRight="15dp"/>
-                <ImageButton
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:background="@drawable/calendar"
-                    android:id="@+id/dateBtn"/>
+                    android:textStyle="bold"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@drawable/radius_10"
+                    android:backgroundTint="@color/white"
+                    android:paddingVertical="5dp"
+                    android:id="@+id/endDate_pattern"
+                    android:paddingHorizontal="10dp">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/calendar"
+                        android:layout_marginEnd="8dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/endText"
+                        android:text="2020.5.1"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </LinearLayout>
             </LinearLayout>
             <GridLayout
                 android:layout_width="match_parent"

@@ -1,34 +1,20 @@
 package com.klab.upright.ui.analysis
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import com.klab.upright.R
+import kotlinx.android.synthetic.main.fragment_pattern.*
+import java.util.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [PatternFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class PatternFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    lateinit var startDate: Calendar
+    lateinit var endDate: Calendar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,23 +24,56 @@ class PatternFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_pattern, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment PatternFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            PatternFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        init()
+
     }
+
+    private fun init() {
+        startDate = Calendar.getInstance()
+        endDate = Calendar.getInstance()
+        var year = Calendar.getInstance().get(Calendar.YEAR).toString()
+        var month = (Calendar.getInstance().get(Calendar.MONTH)+1).toString()
+        var day = Calendar.getInstance().get(Calendar.DATE).toString()
+
+        startText.text = year+"."+month+"."+day
+        endText.text = year+"."+month+"."+day
+
+        //달력 시작 버튼 클릭
+        startDate_pattern.setOnClickListener {
+            val datePickerListener = object :DatePickerDialog.OnDateSetListener{
+                override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+                    startDate.set(year,month,dayOfMonth)
+                    startText.text = year.toString()+"."+(month+1).toString()+"."+dayOfMonth.toString()
+                    updateData()
+                }
+
+            }
+
+            var builder = DatePickerDialog(requireContext(),datePickerListener,startDate.get(Calendar.YEAR),startDate.get(Calendar.MONTH),startDate.get(Calendar.DATE))
+            builder.show()
+        }
+
+        //달력 마지막 버튼 클릭
+        endDate_pattern.setOnClickListener {
+            val datePickerListener = object :DatePickerDialog.OnDateSetListener{
+                override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+                    endDate.set(year,month,dayOfMonth)
+                    endText.text = year.toString()+"."+(month+1).toString()+"."+dayOfMonth.toString()
+                    updateData()
+                }
+
+            }
+
+            var builder = DatePickerDialog(requireContext(),datePickerListener,endDate.get(Calendar.YEAR),endDate.get(Calendar.MONTH),endDate.get(Calendar.DATE))
+            builder.show()
+        }
+    }
+
+    fun updateData(){
+        //update data
+    }
+
+
 }
