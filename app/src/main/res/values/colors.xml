@@ -14,7 +14,14 @@
     <color name="very_light_grey">#f5f5f5</color>
 
 
+
     <color name="orange_light">#ffe1ba</color>
     <color name="orange_middle">#ffd59e</color>
     <color name="orange_dark">#ffbf6b</color>
+
+    <color name="level1_massage">#ffe6e6</color>
+    <color name="level2_massage">#ffcccc</color>
+    <color name="level3_massage">#ffb3b3</color>
+    <color name="level4_massage">#ff9999</color>
+    <color name="level5_massage">#ff8080</color>
 </resources>

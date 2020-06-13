@@ -41,7 +41,7 @@ class CurrentFragment : Fragment() {
         for(i in 0..2){
             val v = LayoutInflater.from(context).inflate(R.layout.item_pressure,linearLayout_left,false)
             v.item.layoutParams = params
-            v.item.background = makeShape(R.color.orange_light)
+            v.item.background = makeShape(R.color.level1_massage)
             //v.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.light_blue))
             linearLayout_left.addView(v)
         }
@@ -49,7 +49,7 @@ class CurrentFragment : Fragment() {
         for(i in 0..2){
             val v = LayoutInflater.from(context).inflate(R.layout.item_pressure,linearLayout_right,false)
             v.item.layoutParams = params
-            v.item.background = makeShape(R.color.orange_middle)
+            v.item.background = makeShape(R.color.level2_massage)
             //v.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.light_blue))
             linearLayout_right.addView(v)
         }
@@ -61,5 +61,33 @@ class CurrentFragment : Fragment() {
         shape.setStroke(3,ContextCompat.getColor(requireContext(),id))
         shape.cornerRadius = 30f
         return shape
+    }
+
+    fun changeState(index:Int,pressure:Int){
+
+        //변경할 뷰(1~6)
+        val changeView = when(index){
+            1->linearLayout_left.getChildAt(0)
+            2->linearLayout_left.getChildAt(1)
+            3->linearLayout_left.getChildAt(2)
+            4->linearLayout_right.getChildAt(0)
+            5->linearLayout_right.getChildAt(1)
+            else->linearLayout_right.getChildAt(2)
+        }
+
+        //변경할 색
+        var changeColor = 0
+        if(pressure < 10)
+            changeColor = R.color.level1_massage
+        else if(pressure < 10)
+            changeColor = R.color.level2_massage
+        else if(pressure < 10)
+            changeColor = R.color.level3_massage
+        else if(pressure < 10)
+            changeColor = R.color.level4_massage
+        else
+            changeColor = R.color.level5_massage
+
+        changeView.item.background = makeShape(changeColor)
     }
 }
