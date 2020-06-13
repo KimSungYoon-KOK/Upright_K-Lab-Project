@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.klab.upright.R
+import kotlinx.android.synthetic.main.fragment_massage.*
 
 class MassageFragment : Fragment() {
 
@@ -14,7 +15,7 @@ class MassageFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_massage, container, false)
-        return root
+        return inflater.inflate(R.layout.fragment_massage, container, false)
     }
+
 }
