@@ -27,6 +27,11 @@ class CurrentFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         init()
+        initPressure()
+    }
+
+    private fun initPressure() {
+
     }
 
     private fun init() {
@@ -77,17 +82,18 @@ class CurrentFragment : Fragment() {
 
         //변경할 색
         var changeColor = 0
-        if(pressure < 10)
+        if(pressure < 40)
             changeColor = R.color.level1_massage
-        else if(pressure < 10)
+        else if(pressure < 80)
             changeColor = R.color.level2_massage
-        else if(pressure < 10)
+        else if(pressure < 120)
             changeColor = R.color.level3_massage
-        else if(pressure < 10)
+        else if(pressure < 160)
             changeColor = R.color.level4_massage
         else
             changeColor = R.color.level5_massage
 
         changeView.item.background = makeShape(changeColor)
     }
+
 }
