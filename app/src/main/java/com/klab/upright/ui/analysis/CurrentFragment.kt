@@ -2,12 +2,17 @@ package com.klab.upright.ui.analysis
 
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import app.akexorcist.bluetotohspp.library.BluetoothSPP
+import app.akexorcist.bluetotohspp.library.BluetoothSPP.OnDataReceivedListener
+import com.klab.upright.MyApplication
 import com.klab.upright.R
 import kotlinx.android.synthetic.main.fragment_current.*
 import kotlinx.android.synthetic.main.item_pressure.view.*
@@ -15,6 +20,7 @@ import kotlinx.android.synthetic.main.item_pressure.view.*
 class CurrentFragment : Fragment() {
 
     lateinit var shape:GradientDrawable
+    var bt : BluetoothSPP? =null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,12 +32,20 @@ class CurrentFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        bt = (activity?.application as MyApplication).bt
         init()
         initPressure()
     }
 
     private fun initPressure() {
-
+        bt?.setOnDataReceivedListener(object : OnDataReceivedListener {
+            //데이터 수신
+            override fun onDataReceived(data: ByteArray, message: String) {
+                //Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                changeState(2, message.toInt())
+                println(message)
+            }
+        })
     }
 
     private fun init() {

@@ -55,6 +55,7 @@
                         android:layout_height="150dp"
                         android:orientation="vertical"
                         android:gravity="center"
+                        android:id="@+id/bluetoothBtn"
                         android:background="@color/white">
                         <TextView
                             android:layout_width="match_parent"
