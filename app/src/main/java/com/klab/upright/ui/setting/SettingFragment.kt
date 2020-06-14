@@ -29,7 +29,6 @@ class SettingFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        bt = (activity?.application as MyApplication).bt
         init()
         initBluetooth()
 
@@ -40,7 +39,8 @@ class SettingFragment : Fragment() {
 
         //블루투스 연결 버튼 클릭 시
         bluetoothBtn.setOnClickListener {
-            (activity?.application as MyApplication).initBluetooth(requireContext())
+
+            bt = (activity?.application as MyApplication).bt
             if(bt != null){
                 if (bt!!.serviceState == BluetoothState.STATE_CONNECTED) {
                     bt!!.disconnect()
@@ -57,7 +57,6 @@ class SettingFragment : Fragment() {
     private fun init() {
 
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == BluetoothState.REQUEST_CONNECT_DEVICE) {
             if (resultCode == Activity.RESULT_OK)
