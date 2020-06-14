@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_analysis, R.id.navigation_write, R.id.navigation_massage,R.id.navigation_setting))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        (application as MyApplication).initBluetooth(this)
         bt = (application as MyApplication).bt
 
     }
