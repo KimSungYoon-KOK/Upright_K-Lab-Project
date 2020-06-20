@@ -8,46 +8,49 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="15dp"
-                android:backgroundTint="@color/colorPrimaryLight"
                 android:layout_margin="10dp"
                 android:background="@drawable/radius_10"
-                android:paddingHorizontal="40dp">
+                android:backgroundTint="@color/colorPrimaryLight"
+                android:orientation="horizontal"
+                android:paddingHorizontal="40dp"
+                android:paddingVertical="15dp">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textColor="@color/black"
                     android:layout_weight="1"
-                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:text="현재 착용 시간"
+                    android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:text="현재 착용 시간"/>
+                    android:textStyle="bold" />
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textColor="@color/black"
                     android:layout_weight="1"
-                    android:textSize="16sp"
-                    android:text="2시간 30분"/>
+                    android:gravity="center"
+                    android:text="2시간 30분"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
             </LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="기울기 자세 뷰"
-                android:gravity="center"/>
+                android:layout_height="130dp"
+                android:gravity="center"
+                android:text="기울기 자세 뷰" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_weight="1"
@@ -70,51 +73,68 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="30dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="L"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:layout_gravity="center_vertical"/>
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/left_pressure"/>
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:id="@+id/linearLayout_left"
-                    android:layout_marginHorizontal="40dp">
-
+                    android:id="@+id/linearLayout_left1">
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:id="@+id/linearLayout_left2">
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:text="1"
-                        android:textColor="@color/black"
-                        android:gravity="center"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:textColor="@color/black"
-                        android:text="2"
-                        android:gravity="center"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:textColor="@color/black"
-                        android:text="3"
-                        android:gravity="center"/>
+                    android:orientation="vertical"
+                    android:layout_marginHorizontal="20dp"
+                    android:id="@+id/centerLayout"
+                    android:gravity="center_horizontal">
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginHorizontal="40dp"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:id="@+id/linearLayout_right">
-
+                    android:id="@+id/linearLayout_right1">
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:id="@+id/linearLayout_right2">
+                </LinearLayout>
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/right_pressure"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="R"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:layout_gravity="center_vertical"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

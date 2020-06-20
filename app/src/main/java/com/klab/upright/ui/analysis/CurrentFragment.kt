@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.GridLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -20,7 +21,9 @@ import kotlinx.android.synthetic.main.item_pressure.view.*
 class CurrentFragment : Fragment() {
 
     lateinit var shape:GradientDrawable
+    lateinit var centerShape:GradientDrawable
     var bt : BluetoothSPP? =null
+    var pressureLine = 6
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,39 +41,102 @@ class CurrentFragment : Fragment() {
     }
 
     private fun initPressure() {
+        //test code
+        for(i in 0..3){
+            changeState(2+i*6, 150)
+            changeState(3+i*6, 150)
+
+        }
+        //
         bt?.setOnDataReceivedListener(object : OnDataReceivedListener {
             //데이터 수신
             override fun onDataReceived(data: ByteArray, message: String) {
                 //Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-                changeState(2, message.toInt())
+                for(i in 0..3){
+                    changeState(2+i*6, message.toInt())
+                }
                 println(message)
             }
         })
     }
 
     private fun init() {
-        var params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT,1f)
-        params.setMargins(0,0,0,40)
+        val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT,1f)
+        params.setMargins(20,0,20,40)
+        val params2 = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT,1f)
+        params2.setMargins(20,0,20,0)
 
         shape = GradientDrawable()
         shape.setColor(ContextCompat.getColor(requireContext(),R.color.white))
         shape.setStroke(3,ContextCompat.getColor(requireContext(),R.color.white))
         shape.cornerRadius = 30f
 
-        for(i in 0..2){
-            val v = LayoutInflater.from(context).inflate(R.layout.item_pressure,linearLayout_left,false)
-            v.item.layoutParams = params
+        centerShape = GradientDrawable()
+        centerShape.setColor(ContextCompat.getColor(requireContext(),R.color.white))
+        centerShape.setStroke(10,ContextCompat.getColor(requireContext(),R.color.black))
+        centerShape.cornerRadius = 25f
+
+        for(i in 0..pressureLine){
+            val v = LayoutInflater.from(context).inflate(R.layout.item_pressure,linearLayout_left1,false)
+            if(i == pressureLine){
+                v.item.layoutParams = params2
+            }else{
+                v.item.layoutParams = params
+            }
             v.item.background = makeShape(R.color.level1_massage)
             //v.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.light_blue))
-            linearLayout_left.addView(v)
+            linearLayout_left1.addView(v)
         }
 
-        for(i in 0..2){
-            val v = LayoutInflater.from(context).inflate(R.layout.item_pressure,linearLayout_right,false)
-            v.item.layoutParams = params
-            v.item.background = makeShape(R.color.level2_massage)
+        for(i in 0..pressureLine){
+            val v = LayoutInflater.from(context).inflate(R.layout.item_pressure,linearLayout_left2,false)
+            if(i == pressureLine){
+                v.item.layoutParams = params2
+            }else{
+                v.item.layoutParams = params
+            }
+            v.item.background = makeShape(R.color.level1_massage)
             //v.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.light_blue))
-            linearLayout_right.addView(v)
+            linearLayout_left2.addView(v)
+        }
+
+        for(i in 0..pressureLine){
+            val v = LayoutInflater.from(context).inflate(R.layout.item_pressure,linearLayout_right1,false)
+            if(i == pressureLine){
+                v.item.layoutParams = params2
+            }else{
+                v.item.layoutParams = params
+            }
+            v.item.background = makeShape(R.color.level1_massage)
+            //v.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.light_blue))
+            linearLayout_right1.addView(v)
+        }
+
+        for(i in 0..pressureLine){
+            val v = LayoutInflater.from(context).inflate(R.layout.item_pressure,linearLayout_right2,false)
+            if(i == pressureLine){
+                v.item.layoutParams = params2
+            }else{
+                v.item.layoutParams = params
+            }
+            v.item.background = makeShape(R.color.level1_massage)
+            //v.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.light_blue))
+            linearLayout_right2.addView(v)
+        }
+
+        makeCenter()
+    }
+
+    private fun makeCenter() {
+        //centerLayout.weightSum = (pressureLine * 10 + ((pressureLine*2)*(pressureLine*2+1))/2).toFloat()
+        for(i in 1..pressureLine*2){
+            val v = View(requireContext())
+            val centerParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT,1f)
+            centerParams.bottomMargin = 3
+            centerParams.width = (60+i*5)
+            v.layoutParams = centerParams
+            v.background = centerShape
+            centerLayout.addView(v)
         }
     }
 
@@ -86,12 +152,11 @@ class CurrentFragment : Fragment() {
 
         //변경할 뷰(1~6)
         val changeView = when(index){
-            1->linearLayout_left.getChildAt(0)
-            2->linearLayout_left.getChildAt(1)
-            3->linearLayout_left.getChildAt(2)
-            4->linearLayout_right.getChildAt(0)
-            5->linearLayout_right.getChildAt(1)
-            else->linearLayout_right.getChildAt(2)
+            1,2,3,4,5,6->linearLayout_left1.getChildAt(index-1)
+            7,8,9,10,11,12->linearLayout_left2.getChildAt(index-7)
+            13,14,15,16,17,18->linearLayout_right1.getChildAt(index-13)
+            19,20,21,22,23,24->linearLayout_right2.getChildAt(index-19)
+            else->null
         }
 
         //변경할 색
@@ -107,7 +172,7 @@ class CurrentFragment : Fragment() {
         else
             changeColor = R.color.level5_massage
 
-        changeView.item.background = makeShape(changeColor)
+        changeView?.item?.background = makeShape(changeColor)
     }
 
 }
