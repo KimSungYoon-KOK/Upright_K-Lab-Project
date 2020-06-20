@@ -3,7 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_analysis">
+    app:startDestination="@id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.klab.upright.ui.home.HomeFragment"
+        android:label="현재 상태"
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_analysis"
@@ -12,7 +18,7 @@
         tools:layout="@layout/fragment_analysis" />
 
     <fragment
-        android:id="@+id/navigation_write"
+        android:id="@+id/navigation_memo"
         android:name="com.klab.upright.ui.memo.MemoFragment"
         android:label="일지작성"
         tools:layout="@layout/fragment_memo" />
@@ -23,9 +29,4 @@
         android:label="마사지"
         tools:layout="@layout/fragment_massage" />
 
-    <fragment
-        android:id="@+id/navigation_setting"
-        android:name="com.klab.upright.ui.setting.SettingFragment"
-        android:label="설정"
-        tools:layout="@layout/fragment_setting" />
 </navigation>

@@ -1,26 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".ui.analysis.AnalysisFragment">
+    tools:context=".ui.analysis.PatternFragment">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <com.google.android.material.tabs.TabLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tabLayout"
-            app:tabTextAppearance="@style/tab_text"
-            app:tabTextColor="@color/middle_grey"
-            app:tabSelectedTextColor="@color/black"
-            />
-        <androidx.viewpager.widget.ViewPager
+            android:orientation="vertical"
+            android:background="@color/colorPrimaryLight"
+            android:padding="20dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="20dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@drawable/radius_10"
+                    android:backgroundTint="@color/white"
+                    android:paddingVertical="5dp"
+                    android:id="@+id/startDate_pattern"
+                    android:paddingHorizontal="10dp">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/calendar"
+                        android:layout_marginEnd="8dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2020.5.1"
+                        android:id="@+id/startText"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="~"
+                    android:layout_marginHorizontal="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@drawable/radius_10"
+                    android:backgroundTint="@color/white"
+                    android:paddingVertical="5dp"
+                    android:id="@+id/endDate_pattern"
+                    android:paddingHorizontal="10dp">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/calendar"
+                        android:layout_marginEnd="8dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/endText"
+                        android:text="2020.5.1"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:columnCount="2">
+                <TextView
+                    android:layout_width="0dp"
+                    android:paddingBottom="10dp"
+                    android:gravity="center"
+                    android:layout_columnWeight="1"
+                    android:layout_height="wrap_content"
+                    android:text="앉아 있는 시간"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_columnWeight="1"
+                    android:text="5시간 30분"
+                    android:textSize="16sp"
+                    android:id="@+id/sitTime_text"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:gravity="center"
+                    android:layout_columnWeight="1"
+                    android:text="운동 시간"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="1시간 30분"
+                    android:layout_columnWeight="1"
+                    android:id="@+id/exercise_text"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:text="통증 경도"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:text="Not Good"
+                    android:layout_columnWeight="1"
+                    android:id="@+id/pain_text"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"/>
+            </GridLayout>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/viewPager"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="분석 그래프 뷰"
+                android:gravity="center"/>
+
+        </LinearLayout>
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

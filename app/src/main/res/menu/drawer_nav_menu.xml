@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_textSize"
+        android:title="글씨 크기"/>
+
+    <item
+        android:id="@+id/action_notify"
+        android:title="공지 사항"/>
+
+    <item
+        android:id="@+id/action_guide"
+        android:title="사용 방법 다시 보기"/>
+
+    <item
+        android:id="@+id/action_help"
+        android:title="고객 센터"/>
+
+    <item
+        android:id="@+id/action_version"
+        android:title="현재 버전"/>
+</menu>
