@@ -2,12 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="현재 상태" />
+
+    <item
         android:id="@+id/navigation_analysis"
         android:icon="@drawable/ic_analysis"
         android:title="분석" />
 
     <item
-        android:id="@+id/navigation_write"
+        android:id="@+id/navigation_memo"
         android:icon="@drawable/ic_memo"
         android:title="일지작성" />
 
@@ -15,10 +20,5 @@
         android:id="@+id/navigation_massage"
         android:icon="@drawable/ic_massage"
         android:title="마사지" />
-
-    <item
-        android:id="@+id/navigation_setting"
-        android:icon="@drawable/ic_baseline_settings_24"
-        android:title="설정" />
 
 </menu>

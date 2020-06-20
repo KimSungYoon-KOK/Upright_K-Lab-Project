@@ -1,24 +1,24 @@
 package com.klab.upright.ui.analysis
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.DatePicker
 import androidx.fragment.app.Fragment
-import com.google.android.material.tabs.TabLayout
 import com.klab.upright.R
-import kotlinx.android.synthetic.main.fragment_analysis.*
+import kotlinx.android.synthetic.main.fragment_analysis.endDate_pattern
+import kotlinx.android.synthetic.main.fragment_analysis.endText
+import kotlinx.android.synthetic.main.fragment_analysis.startDate_pattern
+import kotlinx.android.synthetic.main.fragment_analysis.startText
+import java.util.*
 
 
 class AnalysisFragment : Fragment() {
 
-
-
-    var tabTitle = arrayListOf<String>("현재 상태","생활 패턴 분석")
-    lateinit var adapter: ViewPagerAdapter
-
-
+    lateinit var startDate: Calendar
+    lateinit var endDate: Calendar
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -35,34 +35,48 @@ class AnalysisFragment : Fragment() {
     }
 
     private fun init() {
+        startDate = Calendar.getInstance()
+        endDate = Calendar.getInstance()
+        var year = Calendar.getInstance().get(Calendar.YEAR).toString()
+        var month = (Calendar.getInstance().get(Calendar.MONTH)+1).toString()
+        var day = Calendar.getInstance().get(Calendar.DATE).toString()
 
-        //init viewpager
-        val pagerAdapter = ViewPagerAdapter(requireActivity().supportFragmentManager,2)
-        viewPager.adapter = pagerAdapter
-        viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
+        startText.text = year+"."+month+"."+day
+        endText.text = year+"."+month+"."+day
 
-        //tablayout
-        tabLayout.addTab(tabLayout.newTab().setCustomView(createTabView("현재 상태")))
-        tabLayout.addTab(tabLayout.newTab().setCustomView(createTabView("생활 패턴 분석")))
-        tabLayout.addOnTabSelectedListener(object:TabLayout.OnTabSelectedListener{
-            override fun onTabReselected(tab: TabLayout.Tab?) {
+        //달력 시작 버튼 클릭
+        startDate_pattern.setOnClickListener {
+            val datePickerListener = object : DatePickerDialog.OnDateSetListener{
+                override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+                    startDate.set(year,month,dayOfMonth)
+                    startText.text = year.toString()+"."+(month+1).toString()+"."+dayOfMonth.toString()
+                    updateData()
+                }
+
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            var builder = DatePickerDialog(requireContext(),datePickerListener,startDate.get(Calendar.YEAR),startDate.get(Calendar.MONTH),startDate.get(Calendar.DATE))
+            builder.show()
+        }
+
+        //달력 마지막 버튼 클릭
+        endDate_pattern.setOnClickListener {
+            val datePickerListener = object : DatePickerDialog.OnDateSetListener{
+                override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+                    endDate.set(year,month,dayOfMonth)
+                    endText.text = year.toString()+"."+(month+1).toString()+"."+dayOfMonth.toString()
+                    updateData()
+                }
+
             }
 
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                viewPager.setCurrentItem(tab!!.position)
-            }
-        })
-
+            var builder = DatePickerDialog(requireContext(),datePickerListener,endDate.get(Calendar.YEAR),endDate.get(Calendar.MONTH),endDate.get(Calendar.DATE))
+            builder.show()
+        }
     }
 
-    private fun createTabView(tabName: String): View? {
-        val tabView: View =
-            LayoutInflater.from(context).inflate(R.layout.custom_tab, null)
-        val txt_name = tabView.findViewById<View>(R.id.tab_text) as TextView
-        txt_name.text = tabName
-        return tabView
+    fun updateData(){
+        //update data
     }
+
 }

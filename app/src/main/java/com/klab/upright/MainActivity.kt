@@ -1,17 +1,24 @@
 package com.klab.upright
 
+import android.app.Activity
 import android.bluetooth.BluetoothAdapter
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import app.akexorcist.bluetotohspp.library.BluetoothSPP
 import app.akexorcist.bluetotohspp.library.BluetoothState
+import app.akexorcist.bluetotohspp.library.DeviceList
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.drawer_main.*
+import kotlinx.android.synthetic.main.drawer_main_header.view.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,19 +26,107 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.drawer_main)
+        initView()
+    }
 
+
+
+    private fun initView() {
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         val navController = findNavController(R.id.nav_host_fragment)
         val appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.navigation_analysis, R.id.navigation_write, R.id.navigation_massage,R.id.navigation_setting))
+            R.id.navigation_home, R.id.navigation_analysis, R.id.navigation_memo, R.id.navigation_massage))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         (application as MyApplication).initBluetooth(this)
         bt = (application as MyApplication).bt
-
+        initBtn()
     }
+
+    private fun initBtn() {
+        navigationView.setNavigationItemSelectedListener {
+            when(it.itemId) {
+                R.id.action_textSize -> {
+                    Toast.makeText(this, "글씨 크기 변경", Toast.LENGTH_SHORT).show()
+                }
+                R.id.action_notify -> {
+                    Toast.makeText(this, "공지 사항", Toast.LENGTH_SHORT).show()
+                }
+                R.id.action_guide -> {
+                    Toast.makeText(this, "사용 방법 다시 보기", Toast.LENGTH_SHORT).show()
+                }
+                R.id.action_help -> {
+                    Toast.makeText(this, "고객 센터", Toast.LENGTH_SHORT).show()
+                }
+                R.id.action_version -> {
+                    Toast.makeText(this, "현재 버전", Toast.LENGTH_SHORT).show()
+                }
+            }
+            return@setNavigationItemSelectedListener false
+        }
+
+        navigationView.getHeaderView(0).bluetoothBtn.setOnClickListener {
+            onClickBlueTooth()
+        }
+    }
+
+    private fun onClickBlueTooth() {
+        if(bt != null){
+            if (bt!!.serviceState == BluetoothState.STATE_CONNECTED) {
+                bt!!.disconnect()
+            } else {
+                val intent = Intent(this, DeviceList::class.java)
+                startActivityForResult(intent, BluetoothState.REQUEST_CONNECT_DEVICE)
+            }
+        }
+        Toast.makeText(this,"initbluetooth",Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == BluetoothState.REQUEST_CONNECT_DEVICE) {
+            if (resultCode == Activity.RESULT_OK)
+                bt?.connect(data)
+        } else if (requestCode == BluetoothState.REQUEST_ENABLE_BT) {
+            if (resultCode == Activity.RESULT_OK) {
+                bt?.setupService()
+                bt?.startService(BluetoothState.DEVICE_OTHER)
+            } else {
+                Toast.makeText(
+                    this
+                    , "Bluetooth was not enabled."
+                    , Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.drawer_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.action_drawer -> {
+                layout_drawer_main.openDrawer(GravityCompat.END)
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() { //뒤로가기 처리
+        if(layout_drawer_main.isDrawerOpen(GravityCompat.END)){
+            layout_drawer_main.closeDrawers()
+        } else{
+            super.onBackPressed()
+        }
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()
@@ -51,6 +146,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
 }
+
