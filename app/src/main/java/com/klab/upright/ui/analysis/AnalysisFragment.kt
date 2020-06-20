@@ -25,8 +25,7 @@ class AnalysisFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_analysis, container, false)
-        return root
+        return inflater.inflate(R.layout.fragment_analysis, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -37,23 +36,21 @@ class AnalysisFragment : Fragment() {
     private fun init() {
         startDate = Calendar.getInstance()
         endDate = Calendar.getInstance()
-        var year = Calendar.getInstance().get(Calendar.YEAR).toString()
-        var month = (Calendar.getInstance().get(Calendar.MONTH)+1).toString()
-        var day = Calendar.getInstance().get(Calendar.DATE).toString()
+        val year = Calendar.getInstance().get(Calendar.YEAR).toString()
+        val month = (Calendar.getInstance().get(Calendar.MONTH)+1).toString()
+        val day = Calendar.getInstance().get(Calendar.DATE).toString()
 
-        startText.text = year+"."+month+"."+day
-        endText.text = year+"."+month+"."+day
+        startText.text = "$year.$month.$day"
+        endText.text = "$year.$month.$day"
 
         //달력 시작 버튼 클릭
         startDate_pattern.setOnClickListener {
-            val datePickerListener = object : DatePickerDialog.OnDateSetListener{
-                override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+            val datePickerListener =
+                DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
                     startDate.set(year,month,dayOfMonth)
-                    startText.text = year.toString()+"."+(month+1).toString()+"."+dayOfMonth.toString()
+                    startText.text = "${year}.${month+1}.${dayOfMonth}"
                     updateData()
                 }
-
-            }
 
             var builder = DatePickerDialog(requireContext(),datePickerListener,startDate.get(Calendar.YEAR),startDate.get(Calendar.MONTH),startDate.get(Calendar.DATE))
             builder.show()
@@ -61,16 +58,14 @@ class AnalysisFragment : Fragment() {
 
         //달력 마지막 버튼 클릭
         endDate_pattern.setOnClickListener {
-            val datePickerListener = object : DatePickerDialog.OnDateSetListener{
-                override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+            val datePickerListener =
+                DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
                     endDate.set(year,month,dayOfMonth)
-                    endText.text = year.toString()+"."+(month+1).toString()+"."+dayOfMonth.toString()
+                    endText.text = "${year}.${month+1}.${dayOfMonth}"
                     updateData()
                 }
 
-            }
-
-            var builder = DatePickerDialog(requireContext(),datePickerListener,endDate.get(Calendar.YEAR),endDate.get(Calendar.MONTH),endDate.get(Calendar.DATE))
+            val builder = DatePickerDialog(requireContext(),datePickerListener,endDate.get(Calendar.YEAR),endDate.get(Calendar.MONTH),endDate.get(Calendar.DATE))
             builder.show()
         }
     }
