@@ -145,14 +145,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="15dp">
 
-            <TextView
+<!--            <com.github.mikephil.charting.charts.LineChart-->
+<!--            <com.github.mikephil.charting.charts.LineChart-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:id="@+id/lineChart"/>-->
+            <com.github.mikephil.charting.charts.BarChart
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="분석 그래프 뷰"
-                android:gravity="center"/>
-
+                android:id="@+id/barChart"/>
         </LinearLayout>
     </LinearLayout>
 
