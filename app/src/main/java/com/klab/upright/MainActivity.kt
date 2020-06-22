@@ -17,6 +17,8 @@ import app.akexorcist.bluetotohspp.library.BluetoothSPP
 import app.akexorcist.bluetotohspp.library.BluetoothState
 import app.akexorcist.bluetotohspp.library.DeviceList
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.klab.upright.ui.guide.GuideActivity
+import com.klab.upright.ui.guide.GuideViewPagerAdapter
 import kotlinx.android.synthetic.main.drawer_main.*
 import kotlinx.android.synthetic.main.drawer_main_header.view.*
 
@@ -55,6 +57,9 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "공지 사항", Toast.LENGTH_SHORT).show()
                 }
                 R.id.action_guide -> {
+                    val intent = Intent(this, GuideActivity::class.java)
+                    startActivity(intent)
+                    finish()
                     Toast.makeText(this, "사용 방법 다시 보기", Toast.LENGTH_SHORT).show()
                 }
                 R.id.action_help -> {
