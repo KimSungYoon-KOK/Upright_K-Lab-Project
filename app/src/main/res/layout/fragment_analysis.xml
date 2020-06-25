@@ -41,7 +41,6 @@
                         android:layout_height="wrap_content"
                         android:text="2020.5.1"
                         android:id="@+id/startText"
-                        android:textStyle="bold"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -73,7 +72,6 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/endText"
                         android:text="2020.5.1"
-                        android:textStyle="bold"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </LinearLayout>

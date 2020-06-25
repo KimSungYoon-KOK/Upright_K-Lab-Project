@@ -76,7 +76,7 @@ class HomeFragment : Fragment() {
 
         centerShape = GradientDrawable()
         centerShape.setColor(ContextCompat.getColor(requireContext(), R.color.white))
-        centerShape.setStroke(10, ContextCompat.getColor(requireContext(), R.color.black))
+        centerShape.setStroke(10, ContextCompat.getColor(requireContext(), R.color.middle_grey))
         centerShape.cornerRadius = 25f
 
         for (i in 0..pressureLine) {

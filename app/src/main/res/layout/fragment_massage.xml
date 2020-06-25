@@ -31,9 +31,10 @@
     <LinearLayout
         android:id="@+id/linearLayout_massage"
         android:layout_width="300dp"
-        android:layout_height="400dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
-        android:background="#80F1F9FF"
+        android:backgroundTint="#80F1F9Fe"
+        android:background="@drawable/radius_10"
         android:elevation="3dp"
         android:gravity="center"
         android:orientation="vertical"
@@ -44,25 +45,31 @@
         android:padding="20dp">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="271dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="USER 님의 디바이스"
+            android:textColor="@color/black"
             android:textSize="25sp" />
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="37dp"
             android:layout_marginTop="25dp"
             android:gravity="center"
+
             android:text="마사지 컨트롤러"
+            android:textColor="@color/black"
             android:textSize="20sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:layout_marginBottom="10dp"
             android:text="내 기기와 연결되었습니다."
+            android:textColor="@color/black"
+
             android:textSize="20sp" />
 
         <LinearLayout
@@ -74,11 +81,21 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="재생" />
+                android:backgroundTint="@color/colorPrimary"
+                android:background="@drawable/radius_10"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:text="재생"
+                android:layout_marginEnd="10dp"
+                />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:background="@drawable/radius_10"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 android:text="일시 정지" />
         </LinearLayout>
 
@@ -86,6 +103,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:padding="10dp"
             android:text="세기" />
 
         <SeekBar
@@ -102,6 +120,8 @@
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:text="마사지 패턴"
+            android:textColor="@color/black"
+
             android:textSize="25sp" />
 
         <LinearLayout
@@ -115,25 +135,48 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="1" />
+                android:layout_marginEnd="10dp"
+                android:text="1"
+                android:backgroundTint="@color/colorPrimary"
+                android:background="@drawable/radius_10"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
 
             <Button
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="2" />
+                android:text="2"
+                android:backgroundTint="@color/colorPrimary"
+                android:background="@drawable/radius_10"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginEnd="10dp"
+                />
 
             <Button
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:layout_marginEnd="10dp"
+
                 android:layout_height="wrap_content"
-                android:text="3" />
+                android:text="3"
+                android:backgroundTint="@color/colorPrimary"
+                android:background="@drawable/radius_10"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
 
             <Button
                 android:layout_width="0dp"
+                android:layout_marginEnd="10dp"
+
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="4" />
+                android:text="4"
+                android:backgroundTint="@color/colorPrimary"
+                android:background="@drawable/radius_10"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
         </LinearLayout>
 
         <LinearLayout
@@ -146,6 +189,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginEnd="10dp"
                 android:gravity="center"
                 android:text="기본" />
 
@@ -153,6 +197,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginEnd="10dp"
+
                 android:gravity="center"
                 android:text="편안한" />
 
@@ -160,6 +206,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginEnd="10dp"
+
                 android:gravity="center"
                 android:text="몸풀기" />
 
@@ -167,6 +215,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginEnd="10dp"
+
                 android:gravity="center"
                 android:text="복합" />
         </LinearLayout>

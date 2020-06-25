@@ -10,8 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center"
-        android:padding="5dp"
-        android:gravity="center"
+        android:padding="10dp"
         android:backgroundTint="@color/colorPrimaryLight"
         android:background="@drawable/radius_10">
         <TextView
