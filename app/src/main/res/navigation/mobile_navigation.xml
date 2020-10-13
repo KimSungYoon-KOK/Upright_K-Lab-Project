@@ -8,25 +8,25 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.klab.upright.ui.home.HomeFragment"
-        android:label="현재 상태"
+        android:label="Current State"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_analysis"
         android:name="com.klab.upright.ui.analysis.AnalysisFragment"
-        android:label="분석"
+        android:label="Analysis"
         tools:layout="@layout/fragment_analysis" />
 
     <fragment
         android:id="@+id/navigation_memo"
         android:name="com.klab.upright.ui.memo.MemoFragment"
-        android:label="일지작성"
+        android:label="Record"
         tools:layout="@layout/fragment_memo" />
 
     <fragment
         android:id="@+id/navigation_massage"
         android:name="com.klab.upright.ui.massage.MassageFragment"
-        android:label="마사지"
+        android:label="Message"
         tools:layout="@layout/fragment_massage" />
 
 </navigation>

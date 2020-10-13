@@ -3,21 +3,21 @@
 
     <item
         android:id="@+id/action_textSize"
-        android:title="글씨 크기"/>
+        android:title="Font" />
 
     <item
         android:id="@+id/action_notify"
-        android:title="공지 사항"/>
+        android:title="Notice" />
 
     <item
         android:id="@+id/action_guide"
-        android:title="사용 방법 다시 보기"/>
+        android:title="Tutorial" />
 
     <item
         android:id="@+id/action_help"
-        android:title="고객 센터"/>
+        android:title="Customer Service" />
 
     <item
         android:id="@+id/action_version"
-        android:title="현재 버전"/>
+        android:title="Version" />
 </menu>

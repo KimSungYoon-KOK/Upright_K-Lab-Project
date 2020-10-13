@@ -25,17 +25,17 @@
 <!--        android:background="@color/very_light_grey"-->
 <!--        android:layout_marginBottom="10dp"/>-->
     <TextView
+        android:id="@+id/writeBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="일지 작성하기"
-        android:id="@+id/writeBtn"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/radius_10"
         android:backgroundTint="@color/colorPrimary"
-        android:textStyle="bold"
-        android:textColor="@color/white"
         android:padding="10dp"
-        android:layout_marginBottom="20dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"/>
+        android:text="Record"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
 </RelativeLayout>

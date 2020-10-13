@@ -48,7 +48,7 @@
             android:layout_width="271dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="USER 님의 디바이스"
+            android:text="User's Device"
             android:textColor="@color/black"
             android:textSize="25sp" />
 
@@ -58,16 +58,16 @@
             android:layout_marginTop="25dp"
             android:gravity="center"
 
-            android:text="마사지 컨트롤러"
+            android:text="Massage Controller"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginBottom="10dp"
-            android:text="내 기기와 연결되었습니다."
+            android:gravity="center"
+            android:text="Device is connected"
             android:textColor="@color/black"
 
             android:textSize="20sp" />
@@ -81,22 +81,21 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorPrimary"
-                android:background="@drawable/radius_10"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:text="재생"
                 android:layout_marginEnd="10dp"
-                />
+                android:background="@drawable/radius_10"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="Play"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorPrimary"
                 android:background="@drawable/radius_10"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="Stop"
                 android:textColor="@color/white"
-                android:textStyle="bold"
-                android:text="일시 정지" />
+                android:textStyle="bold" />
         </LinearLayout>
 
         <TextView
@@ -104,7 +103,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="10dp"
-            android:text="세기" />
+            android:text="Intensity" />
 
         <SeekBar
             android:id="@+id/seekBar"
@@ -119,7 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="마사지 패턴"
+            android:text="Massage Pattern"
             android:textColor="@color/black"
 
             android:textSize="25sp" />
@@ -188,37 +187,37 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginEnd="10dp"
+                android:layout_weight="1"
                 android:gravity="center"
-                android:text="기본" />
+                android:text="normal" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginEnd="10dp"
+                android:layout_weight="1"
 
                 android:gravity="center"
-                android:text="편안한" />
+                android:text="cozy" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginEnd="10dp"
+                android:layout_weight="1"
 
                 android:gravity="center"
-                android:text="몸풀기" />
+                android:text="hard" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginEnd="10dp"
+                android:layout_weight="1"
 
                 android:gravity="center"
-                android:text="복합" />
+                android:text="mixed" />
         </LinearLayout>
 
 

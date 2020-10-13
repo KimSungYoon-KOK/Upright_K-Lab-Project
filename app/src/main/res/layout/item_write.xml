@@ -13,20 +13,22 @@
         android:padding="10dp"
         android:backgroundTint="@color/colorPrimaryLight"
         android:background="@drawable/radius_10">
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="5월 17일"
-            android:textSize="16sp"
-            android:textColor="@color/black"
             android:id="@+id/dateText"
-            android:layout_marginEnd="5dp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="May 17"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="일지"
-            android:textColor="@color/black" />
+            android:text="diary"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
