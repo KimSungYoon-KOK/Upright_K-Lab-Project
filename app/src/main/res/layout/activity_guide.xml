@@ -15,14 +15,14 @@
         android:id="@+id/skipBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="건너 띄기 >>>"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:textSize="25sp"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="40dp"
         android:layout_marginLeft="150dp"
-        android:layout_marginEnd="20dp"/>
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
+        android:text="Skip >>>"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
 
 </RelativeLayout>

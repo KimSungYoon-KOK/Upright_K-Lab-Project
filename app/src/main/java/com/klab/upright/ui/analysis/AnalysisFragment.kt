@@ -125,7 +125,7 @@ class AnalysisFragment : Fragment() {
         val set1: LineDataSet
 
         // create a dataset and give it a type
-        set1 = LineDataSet(values, "앉아있는 시간")
+        set1 = LineDataSet(values, "Sitting Time")
         set1.mode = LineDataSet.Mode.CUBIC_BEZIER
         set1.cubicIntensity = 0.2f
         set1.setDrawFilled(true)
@@ -153,7 +153,7 @@ class AnalysisFragment : Fragment() {
         val set2: LineDataSet
 
         // create a dataset and give it a type
-        set2 = LineDataSet(values2, "서있는 시간")
+        set2 = LineDataSet(values2, "Standing Time")
         set2.mode = LineDataSet.Mode.CUBIC_BEZIER
         set2.cubicIntensity = 0.2f
         set2.setDrawFilled(true)

@@ -51,22 +51,22 @@ class MainActivity : AppCompatActivity() {
         navigationView.setNavigationItemSelectedListener {
             when(it.itemId) {
                 R.id.action_textSize -> {
-                    Toast.makeText(this, "글씨 크기 변경", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Chage Font", Toast.LENGTH_SHORT).show()
                 }
                 R.id.action_notify -> {
-                    Toast.makeText(this, "공지 사항", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Notice", Toast.LENGTH_SHORT).show()
                 }
                 R.id.action_guide -> {
                     val intent = Intent(this, GuideActivity::class.java)
                     startActivity(intent)
                     finish()
-                    Toast.makeText(this, "사용 방법 다시 보기", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Tutorial", Toast.LENGTH_SHORT).show()
                 }
                 R.id.action_help -> {
-                    Toast.makeText(this, "고객 센터", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Customer Service", Toast.LENGTH_SHORT).show()
                 }
                 R.id.action_version -> {
-                    Toast.makeText(this, "현재 버전", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Version : 1.0.0", Toast.LENGTH_SHORT).show()
                 }
             }
             return@setNavigationItemSelectedListener false

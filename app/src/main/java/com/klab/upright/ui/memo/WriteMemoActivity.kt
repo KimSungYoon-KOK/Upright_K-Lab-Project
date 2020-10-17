@@ -12,6 +12,7 @@ import java.util.*
 
 class WriteMemoActivity : AppCompatActivity() {
 
+    val months=arrayOf("January", "February", "March","April","May","June","July","August","September","October","November","December")
     lateinit var writeDate:Calendar
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,14 +24,14 @@ class WriteMemoActivity : AppCompatActivity() {
     fun init(){
 
         writeDate = Calendar.getInstance()
-        dateText.text = writeDate.get(Calendar.YEAR).toString()+"년 "+
-                (writeDate.get(Calendar.MONTH)+1).toString()+"월 "+writeDate.get(Calendar.DATE).toString()+"일"
+        dateText.text = months[(writeDate.get(Calendar.MONTH)+1)] +" "+writeDate.get(Calendar.DATE).toString()+", "+writeDate.get(Calendar.YEAR).toString()
 
         dateLayout.setOnClickListener {
             val datePickerListener = object : DatePickerDialog.OnDateSetListener{
                 override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
                     writeDate.set(year,month,dayOfMonth)
-                    dateText.text = year.toString()+"년 "+(month+1).toString()+"월 "+dayOfMonth.toString()+"일"
+                    dateText.text =  months[(month+1)] +" "+ dayOfMonth.toString()+", "+year.toString()
+                        //year.toString()+"년 "+(month+1).toString()+"월 "+dayOfMonth.toString()+"일"
                 }
 
             }

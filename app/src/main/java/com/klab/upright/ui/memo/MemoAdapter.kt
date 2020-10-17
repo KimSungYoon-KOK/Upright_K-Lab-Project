@@ -14,6 +14,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class MemoAdapter(val context: Context, val memoList:ArrayList<MemoData>) : RecyclerView.Adapter<MemoAdapter.ViewHolder>(){
+
+    val months=arrayOf("January", "February", "March","April","May","June","July","August","September","October","November","December")
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemoAdapter.ViewHolder {
         val v = LayoutInflater.from(context).inflate(R.layout.item_write,parent,false)
         return ViewHolder(v)
@@ -27,8 +30,7 @@ class MemoAdapter(val context: Context, val memoList:ArrayList<MemoData>) : Recy
         val writeData = memoList[position]
         val date = writeData.date
 
-        holder.date.text = date.get(Calendar.YEAR).toString()+"년 "+
-                (date.get(Calendar.MONTH)+1).toString()+"월 "+date.get(Calendar.DATE).toString()+"일"
+        holder.date.text = months[(date.get(Calendar.MONTH)+1)] +" "+date.get(Calendar.DATE).toString()+", "+date.get(Calendar.YEAR).toString()
         holder.time.text = writeData.time
         holder.type.text = writeData.type
         holder.pain.text = writeData.pain

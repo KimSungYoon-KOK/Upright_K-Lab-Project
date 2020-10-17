@@ -4,6 +4,6 @@
     <item
         android:id="@+id/action_drawer"
         android:icon="@drawable/ic_baseline_dehaze_24"
-        android:title="메뉴"
+        android:title="Menu"
         app:showAsAction="always"/>
 </menu>

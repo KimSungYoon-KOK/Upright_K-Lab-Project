@@ -5,42 +5,48 @@
     android:layout_height="match_parent"
     tools:context=".ui.analysis.AnalysisFragment"
     android:background="@color/white">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:background="@color/colorPrimaryLight"
+            android:orientation="vertical"
             android:padding="20dp">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:orientation="horizontal"
+                android:layout_marginBottom="20dp"
                 android:gravity="center_vertical"
-                android:layout_marginBottom="20dp">
+                android:orientation="horizontal">
+
                 <LinearLayout
+                    android:id="@+id/startDate_pattern"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:background="@drawable/radius_10"
                     android:backgroundTint="@color/white"
-                    android:paddingVertical="5dp"
-                    android:id="@+id/startDate_pattern"
-                    android:paddingHorizontal="10dp">
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="5dp">
+
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:background="@drawable/calendar"
-                        android:layout_marginEnd="8dp"/>
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/calendar" />
+
                     <TextView
+                        android:id="@+id/startText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="2020.5.1"
-                        android:id="@+id/startText"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -48,95 +54,105 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="~"
                     android:layout_marginHorizontal="10dp"
+                    android:text="~"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
+
                 <LinearLayout
+                    android:id="@+id/endDate_pattern"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:background="@drawable/radius_10"
                     android:backgroundTint="@color/white"
-                    android:paddingVertical="5dp"
-                    android:id="@+id/endDate_pattern"
-                    android:paddingHorizontal="10dp">
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="5dp">
+
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:background="@drawable/calendar"
-                        android:layout_marginEnd="8dp"/>
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/calendar" />
+
                     <TextView
+                        android:id="@+id/endText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/endText"
                         android:text="2020.5.1"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
+
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:columnCount="2">
+
                 <TextView
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:gravity="center"
                     android:paddingBottom="10dp"
-                    android:gravity="center"
-                    android:layout_columnWeight="1"
-                    android:layout_height="wrap_content"
-                    android:text="앉아 있는 시간"
+                    android:text="Sitting Time"
+                    android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"/>
+                    android:textStyle="bold" />
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_columnWeight="1"
-                    android:text="5시간 30분"
-                    android:textSize="16sp"
                     android:id="@+id/sitTime_text"
-                    android:textColor="@color/black"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:gravity="center"
+                    android:text="5h 30m"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:gravity="center"
                     android:paddingBottom="10dp"
-                    android:gravity="center"
-                    android:layout_columnWeight="1"
-                    android:text="운동 시간"
+                    android:text="Exercise Time"
+                    android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"/>
+                    android:textStyle="bold" />
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="1시간 30분"
-                    android:layout_columnWeight="1"
                     android:id="@+id/exercise_text"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"/>
-                <TextView
                     android:layout_width="wrap_content"
-                    android:gravity="center"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
-                    android:text="통증 경도"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"/>
+                    android:gravity="center"
+                    android:text="1h 30m"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
-                    android:gravity="center"
                     android:layout_height="wrap_content"
-                    android:text="Not Good"
                     android:layout_columnWeight="1"
+                    android:gravity="center"
+                    android:text="Pain Scale"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
                     android:id="@+id/pain_text"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:gravity="center"
+                    android:text="Not Good"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
             </GridLayout>
         </LinearLayout>
 
@@ -144,8 +160,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="15dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="15dp">
+
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/lineChart"
                 android:layout_width="match_parent"

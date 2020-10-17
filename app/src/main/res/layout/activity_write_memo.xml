@@ -19,15 +19,16 @@
             android:background="@drawable/ic_baseline_close_24"
             android:backgroundTint="@color/black"
             android:id="@+id/closeBtn"/>
+
         <TextView
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="일지 작성하기"
+            android:layout_weight="1"
             android:gravity="center"
-            android:textSize="20sp"
+            android:text="Record"
             android:textColor="@color/black"
-            android:textStyle="bold"/>
+            android:textSize="20sp"
+            android:textStyle="bold" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -72,21 +73,23 @@
                     android:layout_height="20dp"
                     android:background="@drawable/calendar"
                     android:layout_marginEnd="8dp"/>
+
                 <TextView
+                    android:id="@+id/dateText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="5월 17일"
-                    android:textSize="16sp"
+                    android:layout_marginEnd="5dp"
+                    android:text="May 17"
                     android:textColor="@color/black"
-                    android:id="@+id/dateText"
-                    android:layout_marginEnd="5dp"/>
+                    android:textSize="16sp" />
             </LinearLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:text="일지"
-                android:textColor="@color/black" />
+                android:text="Diary"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -106,36 +109,39 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
                     android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:padding="5dp"
-                        android:text="운동 시간"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
-                        android:textStyle="bold"/>
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="Exercise Time"
+                        android:textColor="@color/black"
+
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="Exercise Type"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="운동 종류"
                         android:padding="5dp"
+                        android:text="Pain Scale"
                         android:textColor="@color/black"
                         android:textSize="16sp"
-                        android:layout_marginBottom="10dp"
-                        android:textStyle="bold"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:padding="5dp"
-                        android:text="통증 경도"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -178,20 +184,21 @@
                 </LinearLayout>
 
             </LinearLayout>
+
             <EditText
+                android:id="@+id/contentText"
                 android:layout_width="match_parent"
-                android:padding="10dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/radius_10"
                 android:backgroundTint="@color/very_light_grey"
-                android:layout_marginHorizontal="10dp"
-                android:layout_height="wrap_content"
-                android:hint="일지 내용을 작성하세요"
                 android:gravity="top"
-                android:id="@+id/contentText"
-                android:textSize="16sp"
+                android:hint="Please write diary"
+                android:padding="10dp"
                 android:textColor="@color/black"
-                android:layout_marginBottom="10dp"/>
+                android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
 

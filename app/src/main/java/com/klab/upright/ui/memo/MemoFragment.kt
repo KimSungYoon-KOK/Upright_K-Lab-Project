@@ -49,8 +49,8 @@ class MemoFragment : Fragment() {
     }
 
     fun setExample(){
-        writeList.add(MemoData(Calendar.getInstance(),"1시간 30분","달리기","아픔","오늘은 운동했다"))
-        writeList.add(MemoData(Calendar.getInstance(),"2시간 30분","걷기","안아픔","오늘은 운동했다"))
+        writeList.add(MemoData(Calendar.getInstance(),"1h 30m","Run","Yes","I worked out today"))
+        writeList.add(MemoData(Calendar.getInstance(),"2h 30m","Walk","No","I worked out today"))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
