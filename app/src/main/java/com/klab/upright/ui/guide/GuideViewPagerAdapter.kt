@@ -4,7 +4,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.klab.upright.R
@@ -13,27 +15,48 @@ class GuideViewPagerAdapter(private val context: Context): PagerAdapter() {
 
     private var layoutInflater: LayoutInflater? = null
 
-    private val images = arrayOf(
-        R.drawable.guide1,
-        R.drawable.guide2,
-        R.drawable.guide3,
-        R.drawable.guide4
-    )
-
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
         return view == `object`
     }
 
     override fun getCount(): Int {
-        return images.size
+        return 5
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         layoutInflater = container.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val v = layoutInflater!!.inflate(R.layout.viewpager_guide, null)
-        val image = v.findViewById<ImageView>(R.id.imageView_guide)
+//        val image = v.findViewById<ImageView>(R.id.imageView_guide)
+        val layout = v.findViewById<LinearLayout>(R.id.layout)
 
-        image.setImageResource(images[position])
+
+        when(position){
+            0->{
+                val child = (layoutInflater!!.inflate(R.layout.item_guide1, null)).findViewById<LinearLayout>(R.id.guide1)
+                child.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT)
+                layout.addView(child)
+            }
+            1->{
+                val child = (layoutInflater!!.inflate(R.layout.item_guide2, null)).findViewById<LinearLayout>(R.id.guide2)
+                child.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT)
+                layout.addView(child)
+            }
+            2->{
+                val child = (layoutInflater!!.inflate(R.layout.item_guide3, null)).findViewById<LinearLayout>(R.id.guide3)
+                child.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT)
+                layout.addView(child)
+            }
+            3->{
+                val child = (layoutInflater!!.inflate(R.layout.item_guide4, null)).findViewById<LinearLayout>(R.id.guide4)
+                child.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT)
+                layout.addView(child)
+            }
+            else->{
+                val child = (layoutInflater!!.inflate(R.layout.item_guide5, null)).findViewById<LinearLayout>(R.id.guide5)
+                child.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT)
+                layout.addView(child)
+            }
+        }
         val vp = container as ViewPager
         vp.addView(v, 0)
         return v

@@ -6,10 +6,15 @@
     android:background="@color/colorPrimary"
     android:gravity="center">
 
-    <ImageView
-        android:id="@+id/imageView_guide"
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView_guide"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:scaleType="fitCenter"/>-->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitCenter"/>
+        android:orientation="vertical"
+        android:id="@+id/layout"/>
 
 </LinearLayout>
