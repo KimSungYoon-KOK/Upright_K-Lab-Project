@@ -2,7 +2,10 @@ package com.klab.upright
 
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothManager
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -15,6 +18,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import app.akexorcist.bluetotohspp.library.BluetoothSPP
 import app.akexorcist.bluetotohspp.library.BluetoothState
+import app.akexorcist.bluetotohspp.library.BluetoothState.REQUEST_ENABLE_BT
 import app.akexorcist.bluetotohspp.library.DeviceList
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.klab.upright.ui.guide.GuideActivity
@@ -82,8 +86,8 @@ class MainActivity : AppCompatActivity() {
             if (bt!!.serviceState == BluetoothState.STATE_CONNECTED) {
                 bt!!.disconnect()
             } else {
-                val intent = Intent(this, DeviceList::class.java)
-                startActivityForResult(intent, BluetoothState.REQUEST_CONNECT_DEVICE)
+                val intent = Intent(this, BLEConnectActivity::class.java)
+                startActivityForResult(intent, RESULT_OK)
             }
         }
         Toast.makeText(this,"initbluetooth",Toast.LENGTH_SHORT).show()
