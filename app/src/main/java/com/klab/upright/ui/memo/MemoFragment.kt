@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.klab.upright.R
+import com.klab.upright.sharedPreference.PreferenceManager
 import kotlinx.android.synthetic.main.fragment_memo.*
 import java.util.*
 
@@ -20,6 +21,7 @@ class MemoFragment : Fragment() {
     var writeList = arrayListOf<MemoData>()
     lateinit var adapter: MemoAdapter
     val REQUEST_TEST = 1
+    lateinit var pref: PreferenceManager
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -32,14 +34,15 @@ class MemoFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        pref =  PreferenceManager(requireContext())
         init()
     }
 
     private fun init() {
-        setExample()
+        //setExample()
         val layoutManager = LinearLayoutManager(context,RecyclerView.VERTICAL,false)
         recyclerView_write.layoutManager = layoutManager
-        adapter = MemoAdapter(requireContext(), writeList)
+        adapter = MemoAdapter(requireContext(), pref.getMemoList()!!.memoList)
         recyclerView_write.adapter = adapter
         writeBtn.setOnClickListener {
             val intent = Intent(requireContext(), WriteMemoActivity::class.java)
@@ -48,17 +51,17 @@ class MemoFragment : Fragment() {
 
     }
 
-    fun setExample(){
-        writeList.add(MemoData(Calendar.getInstance(),"1h 30m","Run","Yes","I worked out today"))
-        writeList.add(MemoData(Calendar.getInstance(),"2h 30m","Walk","No","I worked out today"))
-    }
+//    fun setExample(){
+//        writeList.add(MemoData(Calendar.getInstance(),"1h 30m","Run","Yes","I worked out today"))
+//        writeList.add(MemoData(Calendar.getInstance(),"2h 30m","Walk","No","I worked out today"))
+//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_TEST) {
             if (resultCode == RESULT_OK) {
-                val d = data?.getSerializableExtra("data") as MemoData
-                writeList.add(d)
+                adapter = MemoAdapter(requireContext(), pref.getMemoList()!!.memoList)
+                recyclerView_write.adapter = adapter
             }
         }
 
