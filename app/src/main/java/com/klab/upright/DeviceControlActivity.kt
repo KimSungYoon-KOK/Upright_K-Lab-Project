@@ -9,21 +9,23 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ExpandableListView.OnChildClickListener
-import android.widget.SimpleExpandableListAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.klab.upright.BluetoothLeService.Companion.ACTION_DATA_AVAILABLE
+import com.klab.upright.BluetoothLeService.Companion.ACTION_GATT_CONNECTED
+import com.klab.upright.BluetoothLeService.Companion.ACTION_GATT_DISCONNECTED
+import com.klab.upright.BluetoothLeService.Companion.ACTION_GATT_SERVICES_DISCOVERED
+import com.klab.upright.BluetoothLeService.Companion.EXTRA_DATA
 import kotlinx.android.synthetic.main.gatt_services_characteristics.*
 
 
 class DeviceControlActivity : AppCompatActivity() {
 
-    lateinit var deviceName: String
-    lateinit var deviceAddress: String
+    private lateinit var deviceName: String
+    private lateinit var deviceAddress: String
 
-    private var mGattCharacteristics = ArrayList<ArrayList<BluetoothGattCharacteristic>>()
-    private val LIST_NAME = "NAME"
-    private val LIST_UUID = "UUID"
     private var mNotifyCharacteristic: BluetoothGattCharacteristic? = null
+    private var mWriteCharacteristic: BluetoothGattCharacteristic? = null
 
     // Code to manage Service lifecycle.
     private var bluetoothLeService: BluetoothLeService? = null
@@ -44,78 +46,46 @@ class DeviceControlActivity : AppCompatActivity() {
     // ACTION_GATT_SERVICES_DISCOVERED: discovered GATT services.
     // ACTION_DATA_AVAILABLE: received data from the device.  This can be a result of read or notification operations.
     var mConnected: Boolean = false
-    private val gattUpdateReceiver = object : BroadcastReceiver() {
+    private val gattUpdateReceiver = object: BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            if (intent == null) {
-                Log.e("Log_BroadCast_Intent: ", "not found Intent")
-                return
-            }
+            if (intent == null) return
+            Log.d("Log_BroadCast_Intent: ", intent.action)
             when(intent.action) {
-                BluetoothLeService.ACTION_GATT_CONNECTED -> {
+                ACTION_GATT_CONNECTED -> {
                     mConnected = true
-                    Toast.makeText(
-                        this@DeviceControlActivity,
-                        "BLE: Connected to device",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(this@DeviceControlActivity, "BLE: Connected to device", Toast.LENGTH_SHORT).show()
+                    updateConnectionState(R.string.connected)
                     invalidateOptionsMenu()
+
                 }
-                BluetoothLeService.ACTION_GATT_DISCONNECTED -> {
+                ACTION_GATT_DISCONNECTED -> {
                     mConnected = false
-                    Toast.makeText(
-                        this@DeviceControlActivity,
-                        "BLE: Disconnected to device",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(this@DeviceControlActivity, "BLE: Disconnected to device", Toast.LENGTH_SHORT).show()
+                    updateConnectionState(R.string.disconnected)
                     clearUI()
                 }
-                BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED -> {
+                ACTION_GATT_SERVICES_DISCOVERED -> {
                     bluetoothLeService?.let {
-                        displayGattServices(bluetoothLeService!!.getSupportedGattServices());
+                        displayGattServices(bluetoothLeService!!.getSupportedGattServices())
                     }
                 }
-                BluetoothLeService.ACTION_DATA_AVAILABLE -> {
-                    bluetoothLeService?.let {
-                        displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA))
+                ACTION_DATA_AVAILABLE -> {
+                    bluetoothLeService.let {
+                        val data = intent.getStringExtra(EXTRA_DATA)
+                        Log.d("Log_Data", data)
+                        if (data != null) {
+                            Log.d("Log_Data", data)
+                            displayData(data)
+                        }
                     }
                 }
             }
         }
     }
 
-    // If a given GATT characteristic is selected, check for supported features.  This sample
-    // demonstrates 'Read' and 'Notify' features.  See
-    // http://d.android.com/reference/android/bluetooth/BluetoothGatt.html for the complete
-    // list of supported characteristic features.
-    private val servicesListClickListener =
-        OnChildClickListener { _, _, groupPosition, childPosition, _ ->
-            if (mGattCharacteristics.isNotEmpty()) {
-                val characteristic = mGattCharacteristics[groupPosition][childPosition]
-                val charaProp = characteristic.properties
-                if (charaProp or BluetoothGattCharacteristic.PROPERTY_READ > 0) {
-                    // If there is an active notification on a characteristic, clear
-                    // it first so it doesn't update the data field on the user interface.
-                    if (mNotifyCharacteristic != null) {
-                        bluetoothLeService?.setCharacteristicNotification(
-                            mNotifyCharacteristic!!,
-                            false
-                        )
-                        mNotifyCharacteristic = null
-                    }
-                    bluetoothLeService?.readCharacteristic(characteristic)
-                }
-                if (charaProp or BluetoothGattCharacteristic.PROPERTY_NOTIFY > 0) {
-                    mNotifyCharacteristic = characteristic
-                    bluetoothLeService?.setCharacteristicNotification(characteristic, true)
-                }
-                return@OnChildClickListener true
-            }
-            return@OnChildClickListener false
-        }
 
     private fun clearUI() {
-        gatt_services_list.setAdapter(null as SimpleExpandableListAdapter?)
-        data_value.text = R.string.no_data.toString()
+        data_value.text = getText(R.string.no_data)
     }
 
 
@@ -131,10 +101,10 @@ class DeviceControlActivity : AppCompatActivity() {
             deviceAddress = address
         }
         Log.d("Log_Device_Info", "DeviceName: $deviceName, DeviceAddress: $deviceAddress")
+        device_address.text = deviceAddress
 
-        gatt_services_list.setOnChildClickListener(servicesListClickListener)
         //GATT Intent
-        val gattServiceIntent = Intent(this, BluetoothLeService::class.java)
+        val gattServiceIntent = Intent(applicationContext, BluetoothLeService::class.java)
         bindService(gattServiceIntent, serviceConnection, Context.BIND_AUTO_CREATE)
     }
 
@@ -144,6 +114,8 @@ class DeviceControlActivity : AppCompatActivity() {
         if (bluetoothLeService != null) {
             val result: Boolean = bluetoothLeService!!.connect(deviceAddress)
             Log.d("Log_connection_request", "Connect request result=$result")
+        }else{
+            Log.d("Log_connection_request", "Connect request result=null")
         }
     }
 
@@ -190,81 +162,55 @@ class DeviceControlActivity : AppCompatActivity() {
     }
 
     private fun updateConnectionState(resourceId: Int) {
-        runOnUiThread { connection_state.text = resourceId.toString()}
+        runOnUiThread { connection_state.text = getText(resourceId) }
     }
 
-    private fun displayData(data: String?) {
-        if (data != null) {
-            data_value.text = data
-        }
+    private fun displayData(data: String) {
+        runOnUiThread { data_value.text = data }
     }
 
     // Demonstrates how to iterate through the supported GATT Services/Characteristics.
-    // In this sample, we populate the data structure that is bound to the ExpandableListView
-    // on the UI.
+    // In this sample, we populate the data structure that is bound to the ExpandableListView on the UI.
     private fun displayGattServices(gattServices: List<BluetoothGattService>?) {
         if (gattServices == null) return
-        var uuid: String
-        val unknownServiceString = resources.getString(R.string.unknown_service)
-        val unknownCharaString = resources.getString(R.string.unknown_characteristic)
-        val gattServiceData = ArrayList<HashMap<String, String?>>()
-        val gattCharacteristicData = ArrayList<ArrayList<HashMap<String, String?>>>()
-
         // Loops through available GATT Services.
         for (gattService in gattServices) {
-            val currentServiceData = HashMap<String, String?>()
-            uuid = gattService.uuid.toString()
-            currentServiceData[LIST_NAME] = SampleGattAttributes().lookup(
-                uuid,
-                unknownServiceString
-            )
-            currentServiceData[LIST_UUID] = uuid
-            gattServiceData.add(currentServiceData)
-            val gattCharacteristicGroupData = ArrayList<HashMap<String, String?>>()
-            val gattCharacteristics = gattService.characteristics
-            val charas = ArrayList<BluetoothGattCharacteristic>()
+            val gattCharacteristics: List<BluetoothGattCharacteristic> = gattService.characteristics
 
             // Loops through available Characteristics.
             for (gattCharacteristic in gattCharacteristics) {
-                charas.add(gattCharacteristic)
-                val currentCharaData = HashMap<String, String?>()
-                uuid = gattCharacteristic.uuid.toString()
-                currentCharaData[LIST_NAME] = SampleGattAttributes().lookup(
-                    uuid,
-                    unknownCharaString
-                )
-                currentCharaData[LIST_UUID] = uuid
-                gattCharacteristicGroupData.add(currentCharaData)
+                when (gattCharacteristic.uuid) {
+                    //BluetoothLeService.UUID_DATA_WRITE -> mWriteCharacteristic = gattCharacteristic
+                    BluetoothLeService.UUID_DATA_NOTIFY -> mNotifyCharacteristic = gattCharacteristic
+                }
             }
-            mGattCharacteristics.add(charas)
-            gattCharacteristicData.add(gattCharacteristicGroupData)
         }
-        val gattServiceAdapter = SimpleExpandableListAdapter(
-            this,
-            gattServiceData,
-            android.R.layout.simple_expandable_list_item_2,
-            arrayOf(LIST_NAME, LIST_UUID),
-            intArrayOf(android.R.id.text1, android.R.id.text2),
-            gattCharacteristicData,
-            android.R.layout.simple_expandable_list_item_2,
-            arrayOf(LIST_NAME, LIST_UUID),
-            intArrayOf(android.R.id.text1, android.R.id.text2)
-        )
-        gatt_services_list.setAdapter(gattServiceAdapter)
+    }
+
+    private fun sendData(data: String) {
+        mWriteCharacteristic?.let {
+            if (it.properties or BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE > 0)
+                bluetoothLeService?.writeCharacteristic(it, data)
+        }
+
+        mNotifyCharacteristic?.let {
+            if (it.properties or BluetoothGattCharacteristic.PROPERTY_NOTIFY > 0)
+                bluetoothLeService?.setCharacteristicNotification(it, true)
+        }
     }
 
 
     companion object {
-        val EXTRAS_DEVICE_NAME = "DEVICE_NAME"
-        val EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS"
+        const val EXTRAS_DEVICE_NAME = "DEVICE_NAME"
+        const val EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS"
     }
 
     private fun makeGattUpdateIntentFilter(): IntentFilter? {
         val intentFilter = IntentFilter()
-        intentFilter.addAction(BluetoothLeService.ACTION_GATT_CONNECTED)
-        intentFilter.addAction(BluetoothLeService.ACTION_GATT_DISCONNECTED)
-        intentFilter.addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED)
-        intentFilter.addAction(BluetoothLeService.ACTION_DATA_AVAILABLE)
+        intentFilter.addAction(ACTION_GATT_CONNECTED)
+        intentFilter.addAction(ACTION_GATT_DISCONNECTED)
+        intentFilter.addAction(ACTION_GATT_SERVICES_DISCOVERED)
+        intentFilter.addAction(ACTION_DATA_AVAILABLE)
         return intentFilter
     }
 }

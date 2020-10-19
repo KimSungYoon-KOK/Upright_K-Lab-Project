@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.klab.upright">
 
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -15,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <service android:name=".BluetoothLeService" android:enabled="true" />
+        <service android:name=".BluetoothLeService" android:enabled="true"/>
         <activity android:name=".DeviceControlActivity" />
         <activity android:name=".BLEConnectActivity" />
         <activity android:name=".ui.memo.WriteMemoActivity" />
@@ -24,7 +25,6 @@
             android:theme="@style/GuideTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

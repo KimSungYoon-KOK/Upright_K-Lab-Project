@@ -18,10 +18,9 @@ class BluetoothLeService: Service() {
     val STATE_CONNECTED = 2
 
     var connectionState = STATE_DISCONNECTED
-    var bluetoothGatt: BluetoothGatt? = null
-    var bluetoothManager: BluetoothManager? = null
-    var deviceAddress: String = ""
-    val bluetoothAdapter: BluetoothAdapter by lazy(LazyThreadSafetyMode.NONE) {
+    private var bluetoothGatt: BluetoothGatt? = null
+    private var deviceAddress: String = ""
+    private val bluetoothAdapter: BluetoothAdapter by lazy(LazyThreadSafetyMode.NONE) {
         val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
         bluetoothManager.adapter
     }
@@ -31,7 +30,7 @@ class BluetoothLeService: Service() {
         val service = this@BluetoothLeService
     }
 
-    val binder = LocalBinder()
+    private val binder = LocalBinder()
     override fun onBind(intent: Intent?): IBinder? = binder
     override fun onUnbind(intent: Intent?): Boolean {
         close()
@@ -50,6 +49,7 @@ class BluetoothLeService: Service() {
 
         val device = bluetoothAdapter.getRemoteDevice(address)
         bluetoothGatt = device.connectGatt(this, false, gattCallback)
+        deviceAddress = address
         connectionState = STATE_CONNECTING
         return true
     }
@@ -58,7 +58,7 @@ class BluetoothLeService: Service() {
         bluetoothGatt?.disconnect()
     }
 
-    fun close() {
+    private fun close() {
         bluetoothGatt?.close()
         bluetoothGatt = null
     }
@@ -76,12 +76,17 @@ class BluetoothLeService: Service() {
                     intentAction = ACTION_GATT_CONNECTED
                     connectionState = STATE_CONNECTED
                     broadcastUpdate(intentAction)
+//                    broadcastUpdate(ACTION_DATA_AVAILABLE)
+                    Log.d("Log_GATT_SERVER", "Connected to GATT server.")
+                    Log.d("Log_GATT_SERVER", "Attempting to start service discovery:" + bluetoothGatt?.discoverServices())
                 }
                 BluetoothProfile.STATE_DISCONNECTED -> {
                     intentAction = ACTION_GATT_DISCONNECTED
                     connectionState = STATE_DISCONNECTED
+                    Log.d("Log_GATT_SERVER", "Disconnected from GATT server.")
                     broadcastUpdate(intentAction)
                 }
+
             }
         }
 
@@ -89,7 +94,7 @@ class BluetoothLeService: Service() {
         override fun onServicesDiscovered(gatt: BluetoothGatt, status: Int) {
             when (status) {
                 BluetoothGatt.GATT_SUCCESS -> broadcastUpdate(ACTION_GATT_SERVICES_DISCOVERED)
-                else -> Log.w(TAG, "onServicesDiscovered received: $status")
+                else -> Log.d("Log_GATT_SERVER", "onServicesDiscovered received: $status")
             }
         }
 
@@ -99,8 +104,10 @@ class BluetoothLeService: Service() {
             characteristic: BluetoothGattCharacteristic,
             status: Int
         ) {
+            Log.d("Log_GATT_SERVER: ", characteristic.toString())
             when (status) {
                 BluetoothGatt.GATT_SUCCESS -> {
+                    Log.d("Log_GATT_SERVER: ", "onCharacteristicRead")
                     broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic)
                 }
             }
@@ -117,32 +124,16 @@ class BluetoothLeService: Service() {
     }
 
     private fun broadcastUpdate(action: String) {
-        sendBroadcast(Intent(action))
+        val intent = Intent(action)
+        Log.d("Log_broadcastUpdate", intent.toString() + action)
+        sendBroadcast(intent)
     }
 
     private fun broadcastUpdate(action: String, characteristic: BluetoothGattCharacteristic) {
         val intent = Intent(action)
-        if (UUID_HEART_RATE_MEASUREMENT == characteristic.uuid) {
-            val flag = characteristic.properties
-            var format = -1
-            if (flag and 0x01 != 0) {
-                format = BluetoothGattCharacteristic.FORMAT_UINT16
-                Log.d(TAG, "Heart rate format UINT16.")
-            } else {
-                format = BluetoothGattCharacteristic.FORMAT_UINT8
-                Log.d(TAG, "Heart rate format UINT8.")
-            }
-            val heartRate = characteristic.getIntValue(format, 1)
-            Log.d(TAG, String.format("Received heart rate: %d", heartRate))
-            intent.putExtra(EXTRA_DATA, heartRate.toString())
-        } else {
-            // For all other profiles, writes the data formatted in HEX.
-            val data = characteristic.value
-            if (data != null && data.isNotEmpty()) {
-                val stringBuilder = StringBuilder(data.size)
-                for (byteChar in data) stringBuilder.append(String.format("%02X ", byteChar))
-                intent.putExtra(EXTRA_DATA, data.toString() + "\n" + stringBuilder.toString())
-            }
+        if (characteristic.uuid == UUID_DATA_NOTIFY) {
+            //characteristic.getStringValue(0)
+            intent.putExtra(EXTRA_DATA, characteristic.getStringValue(0))
         }
         sendBroadcast(intent)
     }
@@ -151,13 +142,6 @@ class BluetoothLeService: Service() {
         return bluetoothGatt?.services
     }
 
-    /**
-     * Request a read on a given `BluetoothGattCharacteristic`. The read result is reported
-     * asynchronously through the `BluetoothGattCallback#onCharacteristicRead(android.bluetooth.BluetoothGatt, android.bluetooth.BluetoothGattCharacteristic, int)`
-     * callback.
-     *
-     * @param characteristic The characteristic to read from.
-     */
     fun readCharacteristic(characteristic: BluetoothGattCharacteristic?) {
         if (bluetoothGatt == null) {
             Log.w(TAG, "BluetoothAdapter not initialized")
@@ -166,46 +150,37 @@ class BluetoothLeService: Service() {
         bluetoothGatt!!.readCharacteristic(characteristic)
     }
 
-    /**
-     * Enables or disables notification on a give characteristic.
-     *
-     * @param characteristic Characteristic to act on.
-     * @param enabled If true, enable notification.  False otherwise.
-     */
+
     fun setCharacteristicNotification(
         characteristic: BluetoothGattCharacteristic,
         enabled: Boolean
     ) {
-        if (bluetoothGatt == null) {
-            Log.w(TAG, "BluetoothAdapter not initialized")
-            return
+        bluetoothGatt?.setCharacteristicNotification(characteristic, enabled)
+        val descriptor = characteristic.getDescriptor(CLIENT_CHARACTERISTIC_CONFIG).apply {
+            value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
         }
-        bluetoothGatt!!.setCharacteristicNotification(characteristic, enabled)
+        bluetoothGatt?.writeDescriptor(descriptor)
+    }
 
-        // This is specific to Heart Rate Measurement.
-        if (UUID_HEART_RATE_MEASUREMENT == characteristic.uuid) {
-            val descriptor = characteristic.getDescriptor(
-                UUID.fromString(SampleGattAttributes().CLIENT_CHARACTERISTIC_CONFIG)
-            )
-            descriptor.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
-            bluetoothGatt!!.writeDescriptor(descriptor)
-        }
+    fun writeCharacteristic(
+        characteristic: BluetoothGattCharacteristic,
+        data: String
+    ) {
+        characteristic.setValue(data)
+        characteristic.writeType = BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE
+        bluetoothGatt?.writeCharacteristic(characteristic)
     }
 
 
     companion object {
-        val ACTION_GATT_CONNECTED = "ACTION_GATT_CONNECTED"
-        val ACTION_GATT_DISCONNECTED = "ACTION_GATT_DISCONNECTED"
-        val ACTION_GATT_SERVICES_DISCOVERED = "ACTION_GATT_DISCOVERED"
-        val ACTION_DATA_AVAILABLE = "ACTION_DATA_AVAILABLE"
-        val EXTRA_DATA = "EXTRA_DATA"
-        val UUID_HEART_RATE_MEASUREMENT: UUID = UUID.fromString(SampleGattAttributes().HEART_RATE_MEASUREMENT)
+        const val ACTION_GATT_CONNECTED = "com.example.bluetooth.le.ACTION_GATT_CONNECTED"
+        const val ACTION_GATT_DISCONNECTED = "com.example.bluetooth.le.ACTION_GATT_DISCONNECTED"
+        const val ACTION_GATT_SERVICES_DISCOVERED = "com.example.bluetooth.le.ACTION_GATT_DISCOVERED"
+        const val ACTION_DATA_AVAILABLE = "com.example.bluetooth.le.ACTION_DATA_AVAILABLE"
+        const val EXTRA_DATA = "com.example.bluetooth.le.EXTRA_DATA"
 
-//        const val ACTION_GATT_CONNECTED = "com.example.bluetooth.le.ACTION_GATT_CONNECTED"
-//        const val ACTION_GATT_DISCONNECTED = "com.example.bluetooth.le.ACTION_GATT_DISCONNECTED"
-//        const val ACTION_GATT_SERVICES_DISCOVERED =
-//            "com.example.bluetooth.le.ACTION_GATT_SERVICES_DISCOVERED"
-//        const val ACTION_DATA_AVAILABLE = "com.example.bluetooth.le.ACTION_DATA_AVAILABLE"
-//        const val EXTRA_DATA = "com.example.bluetooth.le.EXTRA_DATA"
+        val UUID_DATA_NOTIFY: UUID = UUID.fromString("0000fff1-0000-1000-8000-00805f9b34fb")
+        val UUID_DATA_WRITE: UUID = UUID.fromString("0000fff2-0000-1000-8000-00805F9B34FB")
+        var CLIENT_CHARACTERISTIC_CONFIG: UUID = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb")
     }
 }
