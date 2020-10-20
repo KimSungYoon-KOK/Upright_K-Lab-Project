@@ -7,13 +7,17 @@ import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.klab.upright.R
+import com.klab.upright.sharedPreference.PreferenceManager
+import kotlinx.android.synthetic.main.item_guide5.view.*
 
 class GuideViewPagerAdapter(private val context: Context): PagerAdapter() {
 
     private var layoutInflater: LayoutInflater? = null
+    var pref: PreferenceManager = PreferenceManager(context)
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
         return view == `object`
@@ -54,6 +58,14 @@ class GuideViewPagerAdapter(private val context: Context): PagerAdapter() {
             else->{
                 val child = (layoutInflater!!.inflate(R.layout.item_guide5, null)).findViewById<LinearLayout>(R.id.guide5)
                 child.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT)
+                child.saveBtn.setOnClickListener {
+                    if(child.userName.text.isNotEmpty()){
+                        pref.setUserName(child.userName.text.toString())
+                        Toast.makeText(context,"your name is "+pref.getUserName(),Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(context,"please write your name !",Toast.LENGTH_SHORT).show()
+                    }
+                }
                 layout.addView(child)
             }
         }
