@@ -131,11 +131,19 @@ class BluetoothLeService: Service() {
 
     private fun broadcastUpdate(action: String, characteristic: BluetoothGattCharacteristic) {
         val intent = Intent(action)
-        if (characteristic.uuid == UUID_DATA_NOTIFY) {
-            //characteristic.getStringValue(0)
-            intent.putExtra(EXTRA_DATA, characteristic.getStringValue(0))
+        //characteristic.getStringValue(0)
+        val data= characteristic.getStringValue(0)
+//        Log.d("Log_broadcastUpdate_temp", temp)
+
+        if (data?.isNotEmpty() == true) {
+
+//            val hexString: String = data.joinToString(separator = ",")
+            intent.putExtra(EXTRA_DATA, "$data")
+            Log.d("Log_broadcastUpdate_value", data.toString())
         }
         sendBroadcast(intent)
+//            intent.putExtra(EXTRA_DATA, characteristic.getStringValue(0))
+
     }
 
     fun getSupportedGattServices(): MutableList<BluetoothGattService>? {
@@ -155,7 +163,12 @@ class BluetoothLeService: Service() {
         characteristic: BluetoothGattCharacteristic,
         enabled: Boolean
     ) {
+        if (bluetoothAdapter == null || bluetoothGatt == null) {
+            Log.w("inae", "BluetoothAdapter not initialized")
+            return
+        }
         bluetoothGatt?.setCharacteristicNotification(characteristic, enabled)
+
         val descriptor = characteristic.getDescriptor(CLIENT_CHARACTERISTIC_CONFIG).apply {
             value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
         }

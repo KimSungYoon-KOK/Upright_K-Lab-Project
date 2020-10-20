@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothManager
 import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanResult
@@ -12,6 +13,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
+import android.os.Trace.isEnabled
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -24,22 +26,25 @@ import kotlinx.android.synthetic.main.activity_ble_connect.*
 
 class BLEConnectActivity: AppCompatActivity() {
 
+//    private var bluetoothGatt: BluetoothGatt? = null
+
     private fun PackageManager.missingSystemFeature(name: String): Boolean = !hasSystemFeature(name)
 
     private lateinit var mLeDeviceAdapter: LeDeviceAdapter
-    private val bluetoothAdapter: BluetoothAdapter by lazy(LazyThreadSafetyMode.NONE) {
+
+    private val bluetoothAdapter: BluetoothAdapter by lazy(LazyThreadSafetyMode.NONE) { // 기기 자체의 블루투스 어댑터
         val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
         bluetoothManager.adapter
     }
 
-    private val BluetoothAdapter.isDisabled: Boolean
+    private val BluetoothAdapter.isDisabled: Boolean // 블루투스 활성화
         get() = !isEnabled
+
     private  val REQUEST_ENABLE_BT = 1000
-
-
     private  var mScanning: Boolean = false
     private var arrayDevices = ArrayList<BluetoothDevice>()
     private val handler = Handler()
+
     private val scanCallback = object : ScanCallback()
     {
         override fun onScanResult(callbackType: Int, result: ScanResult?) {
@@ -80,12 +85,19 @@ class BLEConnectActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ble_connect)
 
+
         //권한 검
-        val permission = checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+        val permission = checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
         if (permission == PackageManager.PERMISSION_DENIED) {
             val permissions = arrayOfNulls<String>(1)
-            permissions[0] = Manifest.permission.ACCESS_FINE_LOCATION // 사용자에게 요청할 권한
+            permissions[0] = Manifest.permission.ACCESS_COARSE_LOCATION // 사용자에게 요청할 권한
             requestPermissions(permissions, LOCATION_PERMISSION_REQUEST_CODE) // 사용자에게 권한 요청
+        }
+
+        //블루투스 비활성화 상태라면 '설정 -> 블루투스 통신'화면으로 이
+        bluetoothAdapter?.takeIf { it.isDisabled }?.apply {
+            val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
         }
 
         val layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
@@ -94,14 +106,20 @@ class BLEConnectActivity: AppCompatActivity() {
             override fun onClick(items: ArrayList<BluetoothDevice>, position: Int) {
                 Log.d("Log_Item_Click",items.toString())
                 val device = items[position]
-                val intent = Intent(this@BLEConnectActivity, DeviceControlActivity::class.java)
-                intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_NAME, device.name)
-                intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, device.address)
+//                bluetoothGatt = device.connectGatt(this,false,)
+//                val intent = Intent(this@BLEConnectActivity, DeviceControlActivity::class.java)
+//                intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_NAME, device.name)
+//                intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, device.address)
                 if (mScanning) {
                     bluetoothAdapter.bluetoothLeScanner.stopScan(scanCallback)
                     mScanning = false
                 }
-                startActivity(intent)
+                val intent = Intent()
+                intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_NAME, device.name)
+                intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, device.address)
+                setResult(RESULT_OK,intent)
+                finish()
+//                startActivity(intent)
             }
         }
         mLeDeviceAdapter = LeDeviceAdapter(listener, arrayDevices)
@@ -111,12 +129,24 @@ class BLEConnectActivity: AppCompatActivity() {
             Toast.makeText(this, "This Device BLE Not Supported!", Toast.LENGTH_SHORT).show()
             finish()
         }
-        //블루투스 비활성화 상태라면 '설정 -> 블루투스 통신'화면으로 이
-        bluetoothAdapter.takeIf { it.isDisabled }?.apply {
-            val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
-        }
+
         scanLeDevice(true)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+//         Ensures Bluetooth is enabled on the device.  If Bluetooth is not currently enabled,
+        // fire an intent to display a dialog asking the user to grant permission to enable it.
+        if (!bluetoothAdapter.isEnabled()) {
+            val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+            startActivityForResult(
+                enableBtIntent,
+                REQUEST_ENABLE_BT
+            )
+        }
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
