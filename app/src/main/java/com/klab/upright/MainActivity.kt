@@ -25,10 +25,14 @@ import com.klab.upright.ui.guide.GuideActivity
 import com.klab.upright.ui.guide.GuideViewPagerAdapter
 import kotlinx.android.synthetic.main.drawer_main.*
 import kotlinx.android.synthetic.main.drawer_main_header.view.*
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     var bt:BluetoothSPP?=null
+    val BLUETOOTH_REQUEST_CODE = 123
+    var deviceName=""
+    var deviceAddress=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,10 +41,8 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     private fun initView() {
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
-
         val navController = findNavController(R.id.nav_host_fragment)
         val appBarConfiguration = AppBarConfiguration(setOf(
             R.id.navigation_home, R.id.navigation_analysis, R.id.navigation_memo, R.id.navigation_massage))
@@ -87,7 +89,7 @@ class MainActivity : AppCompatActivity() {
                 bt!!.disconnect()
             } else {
                 val intent = Intent(this, BLEConnectActivity::class.java)
-                startActivityForResult(intent, RESULT_OK)
+                startActivityForResult(intent, BLUETOOTH_REQUEST_CODE)
             }
         }
         Toast.makeText(this,"initbluetooth",Toast.LENGTH_SHORT).show()
@@ -95,7 +97,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == BluetoothState.REQUEST_CONNECT_DEVICE) {
+        if(requestCode == BLUETOOTH_REQUEST_CODE){
+            if (resultCode == Activity.RESULT_OK) {
+                deviceName = data?.getStringExtra(EXTRAS_DEVICE_NAME)!!
+                deviceAddress = data.getStringExtra(EXTRAS_DEVICE_ADDRESS)!!
+                Toast.makeText(
+                    this
+                    , deviceName+","+deviceAddress
+                    , Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+        else if (requestCode == BluetoothState.REQUEST_CONNECT_DEVICE) {
             if (resultCode == Activity.RESULT_OK)
                 bt?.connect(data)
         } else if (requestCode == BluetoothState.REQUEST_ENABLE_BT) {
@@ -155,6 +168,15 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    fun getData_Name():String = deviceName
+    fun getData_Adress():String = deviceAddress
+
+    companion object {
+        const val EXTRAS_DEVICE_NAME = "DEVICE_NAME"
+        const val EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS"
+        val UUID_DATA_WRITE: UUID = UUID.fromString("0000fff2-0000-1000-8000-00805F9B34FB")
     }
 }
 

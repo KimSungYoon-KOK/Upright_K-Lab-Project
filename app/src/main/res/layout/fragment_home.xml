@@ -72,12 +72,18 @@
                     android:text="Sensor Value" />
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/data_value"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="( 0, 0, 0 )" />
+                <TextView android:id="@+id/connection_state"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:text="@string/disconnected" />
             </LinearLayout>
 
             <LinearLayout
@@ -146,6 +152,15 @@
                 android:text="2. Straighten your back." />
 
         </LinearLayout>
+        <ExpandableListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:layout_weight="1"
+            android:groupIndicator="@null"
+            android:id="@+id/data_recyclerview">
+        </ExpandableListView>
     </LinearLayout>
+
 
 </FrameLayout>
