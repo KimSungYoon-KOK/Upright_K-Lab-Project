@@ -14,7 +14,12 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IFillFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.klab.upright.R
+import com.klab.upright.ui.memo.MemoData
 import kotlinx.android.synthetic.main.fragment_analysis.*
 import java.util.*
 
@@ -23,7 +28,10 @@ class AnalysisFragment : Fragment() {
 
     lateinit var startDate: Calendar
     lateinit var endDate: Calendar
+    val memoList = ArrayList<MemoData>()
 
+    var start:Int=0
+    var end:Int =0
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -40,12 +48,14 @@ class AnalysisFragment : Fragment() {
     private fun init() {
         startDate = Calendar.getInstance()
         endDate = Calendar.getInstance()
-        val year = Calendar.getInstance().get(Calendar.YEAR).toString()
-        val month = (Calendar.getInstance().get(Calendar.MONTH)+1).toString()
-        val day = Calendar.getInstance().get(Calendar.DATE).toString()
+        val year = Calendar.getInstance().get(Calendar.YEAR)
+        val month = (Calendar.getInstance().get(Calendar.MONTH)+1)
+        val day = Calendar.getInstance().get(Calendar.DATE)
 
         startText.text = "$year.$month.$day"
+        start = year*10000+(month)*100+day
         endText.text = "$year.$month.$day"
+        end = year*10000+(month)*100+day
 
         //달력 시작 버튼 클릭
         startDate_pattern.setOnClickListener {
@@ -53,6 +63,7 @@ class AnalysisFragment : Fragment() {
                 DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
                     startDate.set(year,month,dayOfMonth)
                     startText.text = "${year}.${month+1}.${dayOfMonth}"
+                    start = year*10000+(month+1)*100+dayOfMonth
                     updateData()
                 }
 
@@ -66,6 +77,7 @@ class AnalysisFragment : Fragment() {
                 DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
                     endDate.set(year,month,dayOfMonth)
                     endText.text = "${year}.${month+1}.${dayOfMonth}"
+                    end = year*10000+(month+1)*100+dayOfMonth
                     updateData()
                 }
 
@@ -75,6 +87,25 @@ class AnalysisFragment : Fragment() {
 
         //initBarChart()
         initChart()
+
+        FirebaseDatabase.getInstance().getReference().child("memo").addValueEventListener(object:ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                memoList.clear()
+
+                for(item in snapshot.children){
+                    memoList.add(item.getValue(MemoData::class.java)!!)
+
+                }
+
+                updateData()
+                //TODO("Not yet implemented")
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                //TODO("Not yet implemented")
+            }
+
+        })
     }
 
     private fun initChart() {
@@ -188,6 +219,21 @@ class AnalysisFragment : Fragment() {
 
     fun updateData(){
         //update data
+        var time=0
+        var pain=0
+        var n=0
+        for(memo in memoList){
+            if(memo.date>=start && memo.date<=end){
+                time += memo.duration
+                pain += memo.pain
+                n++
+            }
+        }
+        val pain_avg:Double = pain.toDouble()/n
+
+        pain_text.text = pain_avg.toString()
+        exercise_text.text = time.toString()+"m"
+
     }
 
 //    fun initBarChart(){

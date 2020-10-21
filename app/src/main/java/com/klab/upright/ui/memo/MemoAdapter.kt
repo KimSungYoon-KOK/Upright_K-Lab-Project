@@ -9,13 +9,43 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.klab.upright.R
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MemoAdapter(val context: Context, val memoList:ArrayList<MemoData>) : RecyclerView.Adapter<MemoAdapter.ViewHolder>(){
+class MemoAdapter(val context: Context) : RecyclerView.Adapter<MemoAdapter.ViewHolder>(){
 
     val months=arrayOf("January", "February", "March","April","May","June","July","August","September","October","November","December")
+    val memoList = ArrayList<MemoData>()
+
+
+    init{
+            FirebaseDatabase.getInstance().getReference().child("memo").addValueEventListener(object:ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    memoList.clear()
+
+                    for(item in snapshot.children){
+                        memoList.add(item.getValue(MemoData::class.java)!!)
+                    }
+
+                    notifyDataSetChanged()
+
+                    //TODO("Not yet implemented")
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    //TODO("Not yet implemented")
+                }
+
+            })
+
+
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemoAdapter.ViewHolder {
         val v = LayoutInflater.from(context).inflate(R.layout.item_write,parent,false)
@@ -30,10 +60,11 @@ class MemoAdapter(val context: Context, val memoList:ArrayList<MemoData>) : Recy
         val writeData = memoList[position]
         val date = writeData.date
 
-        holder.date.text = months[(date.get(Calendar.MONTH)+1)] +" "+date.get(Calendar.DATE).toString()+", "+date.get(Calendar.YEAR).toString()
+        holder.date.text = writeData.date.toString()
+        holder.date.text = writeData.dateStr
         holder.time.text = writeData.time
         holder.type.text = writeData.type
-        holder.pain.text = writeData.pain
+        holder.pain.text = writeData.pain.toString()
         holder.content.text = writeData.content
 
         holder.titleView.setOnClickListener {

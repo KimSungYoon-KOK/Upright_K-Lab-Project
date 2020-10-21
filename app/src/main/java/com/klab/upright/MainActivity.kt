@@ -158,6 +158,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         if(bt != null){
+            /*
             if (!bt!!.isBluetoothEnabled) { //
                 val intent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
                 startActivityForResult(intent, BluetoothState.REQUEST_ENABLE_BT)
@@ -167,6 +168,7 @@ class MainActivity : AppCompatActivity() {
                     bt!!.startService(BluetoothState.DEVICE_OTHER) //DEVICE_ANDROID는 안드로이드 기기 끼리
                 }
             }
+             */
         }
     }
 

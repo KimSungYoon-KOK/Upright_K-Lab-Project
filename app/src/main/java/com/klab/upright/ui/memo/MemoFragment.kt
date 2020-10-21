@@ -42,7 +42,10 @@ class MemoFragment : Fragment() {
         //setExample()
         val layoutManager = LinearLayoutManager(context,RecyclerView.VERTICAL,false)
         recyclerView_write.layoutManager = layoutManager
-        adapter = MemoAdapter(requireContext(), pref.getMemoList()!!.memoList)
+
+
+
+        adapter = MemoAdapter(requireContext())
         recyclerView_write.adapter = adapter
         writeBtn.setOnClickListener {
             val intent = Intent(requireContext(), WriteMemoActivity::class.java)
@@ -60,7 +63,7 @@ class MemoFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_TEST) {
             if (resultCode == RESULT_OK) {
-                adapter = MemoAdapter(requireContext(), pref.getMemoList()!!.memoList)
+                adapter = MemoAdapter(requireContext())
                 recyclerView_write.adapter = adapter
             }
         }
