@@ -4,6 +4,7 @@
     <item
         android:id="@+id/menu_refresh"
         android:title="@string/menu_refresh"
+        android:actionLayout="@layout/actionbar_indeterminate_progress"
         android:checkable="false"
         android:orderInCategory="1"
         app:showAsAction="ifRoom"/>

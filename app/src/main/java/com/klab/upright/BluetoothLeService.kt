@@ -139,9 +139,10 @@ class BluetoothLeService: Service() {
 
 //            val hexString: String = data.joinToString(separator = ",")
             intent.putExtra(EXTRA_DATA, "$data")
+            sendBroadcast(intent)
             Log.d("Log_broadcastUpdate_value", data.toString())
         }
-        sendBroadcast(intent)
+
 //            intent.putExtra(EXTRA_DATA, characteristic.getStringValue(0))
 
     }

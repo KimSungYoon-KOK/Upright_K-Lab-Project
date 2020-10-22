@@ -1,8 +1,11 @@
 package com.klab.upright.ui.home
 
+import android.animation.ArgbEvaluator
+import android.animation.ValueAnimator
 import android.bluetooth.BluetoothGattCharacteristic
 import android.bluetooth.BluetoothGattService
 import android.content.*
+import android.graphics.Color.red
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.IBinder
@@ -28,6 +31,9 @@ class HomeFragment : Fragment() {
     val LIST_UUID = "UUID"
     val unknown_characteristic = "Unknown characteristic"
     val unknown_service = "Unknown service"
+    val TAG = "homeFragment_log"
+    var colorFrom=0
+    var colorTo=0
 
     private var mGattCharacteristics =
         ArrayList<ArrayList<BluetoothGattCharacteristic>>()
@@ -66,16 +72,12 @@ class HomeFragment : Fragment() {
             when(intent.action) {
                 BluetoothLeService.ACTION_GATT_CONNECTED -> {
                     mConnected = true
-                    Toast.makeText(requireContext(), "BLE: Connected to device", Toast.LENGTH_SHORT).show()
                     updateConnectionState(R.string.connected)
-//                    invalidateOptionsMenu()
 
                 }
                 BluetoothLeService.ACTION_GATT_DISCONNECTED -> {
                     mConnected = false
-                    Toast.makeText(requireContext(), "BLE: Disconnected to device", Toast.LENGTH_SHORT).show()
                     updateConnectionState(R.string.disconnected)
-//                    invalidateOptionsMenu()
                     clearUI()
                 }
                 BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED -> {
@@ -84,14 +86,6 @@ class HomeFragment : Fragment() {
                 BluetoothLeService.ACTION_DATA_AVAILABLE -> {
                     displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA)!!)
                     updateData()
-//                    bluetoothLeService.let {
-//                        val data = intent.getStringExtra(EXTRA_DATA)
-//                        Log.d("Log_Data", data)
-//                        if (data != null) {
-//                            Log.d("Log_Data", data)
-//                            displayData(data)
-//                        }
-//                    }
                 }
             }
         }
@@ -106,32 +100,18 @@ class HomeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        init()
-    }
-
-
-    private fun init() {
-
-
-
-
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        Toast.makeText(
-            requireContext()
-            , "attach"
-            , Toast.LENGTH_SHORT
-        ).show()
         //BLEConnectActivity 로 부터 intent 받기
         deviceName = (activity as MainActivity).getData_Name()
         deviceAddress = (activity as MainActivity).getData_Adress()
 
+        colorFrom = ContextCompat.getColor(requireContext(),R.color.white)
+        colorTo = ContextCompat.getColor(requireContext(),R.color.white)
+    }
+
+    private fun init() {
         if(deviceName.isNotEmpty()){
             //GATT Intent
             val gattServiceIntent = Intent(requireContext(), BluetoothLeService::class.java)
@@ -141,76 +121,84 @@ class HomeFragment : Fragment() {
             activity?.registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
             if (bluetoothLeService != null) {
                 val result: Boolean = bluetoothLeService!!.connect(deviceAddress)
-                Log.d("Log_connection_request", "Connect request result=$result")
+                Log.d(TAG, "Connect request result=$result")
             }else{
-                Log.d("Log_connection_request", "Connect request result=null")
+                Log.d(TAG, "Connect request result=null")
             }
         }
-//        device_address.text = deviceAddress
+
+
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.d(TAG, "onAttach")
+
     }
 
     private fun clearUI() {
-//        data_value.text = getText(R.string.no_data)
+        data_value.text = getText(R.string.no_data)
     }
 
     override fun onResume() {
         super.onResume()
-
+        Log.d(TAG, "onResume")
+        init()
     }
 
     override fun onPause() {
         super.onPause()
+        Log.d(TAG, "onPause")
         if(deviceName.isNotEmpty()){
             activity?.unregisterReceiver(gattUpdateReceiver)
+            activity?.unbindService(serviceConnection)
+            bluetoothLeService = null
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        Log.d(TAG, "onDestroy")
         if(deviceName.isNotEmpty()){
-            activity?.unbindService(serviceConnection)
-            bluetoothLeService = null
+//            activity?.unbindService(serviceConnection)
+//            bluetoothLeService = null
         }
 
     }
-
-
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        menuInflater.inflate(R.menu.gatt_services, menu)
-//        if (mConnected) {
-//            menu.findItem(R.id.menu_connect).isVisible = false
-//            menu.findItem(R.id.menu_disconnect).isVisible = true
-//        } else {
-//            menu.findItem(R.id.menu_connect).isVisible = true
-//            menu.findItem(R.id.menu_disconnect).isVisible = false
-//        }
-//        return true
-//    }
-
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
-//            R.id.menu_connect -> {
-//                bluetoothLeService?.connect(deviceAddress)
-//                return true
-//            }
-//            R.id.menu_disconnect -> {
-//                bluetoothLeService?.disconnect()
-//                return true
-//            }
-//            android.R.id.home -> {
-//                onBackPressed()
-//                return true
-//            }
-//        }
-//        return super.onOptionsItemSelected(item)
-//    }
 
     private fun updateConnectionState(resourceId: Int) {
         activity?.runOnUiThread { connection_state.text = getText(resourceId) }
     }
 
     private fun displayData(data: String) {
-        activity?.runOnUiThread { data_value.text = data }
+        activity?.runOnUiThread {
+            data_value.text = data
+//            val value_split = data.split(",")
+//            val v = value_split[0].toDouble()
+////            for(v in value_split){
+////                colorFrom = colorTo
+////                if(v.toInt() > 0.9){
+////                    colorTo = ContextCompat.getColor(requireContext(),R.color.orange_dark)
+////                }else if(v.toInt() > 0.5){
+////                    colorTo = ContextCompat.getColor(requireContext(),R.color.orange_middle)
+////                }else{
+////                    colorTo = ContextCompat.getColor(requireContext(),R.color.orange_light)
+////                }
+////            }
+//            colorFrom = colorTo
+//            if(v > 0.9){
+//                colorTo = ContextCompat.getColor(requireContext(),R.color.orange_dark)
+//            }else if(v.toInt() > 0.5){
+//                colorTo = ContextCompat.getColor(requireContext(),R.color.orange_middle)
+//            }else{
+//                colorTo = ContextCompat.getColor(requireContext(),R.color.orange_light)
+//            }
+//            val colorAnimation =
+//                ValueAnimator.ofObject(ArgbEvaluator(), colorFrom, colorTo)
+//            colorAnimation.duration = 900// milliseconds
+//            colorAnimation.addUpdateListener { animator -> homeLayout.setBackgroundColor(animator.animatedValue as Int) }
+//            colorAnimation.start()
+        }
     }
 
     // Demonstrates how to iterate through the supported GATT Services/Characteristics.
