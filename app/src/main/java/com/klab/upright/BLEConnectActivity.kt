@@ -1,10 +1,11 @@
 package com.klab.upright
 
 import android.Manifest
+import android.animation.ArgbEvaluator
+import android.animation.ValueAnimator
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
-import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothManager
 import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanResult
@@ -13,7 +14,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
-import android.os.Trace.isEnabled
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -31,6 +31,10 @@ class BLEConnectActivity: AppCompatActivity() {
     private fun PackageManager.missingSystemFeature(name: String): Boolean = !hasSystemFeature(name)
 
     private lateinit var mLeDeviceAdapter: LeDeviceAdapter
+    private lateinit var menu_stop:MenuItem
+    private lateinit var menu_scan:MenuItem
+    private lateinit var menu_refresh:MenuItem
+
 
     private val bluetoothAdapter: BluetoothAdapter by lazy(LazyThreadSafetyMode.NONE) { // 기기 자체의 블루투스 어댑터
         val bluetoothManager = getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
@@ -84,7 +88,7 @@ class BLEConnectActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ble_connect)
-
+        setTitle("Connect Device")
 
         //권한 검
         val permission = checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -145,23 +149,16 @@ class BLEConnectActivity: AppCompatActivity() {
                 REQUEST_ENABLE_BT
             )
         }
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.device_scan_menu, menu)
-        if (!mScanning) {
-            menu.findItem(R.id.menu_stop).isVisible = false
-            menu.findItem(R.id.menu_scan).isVisible = true
-            menu.findItem(R.id.menu_refresh).actionView = null
-        } else {
-            menu.findItem(R.id.menu_stop).isVisible = true
-            menu.findItem(R.id.menu_scan).isVisible = false
-            menu.findItem(R.id.menu_refresh).setActionView(
-                R.layout.actionbar_indeterminate_progress
-            )
-        }
+        val mf = menuInflater
+        mf.inflate(R.menu.device_scan_menu, menu)
+        menu_stop = menu.findItem(R.id.menu_stop)
+        menu_scan = menu.findItem(R.id.menu_scan)
+        menu_refresh = menu.findItem(R.id.menu_refresh)
+        menu_refresh.setActionView(R.layout.actionbar_indeterminate_progress)
+        menu_scan.isVisible = false
         return true
     }
 
@@ -170,8 +167,17 @@ class BLEConnectActivity: AppCompatActivity() {
             R.id.menu_scan -> {
                 mLeDeviceAdapter.clear()
                 scanLeDevice(true)
+                menu_stop.isVisible = true
+                menu_scan.isVisible = false
+                menu_refresh.setActionView(R.layout.actionbar_indeterminate_progress)
+                menu_refresh.isVisible=true
             }
-            R.id.menu_stop -> scanLeDevice(false)
+            R.id.menu_stop ->{
+                scanLeDevice(false)
+                menu_stop.isVisible = true
+                menu_scan.isVisible = true
+                menu_refresh.isVisible = false
+            }
         }
         return true
     }
