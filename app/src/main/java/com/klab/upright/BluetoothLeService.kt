@@ -132,7 +132,19 @@ class BluetoothLeService: Service() {
     private fun broadcastUpdate(action: String, characteristic: BluetoothGattCharacteristic) {
         val intent = Intent(action)
         //characteristic.getStringValue(0)
-        val data= characteristic.getStringValue(0)
+        var temp = characteristic.value
+
+        val zero:Byte = 0
+        val arr:String = ""
+        for(i in temp.indices){
+            if(temp[i]==zero){
+                temp = temp.copyOfRange(0,i)
+                break;
+            }
+
+        }
+
+        val data= String(temp)
 //        Log.d("Log_broadcastUpdate_temp", temp)
 
         if (data?.isNotEmpty() == true) {
