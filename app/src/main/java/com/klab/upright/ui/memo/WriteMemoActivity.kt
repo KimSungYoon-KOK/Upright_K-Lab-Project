@@ -77,7 +77,6 @@ class WriteMemoActivity : AppCompatActivity() {
             pref.addMemo(data)
             uploadMemo(data)
 
-            val intent = getIntent()
             setResult(RESULT_OK, intent)
             finish()
         }
