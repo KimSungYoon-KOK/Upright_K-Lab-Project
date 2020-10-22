@@ -198,7 +198,42 @@ class HomeFragment : Fragment() {
 //            colorAnimation.duration = 900// milliseconds
 //            colorAnimation.addUpdateListener { animator -> homeLayout.setBackgroundColor(animator.animatedValue as Int) }
 //            colorAnimation.start()
+
+
+            val value_split = data.split(",")
+            val x1 = value_split[0].toDouble()
+            val x2 = value_split[1].toDouble()
+            val x3 = value_split[2].toDouble()
+
+            val y = x1*0.0569 + x2*0.0101 + x3*(-0.0048) + 5.5510
+            val result = (y+0.5).toInt()
+            postureView.text = result.toString()
+
+
+            img1.visibility=View.INVISIBLE
+            img2.visibility=View.INVISIBLE
+            img3.visibility=View.INVISIBLE
+            when(result){
+
+                0->{
+                }
+                1->{
+                    img1.visibility=View.VISIBLE
+                }
+                2->{
+                    img2.visibility=View.VISIBLE
+                }
+                3->{
+                    img3.visibility=View.VISIBLE
+                }
+                else->{
+
+                }
+            }
+
         }
+
+
     }
 
     // Demonstrates how to iterate through the supported GATT Services/Characteristics.
