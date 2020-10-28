@@ -5,37 +5,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@color/purple_light_background"
+    android:animateLayoutChanges="true"
     tools:context=".ui.memo.MemoFragment">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
             android:id="@+id/recyclerView_write"
-            android:padding="10dp"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp" />
     </LinearLayout>
 <!--    <View-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="1dp"-->
 <!--        android:background="@color/very_light_grey"-->
 <!--        android:layout_marginBottom="10dp"/>-->
-    <TextView
+    <Button
         android:id="@+id/writeBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/radius_10"
-        android:backgroundTint="@color/colorPrimary"
-        android:padding="10dp"
-        android:text="Record"
-        android:textColor="@color/white"
+        android:background="@drawable/oval_white_background"
+        android:text="+"
+        android:textSize="30sp"
+        android:textColor="@color/purple_background"
         android:textStyle="bold" />
 
 </RelativeLayout>

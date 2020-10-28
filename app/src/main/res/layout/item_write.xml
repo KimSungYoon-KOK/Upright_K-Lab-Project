@@ -1,35 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@drawable/button_shadow_white"
+    android:animateLayoutChanges="true"
     android:layout_marginBottom="10dp">
     <LinearLayout
         android:layout_width="match_parent"
-        android:id="@+id/titleView"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        android:padding="10dp"
-        android:backgroundTint="@color/colorPrimaryLight"
-        android:background="@drawable/radius_10">
-
-        <TextView
-            android:id="@+id/dateText"
-            android:layout_width="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:id="@+id/face_img"
+            android:backgroundTint="@color/purple_background"
+            android:background="@drawable/face_level_5"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/titleView"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:text="May 17"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="diary"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:paddingVertical="10dp"
+            >
+            <TextView
+                android:id="@+id/dateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:text="May 17"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="diary"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

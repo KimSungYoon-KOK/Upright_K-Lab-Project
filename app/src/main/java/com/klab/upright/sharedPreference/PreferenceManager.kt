@@ -64,4 +64,12 @@ class PreferenceManager(c: Context) {
         edit.putString("memo_list",str).commit()
     }
 
+    fun setFontSize(size:Int){
+        edit.putString("font_size",size.toString()).commit()
+    }
+
+    fun getFontSize():Int{
+        return (pref.getString("font_size","1")!!).toInt()
+    }
+
 }

@@ -6,8 +6,10 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -64,8 +66,17 @@ class MemoAdapter(val context: Context) : RecyclerView.Adapter<MemoAdapter.ViewH
         holder.date.text = writeData.dateStr
         holder.time.text = writeData.time
         holder.type.text = writeData.type
-        holder.pain.text = writeData.pain.toString()
         holder.content.text = writeData.content
+        //pain
+        val pain = writeData.pain
+        holder.pain.text = pain.toString()
+        when(pain){
+            1->holder.faceImg.background = ContextCompat.getDrawable(context,R.drawable.face_level_1)
+            2->holder.faceImg.background = ContextCompat.getDrawable(context,R.drawable.face_level_2)
+            3->holder.faceImg.background = ContextCompat.getDrawable(context,R.drawable.face_level_3)
+            4->holder.faceImg.background = ContextCompat.getDrawable(context,R.drawable.face_level_4)
+            else->holder.faceImg.background = ContextCompat.getDrawable(context,R.drawable.face_level_5)
+        }
 
         holder.titleView.setOnClickListener {
             if(holder.detailView.visibility == GONE)
@@ -84,6 +95,7 @@ class MemoAdapter(val context: Context) : RecyclerView.Adapter<MemoAdapter.ViewH
         var content:TextView
         var titleView:LinearLayout
         var detailView:LinearLayout
+        var faceImg: ImageView
 
         init{
             date = itemView.findViewById(R.id.dateText)
@@ -93,6 +105,7 @@ class MemoAdapter(val context: Context) : RecyclerView.Adapter<MemoAdapter.ViewH
             content = itemView.findViewById(R.id.contentText)
             titleView =itemView.findViewById(R.id.titleView)
             detailView =itemView.findViewById(R.id.detailView)
+            faceImg =itemView.findViewById(R.id.face_img)
 
         }
 

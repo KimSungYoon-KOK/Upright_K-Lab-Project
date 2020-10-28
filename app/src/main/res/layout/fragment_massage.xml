@@ -1,226 +1,256 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    tools:context=".ui.massage.MassageFragment">
+    android:background="@color/purple_light_background"
+    tools:context=".ui.massage.MassageFragment"
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:src="@drawable/hero"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView2"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="60dp"-->
+<!--        android:src="@drawable/hero"/>-->
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="500dp"
-        android:layout_height="120dp"
-        android:layout_marginBottom="4dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/graphs"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView"-->
+<!--        android:layout_width="500dp"-->
+<!--        android:layout_height="120dp"-->
+<!--        android:layout_marginBottom="4dp"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        android:src="@drawable/graphs"/>-->
 
     <LinearLayout
         android:id="@+id/linearLayout_massage"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:backgroundTint="#80F1F9Fe"
-        android:background="@drawable/radius_10"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:elevation="3dp"
         android:gravity="center"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:padding="20dp">
+        android:padding="10dp">
 
-        <TextView
-            android:layout_width="271dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="User's Device"
-            android:textColor="@color/black"
-            android:textSize="25sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="37dp"
-            android:layout_marginTop="25dp"
-            android:gravity="center"
-
-            android:text="Massage Controller"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:background="@drawable/radius_10"
+            android:backgroundTint="@color/white"
             android:gravity="center"
-            android:text="Device is connected"
-            android:textColor="@color/black"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-            android:textSize="20sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <Button
-                android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="271dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/radius_10"
-                android:backgroundTint="@color/colorPrimary"
-                android:text="Play"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
+                android:gravity="center"
+                android:text="User's Device"
+                android:textColor="@color/black"
+                android:textSize="25sp" />
 
-            <Button
-                android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+
+                android:text="Massage Controller"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/radius_10"
-                android:backgroundTint="@color/colorPrimary"
-                android:text="Stop"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
-        </LinearLayout>
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:text="Device is connected"
+                android:textColor="@color/black"
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="10dp"
-            android:text="Intensity" />
+                android:textSize="20sp" />
 
-        <SeekBar
-            android:id="@+id/seekBar"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:max="10"
-            android:progress="3" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="Massage Pattern"
-            android:textColor="@color/black"
-
-            android:textSize="25sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_weight="1"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:text="1"
-                android:backgroundTint="@color/colorPrimary"
-                android:background="@drawable/radius_10"
-                android:textColor="@color/white"
-                android:textStyle="bold"/>
+                android:gravity="center"
+                android:orientation="horizontal">
+                <Button
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/gradient_background_oval"
+                    android:shadowColor="@color/black"
+                    android:text="Play"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
-            <Button
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="2"
-                android:backgroundTint="@color/colorPrimary"
-                android:background="@drawable/radius_10"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:layout_marginEnd="10dp"
-                />
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_marginEnd="10dp"
-
-                android:layout_height="wrap_content"
-                android:text="3"
-                android:backgroundTint="@color/colorPrimary"
-                android:background="@drawable/radius_10"
-                android:textColor="@color/white"
-                android:textStyle="bold"/>
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_marginEnd="10dp"
-
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="4"
-                android:backgroundTint="@color/colorPrimary"
-                android:background="@drawable/radius_10"
-                android:textColor="@color/white"
-                android:textStyle="bold"/>
+                <Button
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@drawable/gradient_background_oval"
+                    android:text="Stop"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/radius_10"
+            android:backgroundTint="@color/white"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="1"
                 android:gravity="center"
-                android:text="normal" />
+                android:padding="10dp"
+                android:textSize="25sp"
+                android:text="Intensity"
+                android:textColor="@color/black" />
 
-            <TextView
-                android:layout_width="0dp"
+            <SeekBar
+                android:id="@+id/seekBar"
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="1"
-
-                android:gravity="center"
-                android:text="cozy" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="1"
-
-                android:gravity="center"
-                android:text="hard" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="1"
-
-                android:gravity="center"
-                android:text="mixed" />
+                android:backgroundTint="@color/white"
+                android:max="5"
+                android:progress="2"
+                android:progressDrawable="@drawable/seekbar"
+                android:thumb="@drawable/seek_tumb" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/radius_10"
+            android:backgroundTint="@color/white"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Massage Pattern"
+                android:textColor="@color/black"
+                android:textSize="25sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingHorizontal="30dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/gradient_background_radius10"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:text="normal"
+                        android:layout_marginEnd="10dp"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/gradient_background_radius10"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:text="cozy"
+                        android:textStyle="bold"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/gradient_background_radius10"
+                        android:padding="10dp"
+                        android:text="hard"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:layout_marginEnd="10dp"
+                        android:textColor="@color/white" />
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/gradient_background_radius10"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:text="mixed"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:gravity="center"-->
+        <!--            android:orientation="horizontal">-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginEnd="10dp"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:gravity="center"-->
+        <!--                android:text="normal" />-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginEnd="10dp"-->
+        <!--                android:layout_weight="1"-->
+
+        <!--                android:gravity="center"-->
+        <!--                android:text="cozy" />-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginEnd="10dp"-->
+        <!--                android:layout_weight="1"-->
+
+        <!--                android:gravity="center"-->
+        <!--                android:text="hard" />-->
+
+        <!--            <TextView-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginEnd="10dp"-->
+        <!--                android:layout_weight="1"-->
+
+        <!--                android:gravity="center"-->
+        <!--                android:text="mixed" />-->
+        <!--        </LinearLayout>-->
 
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
