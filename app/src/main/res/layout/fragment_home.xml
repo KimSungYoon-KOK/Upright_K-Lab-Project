@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-
+    android:background="@color/purple_light_background"
     android:foregroundTint="#FFFFFF"
     tools:context=".ui.home.HomeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="10dp"
         android:id="@+id/homeLayout"
         android:orientation="vertical">
 
@@ -24,10 +24,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
                 android:background="@drawable/radius_10"
-                android:backgroundTint="@color/colorPrimaryLight"
+                android:backgroundTint="@color/white"
                 android:orientation="horizontal"
+                android:layout_marginBottom="10dp"
                 android:paddingHorizontal="40dp"
                 android:paddingVertical="15dp">
 
@@ -46,90 +46,105 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="2h 30min"
+                    android:textStyle="bold"
+                    android:text="2h 30m"
                     android:textColor="@color/black"
+                    android:textSize="16sp"/>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/radius_10"
+                android:backgroundTint="@color/white"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:text="your posture"
                     android:textSize="16sp" />
 
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:gravity="center"
-                android:text="your posture"
-                android:textSize="16sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="Sensor Value" />
+                    android:layout_marginHorizontal="10dp"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/data_value"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="( 0, 0, 0 )" />
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        android:text="Sensor Value" />
 
-                <TextView
-                    android:id="@+id/postureView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="TextView"
-                    android:visibility="visible" />
+                    <TextView
+                        android:id="@+id/data_value"
+                        android:layout_width="0dp"
+                        android:textColor="@color/black"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="( 0, 0, 0 )" />
 
-                <TextView android:id="@+id/connection_state"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:layout_height="wrap_content"
-                    android:text="@string/disconnected" />
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/postureView"
+                        android:layout_width="0dp"
+                        android:textColor="@color/black"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="TextView"
+                        android:visibility="visible" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:padding="20dp">
+                    <TextView android:id="@+id/connection_state"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="@string/disconnected" />
+                </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/img1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
                     android:layout_weight="1"
-                    android:tint="#DD4444"
-                    android:tintMode="add"
-                    app:srcCompat="@drawable/posture1" />
+                    android:orientation="horizontal"
+                    android:padding="20dp">
 
-                <ImageView
-                    android:id="@+id/img2"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:tint="#DD4444"
-                    android:tintMode="add"
-                    app:srcCompat="@drawable/posture2" />
+                    <ImageView
+                        android:id="@+id/img1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:tint="#DD4444"
+                        android:tintMode="add"
+                        app:srcCompat="@drawable/posture1" />
 
-                <ImageView
-                    android:id="@+id/img3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/posture3"
-                    android:tint="#DD4444"
-                    android:tintMode="add" />
+                    <ImageView
+                        android:id="@+id/img2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:tint="#DD4444"
+                        android:tintMode="add"
+                        app:srcCompat="@drawable/posture2" />
+
+                    <ImageView
+                        android:id="@+id/img3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/posture3"
+                        android:tint="#DD4444"
+                        android:tintMode="add" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
@@ -142,31 +157,41 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/radius_10"
-                android:backgroundTint="@color/colorPrimaryLight"
+                android:backgroundTint="@color/white"
                 android:gravity="center"
                 android:padding="15dp"
                 android:text="instructions"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:gravity="center"
-                android:text="1. Pull your hips back." />
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/white"
+                android:background="@drawable/radius_10"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_margin="10dp"
+                    android:gravity="center"
+                    android:text="1. Pull your hips back." />
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:gravity="center"
-                android:text="2. Straighten your back." />
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:text="2. Straighten your back." />
+            </LinearLayout>
+
+
 
         </LinearLayout>
         <ExpandableListView

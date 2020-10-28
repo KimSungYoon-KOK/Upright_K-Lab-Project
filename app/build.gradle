@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -29,6 +30,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+//    buildFeatures {
+//        dataBinding true
+//        viewBinding true
+//    }
 }
 
 repositories {
@@ -64,6 +69,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     //time picker
     implementation 'com.akexorcist:snap-time-picker:1.0.0'
+    //databinding
+//    kapt 'com.android.databinding:compiler:3.5.3'
 
 
 }

@@ -2,15 +2,16 @@ package com.klab.upright
 
 import android.Manifest
 import android.app.Activity
-import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothManager
-import android.content.Context
+import android.app.AlertDialog
+import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.NumberPicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -22,11 +23,9 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import app.akexorcist.bluetotohspp.library.BluetoothSPP
 import app.akexorcist.bluetotohspp.library.BluetoothState
-import app.akexorcist.bluetotohspp.library.BluetoothState.REQUEST_ENABLE_BT
-import app.akexorcist.bluetotohspp.library.DeviceList
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.klab.upright.sharedPreference.PreferenceManager
 import com.klab.upright.ui.guide.GuideActivity
-import com.klab.upright.ui.guide.GuideViewPagerAdapter
 import kotlinx.android.synthetic.main.drawer_main.*
 import kotlinx.android.synthetic.main.drawer_main_header.view.*
 import java.util.*
@@ -38,10 +37,13 @@ class MainActivity : AppCompatActivity() {
     val LOCATION_REQUEST_CODE = 200
     var deviceName=""
     var deviceAddress=""
+    lateinit var pref: PreferenceManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.drawer_main)
+
+        pref =  PreferenceManager(this)
         initView()
         checkPermission()
     }
@@ -64,6 +66,9 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         val appBarConfiguration = AppBarConfiguration(setOf(
             R.id.navigation_home, R.id.navigation_analysis, R.id.navigation_memo, R.id.navigation_massage))
+        supportActionBar?.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.gradient_background))
+//        window.statusBarColor = ContextCompat.getColor(this,R.color.white)
+//        window.navigationBarColor = ContextCompat.getColor(this,R.color.grey)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         (application as MyApplication).initBluetooth(this)
@@ -75,7 +80,20 @@ class MainActivity : AppCompatActivity() {
         navigationView.setNavigationItemSelectedListener {
             when(it.itemId) {
                 R.id.action_textSize -> {
-                    Toast.makeText(this, "Chage Font", Toast.LENGTH_SHORT).show()
+                    val numberPicker = NumberPicker(this)
+                    numberPicker.minValue = 1
+                    numberPicker.maxValue = 3
+                    val builder = AlertDialog.Builder(this)
+                        .setTitle("Font Size Level")
+                        .setPositiveButton("OK",object: DialogInterface.OnClickListener{
+                        override fun onClick(dialog: DialogInterface?, which: Int) {
+                            pref.setFontSize(numberPicker.value)
+                            recreate()
+                        }
+                    }).setNegativeButton("CANCEL",null)
+                    builder.setView(numberPicker)
+                    builder.create()
+                    builder.show()
                 }
                 R.id.action_notify -> {
                     Toast.makeText(this, "Notice", Toast.LENGTH_SHORT).show()
@@ -197,6 +215,12 @@ class MainActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         Toast.makeText(this,"location permission",Toast.LENGTH_SHORT).show()
+    }
+    fun getStatusBarHeight():Int{
+        var result = 0
+        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+        if (resourceId > 0) result = resources.getDimensionPixelSize(resourceId)
+        return result
     }
 
     fun getData_Name():String = deviceName

@@ -230,7 +230,6 @@ class AnalysisFragment : Fragment() {
             }
         }
         val pain_avg:Double = pain.toDouble()/n
-
         pain_text.text = pain_avg.toString()
         exercise_text.text = time.toString()+"m"
 

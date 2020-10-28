@@ -22,4 +22,16 @@
         <item name="android:statusBarColor">@color/colorPrimary</item>
     </style>
 
+    //font size
+    <style name="Theme.App.Small" parent="AppTheme">
+        <item name="mainTextSize">@dimen/main_text_size_0</item>
+    </style>
+
+    <style name="Theme.App.Medium" parent="AppTheme">
+        <item name="mainTextSize">@dimen/main_text_size_1</item>
+    </style>
+    <style name="Theme.App.Large" parent="AppTheme">
+        <item name="mainTextSize">@dimen/main_text_size_2</item>
+    </style>
+
 </resources>

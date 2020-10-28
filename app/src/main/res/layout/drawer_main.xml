@@ -18,6 +18,4 @@
         android:layout_gravity="right"
         app:headerLayout="@layout/drawer_main_header"
         app:menu="@menu/drawer_nav_menu"    />
-
-
-</androidx.drawerlayout.widget.DrawerLayout>
+    </androidx.drawerlayout.widget.DrawerLayout>
