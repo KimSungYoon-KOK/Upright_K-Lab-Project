@@ -117,33 +117,40 @@
                     android:layout_weight="1"
                     android:orientation="horizontal"
                     android:padding="20dp">
+                        <ImageView
+                            android:id="@+id/image_posture"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:tint="#ff8080"
+                            android:tintMode="add"
+                            android:src="@drawable/sit1"/>
+<!--                    <ImageView-->
+<!--                        android:id="@+id/img1"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:tint="#DD4444"-->
+<!--                        android:tintMode="add"-->
+<!--                        app:srcCompat="@drawable/posture1" />-->
 
-                    <ImageView
-                        android:id="@+id/img1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:tint="#DD4444"
-                        android:tintMode="add"
-                        app:srcCompat="@drawable/posture1" />
+<!--                    <ImageView-->
+<!--                        android:id="@+id/img2"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:tint="#DD4444"-->
+<!--                        android:tintMode="add"-->
+<!--                        app:srcCompat="@drawable/posture2" />-->
 
-                    <ImageView
-                        android:id="@+id/img2"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:tint="#DD4444"
-                        android:tintMode="add"
-                        app:srcCompat="@drawable/posture2" />
-
-                    <ImageView
-                        android:id="@+id/img3"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:src="@drawable/posture3"
-                        android:tint="#DD4444"
-                        android:tintMode="add" />
+<!--                    <ImageView-->
+<!--                        android:id="@+id/img3"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:src="@drawable/posture3"-->
+<!--                        android:tint="#DD4444"-->
+<!--                        android:tintMode="add" />-->
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

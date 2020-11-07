@@ -25,6 +25,10 @@
     <color name="level4_massage">#ff9999</color>
     <color name="level5_massage">#ff8080</color>
     <color name="raw">#fff1d4</color>
+
+    <color name="sit_color1">#ff1919</color>
+    <color name="sit_color2">#ffb217</color>
+    <color name="sit_color3">#17ff2a</color>
     
     <color name="blue_background">#86a7f4</color>
     <color name="purple_background">#9595ef</color>

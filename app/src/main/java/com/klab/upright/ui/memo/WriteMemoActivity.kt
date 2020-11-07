@@ -29,6 +29,7 @@ class WriteMemoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_write_memo)
         pref = PreferenceManager(this)
+        this.supportActionBar?.hide()
         init()
     }
 
@@ -102,10 +103,7 @@ class WriteMemoActivity : AppCompatActivity() {
                     dialog2.show(supportFragmentManager,SnapTimePickerDialog.TAG)
                 }
             }
-
             dialog1.show(supportFragmentManager,SnapTimePickerDialog.TAG)
-
-
         }
     }
 }

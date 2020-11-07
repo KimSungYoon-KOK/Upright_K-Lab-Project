@@ -5,25 +5,28 @@ import android.animation.ValueAnimator
 import android.bluetooth.BluetoothGattCharacteristic
 import android.bluetooth.BluetoothGattService
 import android.content.*
+import android.content.res.ColorStateList
 import android.graphics.Color.red
+import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
 import android.view.*
-import android.widget.ExpandableListView
-import android.widget.LinearLayout
-import android.widget.SimpleExpandableListAdapter
-import android.widget.Toast
+import android.widget.*
+import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat.getColorStateList
 import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.core.content.ContextCompat
+import androidx.core.widget.ImageViewCompat
 import androidx.fragment.app.Fragment
 import app.akexorcist.bluetotohspp.library.BluetoothSPP
 import com.klab.upright.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.item_pressure.view.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 class HomeFragment : Fragment() {
 
@@ -34,6 +37,8 @@ class HomeFragment : Fragment() {
     val TAG = "homeFragment_log"
     var colorFrom=0
     var colorTo=0
+    lateinit var imageList:ArrayList<Pair<Drawable,Int>>
+    var imageCount=0
 
     private var mGattCharacteristics =
         ArrayList<ArrayList<BluetoothGattCharacteristic>>()
@@ -109,6 +114,32 @@ class HomeFragment : Fragment() {
 
         colorFrom = ContextCompat.getColor(requireContext(),R.color.white)
         colorTo = ContextCompat.getColor(requireContext(),R.color.white)
+        testImage()
+    }
+
+    private fun testImage(){
+        imageList = arrayListOf()
+        imageList.add(Pair(ContextCompat.getDrawable(requireContext(),R.drawable.sit1)!!,R.color.sit_color1))
+        imageList.add(Pair(ContextCompat.getDrawable(requireContext(),R.drawable.sit2)!!,R.color.sit_color2))
+        imageList.add(Pair(ContextCompat.getDrawable(requireContext(),R.drawable.sit3)!!,R.color.sit_color3))
+        imageList.add(Pair(ContextCompat.getDrawable(requireContext(),R.drawable.sit4)!!,R.color.sit_color2))
+        imageList.add(Pair(ContextCompat.getDrawable(requireContext(),R.drawable.sit5)!!,R.color.sit_color1))
+        image_posture.setOnClickListener {
+            imageCount++
+            if(imageCount == 5)
+                imageCount=0
+            image_posture.setImageDrawable(imageList[imageCount].first)
+            image_posture.setTint(imageList[imageCount].second)
+//            image_posture.im
+//            val colorStateList = ContextCompat.getColorStateList()
+//            colorStateList.
+//            image_posture.imageTintList(ColorStateList.valueOf(imageList[imageCount].second))
+//            image_posture.setColorFilter(imageList[imageCount].second,android.graphics.PorterDuff.Mode.SRC_IN)
+        }
+    }
+
+    fun ImageView.setTint(@ColorRes colorRes: Int) {
+        ImageViewCompat.setImageTintList(this, ColorStateList.valueOf(ContextCompat.getColor(context, colorRes)))
     }
 
     private fun init() {
@@ -210,26 +241,26 @@ class HomeFragment : Fragment() {
             postureView.text = result.toString()
 
 
-            img1.visibility=View.INVISIBLE
-            img2.visibility=View.INVISIBLE
-            img3.visibility=View.INVISIBLE
-            when(result){
-
-                0->{
-                }
-                1->{
-                    img1.visibility=View.VISIBLE
-                }
-                2->{
-                    img2.visibility=View.VISIBLE
-                }
-                3->{
-                    img3.visibility=View.VISIBLE
-                }
-                else->{
-
-                }
-            }
+//            img1.visibility=View.INVISIBLE
+//            img2.visibility=View.INVISIBLE
+//            img3.visibility=View.INVISIBLE
+//            when(result){
+//
+//                0->{
+//                }
+//                1->{
+//                    img1.visibility=View.VISIBLE
+//                }
+//                2->{
+//                    img2.visibility=View.VISIBLE
+//                }
+//                3->{
+//                    img3.visibility=View.VISIBLE
+//                }
+//                else->{
+//
+//                }
+//            }
 
         }
 
