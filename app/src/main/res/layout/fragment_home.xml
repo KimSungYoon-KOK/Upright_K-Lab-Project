@@ -29,46 +29,67 @@
                 android:orientation="horizontal"
                 android:layout_marginBottom="10dp"
                 android:paddingHorizontal="40dp"
-                android:paddingVertical="15dp">
-
-                <TextView
-                    android:layout_width="0dp"
+                android:paddingVertical="15dp"
+                android:animateLayoutChanges="true">
+                <LinearLayout
+                    android:id="@+id/wearingTrue"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Wearing Time"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:text="2h 30m"
+                        android:id="@+id/time_wearing"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"/>
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Wearing Time"
-                    android:textColor="@color/black"
+                    android:id="@+id/wearingFalse"
+                    android:visibility="visible"
+                    android:textColor="@color/middle_grey"
                     android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
                     android:textStyle="bold"
-                    android:text="2h 30m"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"/>
+                    android:text="Not Wearing"/>
+
 
 
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/radius_10"
+                android:background="@drawable/gradient_background_radius10"
                 android:backgroundTint="@color/white"
                 android:layout_marginBottom="10dp"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:gravity="center"
-                    android:textColor="@color/black"
-                    android:text="your posture"
-                    android:textSize="18sp"
-                    android:textStyle="bold"/>
+                android:orientation="vertical"
+                android:gravity="center">
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:padding="10dp"-->
+<!--                    android:layout_marginTop="15dp"-->
+<!--                    android:gravity="center"-->
+<!--                    android:background="@drawable/gradient_background_radius10"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:text="MY POSTURE"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:textStyle="bold"/>-->
 
                 <LinearLayout
                     android:visibility="gone"
@@ -115,127 +136,59 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:padding="20dp"
-                    android:layout_marginStart="10dp">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:layout_height="0dp">
+
                         <ImageView
                             android:id="@+id/image_posture"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
+                            android:layout_margin="10dp"
+                            android:src="@drawable/sit3"
+                            android:tint="#17ff2a"
+                            android:tintMode="add" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:id="@+id/instruct_text1"
+                            android:text="instruct1"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:layout_height="0dp">
+                        <ImageView
+                            android:id="@+id/image_posture2"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:layout_margin="10dp"
+                            android:padding="10dp"
                             android:tint="#17ff2a"
                             android:tintMode="add"
-                            android:src="@drawable/sit3"/>
-<!--                        <LinearLayout-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:orientation="vertical">-->
-<!--                            <TextView-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:background="@drawable/button_shadow_purple"-->
-<!--                                android:text="save"-->
-<!--                                android:padding="10dp"-->
-<!--                                android:textColor="@color/white"-->
-<!--                                android:id="@+id/save"/>-->
-<!--                            <TextView-->
-<!--                                android:layout_width="wrap_content"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:background="@drawable/button_shadow_purple"-->
-<!--                                android:text="reset"-->
-<!--                                android:padding="10dp"-->
-<!--                                android:textColor="@color/white"-->
-<!--                                android:id="@+id/reset"/>-->
-<!--                        </LinearLayout>-->
-                    <ImageView
-                        android:id="@+id/image_posture2"
-                        android:layout_width="0dp"
-                        android:layout_margin="15dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:tint="#17ff2a"
-                        android:tintMode="add"
-                        android:src="@drawable/good"/>
-
-
-<!--                    <ImageView-->
-<!--                        android:id="@+id/img1"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:tint="#DD4444"-->
-<!--                        android:tintMode="add"-->
-<!--                        app:srcCompat="@drawable/posture1" />-->
-
-<!--                    <ImageView-->
-<!--                        android:id="@+id/img2"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:tint="#DD4444"-->
-<!--                        android:tintMode="add"-->
-<!--                        app:srcCompat="@drawable/posture2" />-->
-
-<!--                    <ImageView-->
-<!--                        android:id="@+id/img3"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:src="@drawable/posture3"-->
-<!--                        android:tint="#DD4444"-->
-<!--                        android:tintMode="add" />-->
+                            android:cropToPadding="true"
+                            android:src="@drawable/good"/>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:id="@+id/instruct_text2"
+                            android:text="instruct2"/>
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/radius_10"
-                android:backgroundTint="@color/white"
-                android:gravity="center"
-                android:padding="15dp"
-                android:text="instructions"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:backgroundTint="@color/white"
-                android:gravity="center"
-                android:background="@drawable/radius_10"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:layout_margin="10dp"
-                    android:gravity="center"
-                    android:text="1. Pull your hips back." />
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:textColor="@color/black"
-                    android:gravity="center"
-                    android:text="2. Straighten your back." />
-            </LinearLayout>
-
-
-
         </LinearLayout>
         <ExpandableListView
             android:layout_width="match_parent"

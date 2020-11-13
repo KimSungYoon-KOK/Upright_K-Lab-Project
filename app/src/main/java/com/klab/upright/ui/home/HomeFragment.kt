@@ -10,11 +10,14 @@ import android.os.IBinder
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ExpandableListView
 import android.widget.ImageView
 import android.widget.SimpleExpandableListAdapter
-import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -24,10 +27,13 @@ import com.klab.upright.BluetoothLeService
 import com.klab.upright.MainActivity
 import com.klab.upright.R
 import com.klab.upright.SampleGattAttributes
+import com.klab.upright.data.PostureResource
 import kotlinx.android.synthetic.main.fragment_home.*
-import java.io.*
+import java.sql.Time
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.concurrent.timer
+import java.util.TimerTask as Tim
 
 class HomeFragment : Fragment() {
 
@@ -40,8 +46,14 @@ class HomeFragment : Fragment() {
     var colorTo=0
     lateinit var imageList:ArrayList<Pair<Drawable,Int>>
     var imageCount=0
-    var imageCount2=5
+    var imageCount2=0
     lateinit var dataList:ArrayList<PostureData>
+    lateinit var shake:Animation
+    var startTime=0L
+    var nowTime=0L
+    lateinit var timerTask: java.util.TimerTask
+    lateinit var timer:Timer
+    var isFragmentAttach = false
 
     private var mGattCharacteristics =
         ArrayList<ArrayList<BluetoothGattCharacteristic>>()
@@ -59,12 +71,15 @@ class HomeFragment : Fragment() {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             bluetoothLeService = (service as BluetoothLeService.LocalBinder).service
             bluetoothLeService?.connect(deviceAddress)
+//            Log.d(TAG,"connect")
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
             bluetoothLeService = null
+//            Log.d(TAG,"disconnect")
         }
     }
+
 
     // Handles various events fired by the Service.
     // ACTION_GATT_CONNECTED: connected to a GATT server.
@@ -81,12 +96,13 @@ class HomeFragment : Fragment() {
                 BluetoothLeService.ACTION_GATT_CONNECTED -> {
                     mConnected = true
                     updateConnectionState(R.string.connected)
-
+                    isConnectedView(true)
                 }
                 BluetoothLeService.ACTION_GATT_DISCONNECTED -> {
                     mConnected = false
                     updateConnectionState(R.string.disconnected)
                     clearUI()
+                    isConnectedView(false)
                 }
                 BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED -> {
                     displayGattServices(bluetoothLeService?.getSupportedGattServices())
@@ -118,10 +134,59 @@ class HomeFragment : Fragment() {
         colorFrom = ContextCompat.getColor(requireContext(),R.color.white)
         colorTo = ContextCompat.getColor(requireContext(),R.color.white)
         dataList = arrayListOf()
+        timer = Timer()
+        timerTask = object : java.util.TimerTask() {
+            override fun run() {
+                nowTime += 1000
+                val wearingTime= (nowTime - startTime)/1000
+                val second = (wearingTime%60)
+                val minute =((wearingTime/60)%60)
+                val hour = (wearingTime/3600)
+
+                var s=""; var m=""; var h=""
+                if(second < 10L)
+                    s = "0"+second.toString()
+                else
+                    s = second.toString()
+                if(minute < 10L)
+                    m =  "0"+minute.toString()
+                else
+                    m = minute.toString()
+                if(hour < 10L)
+                    h =  "0"+hour.toString()
+                else
+                    h = hour.toString()
+
+                val str = h+" : "+m+" : "+s
+
+                Log.d(TAG,"startTime : "+startTime+", nowTime : "+nowTime)
+                if(isFragmentAttach)
+                    time_wearing.text = str
+            }
+        }
         testImage()
         savePostureData()
+        shakeImage()
     }
 
+    private fun isConnectedView(isConnect:Boolean){
+        if(isConnect){
+            wearingTrue.visibility = VISIBLE
+            wearingFalse.visibility = GONE
+            startTime = System.currentTimeMillis()
+            nowTime = startTime
+            timer.schedule(timerTask,0,1000)
+
+        }else{
+            wearingTrue.visibility = GONE
+            wearingFalse.visibility = VISIBLE
+            timer.cancel()
+        }
+    }
+
+    private fun shakeImage(){
+       shake = AnimationUtils.loadAnimation(requireContext(), R.anim.shakeanimation)
+    }
     private fun savePostureData() {
 //        reset.setOnClickListener {
 //            dataList.clear()
@@ -160,43 +225,26 @@ class HomeFragment : Fragment() {
 
 
     private fun testImage(){
-        imageList = arrayListOf()
-        imageList.add(Pair(ContextCompat.getDrawable(requireContext(),R.drawable.sit1)!!,R.color.sit_color1))
-        imageList.add(Pair(ContextCompat.getDrawable(requireContext(),R.drawable.sit2)!!,R.color.sit_color2))
-        imageList.add(Pair(ContextCompat.getDrawable(requireContext(),R.drawable.sit3)!!,R.color.sit_color3))
-        imageList.add(Pair(ContextCompat.getDrawable(requireContext(),R.drawable.sit4)!!,R.color.sit_color2))
-        imageList.add(Pair(ContextCompat.getDrawable(requireContext(),R.drawable.sit5)!!,R.color.sit_color1))
-
-        imageList.add(Pair(ContextCompat.getDrawable(requireContext(),R.drawable.left)!!,R.color.sit_color1))
-        imageList.add(Pair(ContextCompat.getDrawable(requireContext(),R.drawable.good)!!,R.color.sit_color3))
-        imageList.add(Pair(ContextCompat.getDrawable(requireContext(),R.drawable.right)!!,R.color.sit_color1))
-
         image_posture.setOnClickListener {
             imageCount++
             if(imageCount == 5)
                 imageCount=0
-            image_posture.setImageDrawable(imageList[imageCount].first)
-            image_posture.setTint(imageList[imageCount].second)
-//            image_posture.im
-//            val colorStateList = ContextCompat.getColorStateList()
-//            colorStateList.
-//            image_posture.imageTintList(ColorStateList.valueOf(imageList[imageCount].second))
-//            image_posture.setColorFilter(imageList[imageCount].second,android.graphics.PorterDuff.Mode.SRC_IN)
+            val data = PostureResource(requireContext()).getPostureData(imageCount,true)
+            image_posture.setImageDrawable(data.drawable)
+            image_posture.setTint(data.color)
+            instruct_text1.text = data.instruction
+            image_posture.animation = shake
         }
-
         image_posture2.setOnClickListener {
             imageCount2++
-            if(imageCount2 == 8)
-                imageCount2 = 5
-            image_posture2.setImageDrawable(imageList[imageCount2].first)
-            image_posture2.setTint(imageList[imageCount2].second)
-//            image_posture.im
-//            val colorStateList = ContextCompat.getColorStateList()
-//            colorStateList.
-//            image_posture.imageTintList(ColorStateList.valueOf(imageList[imageCount].second))
-//            image_posture.setColorFilter(imageList[imageCount].second,android.graphics.PorterDuff.Mode.SRC_IN)
+            if(imageCount2 == 3)
+                imageCount2 = 0
+            val data = PostureResource(requireContext()).getPostureData(imageCount2,false)
+            image_posture2.setImageDrawable(data.drawable)
+            image_posture2.setTint(data.color)
+            instruct_text2.text = data.instruction
+            image_posture2.animation = shake
         }
-
     }
 
     fun ImageView.setTint(@ColorRes colorRes: Int) {
@@ -225,6 +273,7 @@ class HomeFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         Log.d(TAG, "onAttach")
+        isFragmentAttach = true
 
     }
 
@@ -246,6 +295,7 @@ class HomeFragment : Fragment() {
             activity?.unbindService(serviceConnection)
             bluetoothLeService = null
         }
+        isFragmentAttach = false
     }
 
     override fun onDestroy() {

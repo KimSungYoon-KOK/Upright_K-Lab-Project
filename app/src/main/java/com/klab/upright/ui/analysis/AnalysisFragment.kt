@@ -18,6 +18,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.klab.upright.ChartAdapter
 import com.klab.upright.R
 import com.klab.upright.ui.memo.MemoData
 import kotlinx.android.synthetic.main.fragment_analysis.*
@@ -43,6 +44,11 @@ class AnalysisFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         init()
+        initViewPager()
+    }
+
+    private fun initViewPager(){
+        viewPager.setAdapter(ChartAdapter(requireContext()))
     }
 
     private fun init() {
@@ -154,7 +160,6 @@ class AnalysisFragment : Fragment() {
         }
 
         val set1: LineDataSet
-
         // create a dataset and give it a type
         set1 = LineDataSet(values, "Sitting Time")
         set1.mode = LineDataSet.Mode.CUBIC_BEZIER
