@@ -1,30 +1,31 @@
 package com.klab.upright.ui.home
 
-import android.animation.ArgbEvaluator
-import android.animation.ValueAnimator
 import android.bluetooth.BluetoothGattCharacteristic
 import android.bluetooth.BluetoothGattService
 import android.content.*
 import android.content.res.ColorStateList
-import android.graphics.Color.red
 import android.graphics.drawable.Drawable
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
-import android.view.*
-import android.widget.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ExpandableListView
+import android.widget.ImageView
+import android.widget.SimpleExpandableListAdapter
+import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat.getColorStateList
-import androidx.core.app.ActivityCompat.invalidateOptionsMenu
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
 import androidx.fragment.app.Fragment
-import app.akexorcist.bluetotohspp.library.BluetoothSPP
-import com.klab.upright.*
+import com.klab.upright.BluetoothLeService
+import com.klab.upright.MainActivity
+import com.klab.upright.R
+import com.klab.upright.SampleGattAttributes
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.item_pressure.view.*
+import java.io.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -39,6 +40,8 @@ class HomeFragment : Fragment() {
     var colorTo=0
     lateinit var imageList:ArrayList<Pair<Drawable,Int>>
     var imageCount=0
+    var imageCount2=5
+    lateinit var dataList:ArrayList<PostureData>
 
     private var mGattCharacteristics =
         ArrayList<ArrayList<BluetoothGattCharacteristic>>()
@@ -114,8 +117,47 @@ class HomeFragment : Fragment() {
 
         colorFrom = ContextCompat.getColor(requireContext(),R.color.white)
         colorTo = ContextCompat.getColor(requireContext(),R.color.white)
+        dataList = arrayListOf()
         testImage()
+        savePostureData()
     }
+
+    private fun savePostureData() {
+//        reset.setOnClickListener {
+//            dataList.clear()
+//            Toast.makeText(requireContext(),"reset",Toast.LENGTH_SHORT).show()
+//
+//        }
+//        save.setOnClickListener {
+//            if(dataList.isNotEmpty()){
+////                val os = resources.openRawResource(R.raw.data) as OutputStream
+////                val stream = OutputStreamWriter(os,"utf-8")
+////                val file = getResources().openRawResource(R.raw.data);
+////                val f = File(file)
+////                val fw = FileWriter(file)
+////                print("fw : "+fw.toString())
+//
+//                var text = ""
+//                for(data in dataList){
+//                    val str = data.x.toString()+","+data.y.toString()+","+data.z.toString()+"\n"
+//                    text += str
+//                }
+//
+//                val bw =
+//                    BufferedWriter(FileWriter( activity?.filesDir.toString()+"data.txt"))
+//                bw.write(text)
+//                bw.close()
+//                Log.d("textsave",text)
+//
+//                Toast.makeText(requireContext(),"save "+text,Toast.LENGTH_SHORT).show()
+//            }else{
+//                Toast.makeText(requireContext(),"empty!",Toast.LENGTH_SHORT).show()
+//
+//            }
+//        }
+    }
+
+
 
     private fun testImage(){
         imageList = arrayListOf()
@@ -124,6 +166,11 @@ class HomeFragment : Fragment() {
         imageList.add(Pair(ContextCompat.getDrawable(requireContext(),R.drawable.sit3)!!,R.color.sit_color3))
         imageList.add(Pair(ContextCompat.getDrawable(requireContext(),R.drawable.sit4)!!,R.color.sit_color2))
         imageList.add(Pair(ContextCompat.getDrawable(requireContext(),R.drawable.sit5)!!,R.color.sit_color1))
+
+        imageList.add(Pair(ContextCompat.getDrawable(requireContext(),R.drawable.left)!!,R.color.sit_color1))
+        imageList.add(Pair(ContextCompat.getDrawable(requireContext(),R.drawable.good)!!,R.color.sit_color3))
+        imageList.add(Pair(ContextCompat.getDrawable(requireContext(),R.drawable.right)!!,R.color.sit_color1))
+
         image_posture.setOnClickListener {
             imageCount++
             if(imageCount == 5)
@@ -136,6 +183,20 @@ class HomeFragment : Fragment() {
 //            image_posture.imageTintList(ColorStateList.valueOf(imageList[imageCount].second))
 //            image_posture.setColorFilter(imageList[imageCount].second,android.graphics.PorterDuff.Mode.SRC_IN)
         }
+
+        image_posture2.setOnClickListener {
+            imageCount2++
+            if(imageCount2 == 8)
+                imageCount2 = 5
+            image_posture2.setImageDrawable(imageList[imageCount2].first)
+            image_posture2.setTint(imageList[imageCount2].second)
+//            image_posture.im
+//            val colorStateList = ContextCompat.getColorStateList()
+//            colorStateList.
+//            image_posture.imageTintList(ColorStateList.valueOf(imageList[imageCount].second))
+//            image_posture.setColorFilter(imageList[imageCount].second,android.graphics.PorterDuff.Mode.SRC_IN)
+        }
+
     }
 
     fun ImageView.setTint(@ColorRes colorRes: Int) {
@@ -239,7 +300,7 @@ class HomeFragment : Fragment() {
             val y = x1*0.0569 + x2*0.0101 + x3*(-0.0048) + 5.5510
             val result = (y+0.5).toInt()
             postureView.text = result.toString()
-
+            dataList.add(PostureData(x1,x2,x3))
 
 //            img1.visibility=View.INVISIBLE
 //            img2.visibility=View.INVISIBLE
@@ -423,6 +484,10 @@ class HomeFragment : Fragment() {
         return intentFilter
     }
 
+
+    inner class PostureData(var x:Double,var y:Double,var z:Double){
+
+    }
 
 
 
