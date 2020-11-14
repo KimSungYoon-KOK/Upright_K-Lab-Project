@@ -15,6 +15,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IFillFormatter
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.klab.upright.ui.analysis.Time
@@ -43,24 +44,33 @@ class ChartAdapter(val context:Context, val itemList: ArrayList<Time>) : PagerAd
                 val chart = view.pieChart
             }
             1->{
-                val totalList = arrayListOf<Int>(2,5,0,1,4,2,5,0,1,4)
+                val dateList = arrayListOf<String>()
+                val totalList = arrayListOf<Int>()
+                for(time in itemList){
+                    totalList.add(time.total);
+                    dateList.add(time.date.toString());
+                }
 
                 view = inflater.inflate(R.layout.layout_chart,null)
                 val lineChart = view.lineChart
                 lineChart.apply {
                     setBackgroundColor(ContextCompat.getColor(context,R.color.white))
-
+                    axisRight.isEnabled=false
+                    axisLeft.isEnabled=false
+                    axisLeft.setDrawGridLines(false);
+                    axisRight.setDrawGridLines(false);
                 }
 
                 val xAxis = lineChart.xAxis
                 xAxis.position = XAxis.XAxisPosition.BOTTOM
                 xAxis.setDrawGridLines(false)
+                xAxis.valueFormatter = object : ValueFormatter() {
+                    override fun getFormattedValue(value: Float): String {
+                        return dateList[value.toInt()]
+                    }
+                }
                 val yAxis = lineChart.axisLeft
                 yAxis.setDrawGridLines(false)
-                lineChart.axisRight.isEnabled=false
-                lineChart.axisLeft.isEnabled=false
-                lineChart.axisLeft.setDrawGridLines(false);
-                lineChart.axisRight.setDrawGridLines(false);
 
                 val values = arrayListOf<Entry>()
 

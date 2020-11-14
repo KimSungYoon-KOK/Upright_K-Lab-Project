@@ -5,14 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.google.android.material.tabs.TabLayout
 import com.google.firebase.database.*
 import com.klab.upright.ChartAdapter
-import com.klab.upright.R
 import com.klab.upright.ui.memo.MemoData
+import kotlinx.android.synthetic.main.custom_tab.*
 import kotlinx.android.synthetic.main.fragment_analysis.*
 import java.util.*
 import kotlin.collections.ArrayList
+import com.klab.upright.R
 
 
 class AnalysisFragment : Fragment() {
@@ -41,7 +44,29 @@ class AnalysisFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         init()
+        initTapLayout()
         initViewPager()
+    }
+
+    private fun initTapLayout() {
+        tabLayout.addTab(tabLayout.newTab().setCustomView(createTabView("MY POSTURE")))
+        tabLayout.addTab(tabLayout.newTab().setCustomView(createTabView("WEARING TIME")))
+        tabLayout.addTab(tabLayout.newTab().setCustomView(createTabView("PAIN")))
+
+        viewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabLayout))
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                viewPager.setCurrentItem(tab!!.position)
+            }
+
+        })
     }
 
     private fun initViewPager(){
@@ -145,5 +170,12 @@ class AnalysisFragment : Fragment() {
 //        pain_text.text = pain_avg.toString()
 //        exercise_text.text = time.toString()+"m"
 
+    }
+
+    private fun createTabView(tabName: String): View? {
+        val tabView =
+            LayoutInflater.from(requireContext()).inflate(R.layout.custom_tab, null)
+        tab_text.text = tabName
+        return tabView
     }
 }

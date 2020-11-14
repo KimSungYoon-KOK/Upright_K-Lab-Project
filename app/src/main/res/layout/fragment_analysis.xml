@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.analysis.AnalysisFragment"
-    android:background="@color/white">
+    tools:context=".ui.analysis.AnalysisFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,147 +13,146 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/radius_10"
-            android:backgroundTint="@color/purple_light_background"
-            android:orientation="vertical"
-            android:padding="15dp">
+            android:background="@drawable/gradient_background_radius20"
+            android:paddingTop="6dp"
+            android:paddingBottom="8dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
+            <LinearLayout
+                android:id="@+id/startDate_pattern"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="5dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/calendar"
+                    android:backgroundTint="@color/white"/>
+
+                <TextView
+                    android:id="@+id/startText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2020.05.01"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:text="~"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/endDate_pattern"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="5dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/calendar"
+                    android:backgroundTint="@color/white"/>
+
+                <TextView
+                    android:id="@+id/endText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2020.05.01"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:background="@drawable/radius_10"
+            android:backgroundTint="@color/white"
+            android:orientation="horizontal"
+            android:padding="15dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:gravity="right"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:paddingBottom="10dp"-->
+<!--                    android:text="Sitting Time"-->
+<!--                    android:textColor="@color/colorPrimary"-->
+<!--                    android:textSize="18sp" />-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:text="Exercise Time"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pain Scale"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"/>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@drawable/button_shadow_white"
-                android:paddingTop="3dp"
-                android:paddingBottom="5dp"
-                android:layout_marginBottom="10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/startDate_pattern"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="5dp">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginEnd="8dp"
-                        android:background="@drawable/calendar" />
-
-                    <TextView
-                        android:id="@+id/startText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2020.5.1"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:text="~"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <LinearLayout
-                    android:id="@+id/endDate_pattern"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingHorizontal="10dp"
-                    android:paddingVertical="5dp">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginEnd="8dp"
-                        android:background="@drawable/calendar" />
-
-                    <TextView
-                        android:id="@+id/endText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2020.5.1"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <GridLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:columnCount="2">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:gravity="center"
-                    android:paddingBottom="10dp"
-                    android:text="Sitting Time"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/sitTime_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:gravity="center"
-                    android:text="5h 30m"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:gravity="center"
-                    android:paddingBottom="10dp"
-                    android:text="Exercise Time"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
+                android:layout_marginStart="10dp"
+                android:gravity="left"
+                android:orientation="vertical">
+<!--                <TextView-->
+<!--                    android:id="@+id/sitTime_text"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:paddingBottom="10dp"-->
+<!--                    android:text="5h 30m"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="18sp" />-->
                 <TextView
                     android:id="@+id/exercise_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
                     android:gravity="center"
+                    android:paddingBottom="10dp"
                     android:text="1h 30m"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:gravity="center"
-                    android:text="Pain Scale"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
+                    android:textSize="18sp" />
                 <TextView
                     android:id="@+id/pain_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
                     android:gravity="center"
                     android:text="Not Good"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
-            </GridLayout>
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+
+
+
         </LinearLayout>
 
         <LinearLayout
