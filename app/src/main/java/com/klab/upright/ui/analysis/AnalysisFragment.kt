@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.fragment_analysis.*
 import java.util.*
 import kotlin.collections.ArrayList
 import com.klab.upright.R
+import kotlinx.android.synthetic.main.custom_tab.view.*
 
 
 class AnalysisFragment : Fragment() {
@@ -175,7 +176,7 @@ class AnalysisFragment : Fragment() {
     private fun createTabView(tabName: String): View? {
         val tabView =
             LayoutInflater.from(requireContext()).inflate(R.layout.custom_tab, null)
-        tab_text.text = tabName
+        tabView.tab_text.text = tabName
         return tabView
     }
 }
