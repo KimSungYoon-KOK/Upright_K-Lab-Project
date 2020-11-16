@@ -77,7 +77,13 @@ class AnalysisFragment : Fragment() {
                 itemList.add(item)
             }
         }
-        viewPager.adapter = ChartAdapter(requireContext(), itemList)
+        val painList = ArrayList<MemoData>()
+        for (pain in memoList) {
+            if (pain.date in start..end) {
+                painList.add(pain)
+            }
+        }
+        viewPager.adapter = ChartAdapter(requireContext(), itemList,painList)
     }
 
     private fun init() {

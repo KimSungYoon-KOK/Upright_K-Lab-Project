@@ -16,9 +16,9 @@
         android:icon="@drawable/ic_memo"
         android:title="Record" />
 
-    <item
-        android:id="@+id/navigation_massage"
-        android:icon="@drawable/ic_massage"
-        android:title="Massage" />
+<!--    <item-->
+<!--        android:id="@+id/navigation_massage"-->
+<!--        android:icon="@drawable/ic_massage"-->
+<!--        android:title="Massage" />-->
 
 </menu>

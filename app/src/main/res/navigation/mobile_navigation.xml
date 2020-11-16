@@ -23,10 +23,10 @@
         android:label="Record"
         tools:layout="@layout/fragment_memo" />
 
-    <fragment
-        android:id="@+id/navigation_massage"
-        android:name="com.klab.upright.ui.massage.MassageFragment"
-        android:label="Message"
-        tools:layout="@layout/fragment_massage" />
+<!--    <fragment-->
+<!--        android:id="@+id/navigation_massage"-->
+<!--        android:name="com.klab.upright.ui.massage.MassageFragment"-->
+<!--        android:label="Message"-->
+<!--        tools:layout="@layout/fragment_massage" />-->
 
 </navigation>
