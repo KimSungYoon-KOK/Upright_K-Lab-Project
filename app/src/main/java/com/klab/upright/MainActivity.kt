@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
         val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.navigation_home, R.id.navigation_analysis, R.id.navigation_memo, R.id.navigation_massage))
+            R.id.navigation_home, R.id.navigation_analysis, R.id.navigation_memo))
         supportActionBar?.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.gradient_background))
 //        window.statusBarColor = ContextCompat.getColor(this,R.color.white)
 //        window.navigationBarColor = ContextCompat.getColor(this,R.color.grey)

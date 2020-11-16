@@ -6,27 +6,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.PagerAdapter
-import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IFillFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.klab.upright.ui.analysis.Time
-import kotlinx.android.synthetic.main.fragment_analysis.*
+import com.klab.upright.ui.memo.MemoData
 import kotlinx.android.synthetic.main.layout_chart.view.*
 import kotlinx.android.synthetic.main.layout_chart2.view.*
-import java.util.*
-import kotlin.collections.ArrayList
+import kotlinx.android.synthetic.main.layout_chart3.view.*
 
-class ChartAdapter(val context:Context, val itemList: ArrayList<Time>) : PagerAdapter()
+class ChartAdapter(val context:Context, val itemList: ArrayList<Time>, val memoList:ArrayList<MemoData>) : PagerAdapter()
 {
+    val TAG = "ChartAdapter"
+
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
         return view == `object`
     }
@@ -43,12 +39,13 @@ class ChartAdapter(val context:Context, val itemList: ArrayList<Time>) : PagerAd
                 view = inflater.inflate(R.layout.layout_chart2,null)
                 val chart = view.pieChart
             }
-            1->{
+            1->{ // 날짜별 착용 시간
                 val dateList = arrayListOf<String>()
                 val totalList = arrayListOf<Int>()
                 for(time in itemList){
                     totalList.add(time.total);
-                    dateList.add(time.date.toString());
+                    val str = time.date.toString().substring(4,6)+"/"+time.date.toString().substring(6,8) // 11/22
+                    dateList.add(str);
                 }
 
                 view = inflater.inflate(R.layout.layout_chart,null)
@@ -57,18 +54,23 @@ class ChartAdapter(val context:Context, val itemList: ArrayList<Time>) : PagerAd
                     setBackgroundColor(ContextCompat.getColor(context,R.color.white))
                     axisRight.isEnabled=false
                     axisLeft.isEnabled=false
-                    axisLeft.setDrawGridLines(false);
-                    axisRight.setDrawGridLines(false);
+                    axisLeft.setDrawGridLines(false)
+                    axisRight.setDrawGridLines(false)
+                    description.isEnabled = false
+                    setTouchEnabled(false)
+                    isDragEnabled = false
+                    legend.isEnabled = false
+                    animateX(1000)
+
                 }
+
 
                 val xAxis = lineChart.xAxis
                 xAxis.position = XAxis.XAxisPosition.BOTTOM
                 xAxis.setDrawGridLines(false)
-                xAxis.valueFormatter = object : ValueFormatter() {
-                    override fun getFormattedValue(value: Float): String {
-                        return dateList[value.toInt()]
-                    }
-                }
+                xAxis.isGranularityEnabled = true
+                xAxis.textSize = 13f
+
                 val yAxis = lineChart.axisLeft
                 yAxis.setDrawGridLines(false)
 
@@ -76,6 +78,15 @@ class ChartAdapter(val context:Context, val itemList: ArrayList<Time>) : PagerAd
 
                 for(i in totalList.indices){
                     values.add(Entry(i.toFloat(),totalList[i].toFloat(),ContextCompat.getDrawable(context, R.drawable.button_shadow_purple)))
+                }
+
+                xAxis.valueFormatter = object : ValueFormatter() {
+                    override fun getFormattedValue(value: Float): String {
+                        if(dateList.size > value.toInt()){
+                            return dateList[value.toInt()]
+                        }
+                        return ""
+                    }
                 }
 
                 val set1:LineDataSet
@@ -105,11 +116,11 @@ class ChartAdapter(val context:Context, val itemList: ArrayList<Time>) : PagerAd
                         // customize legend entry
                         formLineWidth = 1f
                         formLineDashEffect = DashPathEffect(floatArrayOf(10f, 5f), 0f)
-                        formSize = 15f
+                        formSize = 13f
 
                         setDrawCircleHole(true)
 
-                        valueTextSize = 10f
+                        valueTextSize = 13f
 
                         cubicIntensity = 0.2f
                         setMode(LineDataSet.Mode.CUBIC_BEZIER)
@@ -132,7 +143,99 @@ class ChartAdapter(val context:Context, val itemList: ArrayList<Time>) : PagerAd
                 }
             }
             else->{
-                view = inflater.inflate(R.layout.layout_chart,null)
+                view = inflater.inflate(R.layout.layout_chart3,null)
+                val barChart = view.barChart
+
+                val dateList = arrayListOf<String>()
+                for(i in memoList.indices){
+                    val str = memoList[i].date.toString().substring(4,6)+"/"+memoList[i].date.toString().substring(6,8) // 11/22
+                    dateList.add(str);
+                }
+
+                barChart.apply {
+                    setBackgroundColor(ContextCompat.getColor(context,R.color.white))
+                    axisRight.isEnabled=false
+                    axisLeft.isEnabled=false
+                    axisLeft.setDrawGridLines(false)
+                    axisRight.setDrawGridLines(false)
+                    description.isEnabled = false
+                    setTouchEnabled(false)
+                    isDragEnabled = false
+                    legend.isEnabled = false
+                    animateX(1000)
+                }
+
+                val xAxis = barChart.xAxis
+                xAxis.position = XAxis.XAxisPosition.BOTTOM
+                xAxis.setDrawGridLines(false)
+                xAxis.isGranularityEnabled = true
+                xAxis.textSize = 13f
+
+                val yAxis = barChart.axisLeft
+                yAxis.setDrawGridLines(false)
+
+                val values = arrayListOf<BarEntry>()
+
+                for(i in memoList.indices){
+                    values.add(BarEntry(i.toFloat(),memoList[i].pain.toFloat(),ContextCompat.getDrawable(context, R.drawable.button_shadow_purple)))
+                }
+
+                xAxis.valueFormatter = object : ValueFormatter() {
+                    override fun getFormattedValue(value: Float): String {
+                        if(dateList.size > value.toInt()){
+                            return dateList[value.toInt()]
+                        }
+                        return ""
+                    }
+                }
+
+                val set1:BarDataSet
+                if (barChart.data != null &&
+                    barChart.data.dataSetCount > 0
+                ) {
+                    set1 = barChart.data.getDataSetByIndex(0) as BarDataSet
+                    set1.values = values
+                    set1.notifyDataSetChanged()
+                    barChart.data.notifyDataChanged()
+                    barChart.notifyDataSetChanged()
+                }else {
+                    set1 = BarDataSet(values,"Dataset 1")
+
+                    val colorList = arrayListOf<Int>(
+                        ContextCompat.getColor(context,R.color.level1_purple),
+                        ContextCompat.getColor(context,R.color.level2_purple),
+                        ContextCompat.getColor(context,R.color.level3_purple),
+                        ContextCompat.getColor(context,R.color.level4_purple),
+                        ContextCompat.getColor(context,R.color.level5_purple)
+                    )
+
+                    set1.apply {
+                        setDrawIcons(false)
+
+                        // black line and point
+                        //color = ContextCompat.getColor(context,R.color.colorPrimary)
+
+                        // customize legend entry
+                        formLineWidth = 1f
+                        formLineDashEffect = DashPathEffect(floatArrayOf(10f, 5f), 0f)
+                        formSize = 13f
+
+                        valueTextSize = 13f
+
+                        colors = colorList
+                        setValueTextColors(colorList)
+                    }
+
+
+                    val dataSets = arrayListOf<IBarDataSet>()
+                    dataSets.add(set1)
+
+                    val data = BarData(dataSets)
+
+                    barChart.data = data
+
+                }
+
             }
         }
         container.addView(view)

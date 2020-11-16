@@ -301,10 +301,10 @@ class HomeFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         Log.d(TAG, "onDestroy")
-        if(deviceName.isNotEmpty()){
-//            activity?.unbindService(serviceConnection)
-//            bluetoothLeService = null
-        }
+//        if(deviceName.isNotEmpty()){
+////            activity?.unbindService(serviceConnection)
+////            bluetoothLeService = null
+//        }
 
     }
 

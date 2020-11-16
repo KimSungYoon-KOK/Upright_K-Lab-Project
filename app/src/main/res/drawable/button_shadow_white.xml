@@ -4,14 +4,14 @@
     <item>
         <layer-list>
             <!-- shadow (밑으로) : 그림자 -->
-            <item android:top="3dp">
+            <item >
                 <shape>
                     <corners android:radius="10dp" />
                     <solid android:color="#1f000000" />
                 </shape>
             </item>
             <!-- background (위로) -->
-            <item android:bottom="3dp">
+            <item >
                 <shape>
                     <corners android:radius="10dp"/>
                     <solid android:color="@color/white" />

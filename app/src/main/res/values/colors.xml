@@ -34,4 +34,11 @@
     <color name="purple_background">#9595ef</color>
     <color name="purple_light_background">#f2f2ff</color>
 
+    <color name="level1_purple">#E8CBFE</color>
+    <color name="level2_purple">#CE97FD</color>
+    <color name="level3_purple">#AE63F9</color>
+    <color name="level4_purple">#903DF4</color>
+    <color name="level5_purple">#6200EE</color>
+
+
 </resources>
