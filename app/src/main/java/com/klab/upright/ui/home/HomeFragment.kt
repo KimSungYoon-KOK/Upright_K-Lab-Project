@@ -37,6 +37,15 @@ import java.util.TimerTask as Tim
 
 class HomeFragment : Fragment() {
 
+
+    var bf_cor = 0.0 //bf 보정값
+    var lr_cor = 0.0 //lr 보정값
+    var bf = 0.0 //bf 값
+    var lr = 0.0 //lr 값
+    //var lastImageCount = 0
+    //var lastImageCount2 = 0
+    var bft = arrayOf(0,0,0,0,0)
+    var lrt = arrayOf(0,0,0,0,0)
     val LIST_NAME = "NAME"
     val LIST_UUID = "UUID"
     val unknown_characteristic = "Unknown characteristic"
@@ -88,7 +97,6 @@ class HomeFragment : Fragment() {
     // ACTION_DATA_AVAILABLE: received data from the device.  This can be a result of read or notification operations.
     var mConnected: Boolean = false
     private val gattUpdateReceiver = object: BroadcastReceiver() {
-
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent == null) return
             Log.d("Log_BroadCast_Intent: ", intent.action)
@@ -127,6 +135,12 @@ class HomeFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+
+        button.setOnClickListener{
+            bf_cor = 90.0-bf
+            lr_cor = 90.0-lr
+        }
+
         //BLEConnectActivity 로 부터 intent 받기
         deviceName = (activity as MainActivity).getData_Name()
         deviceAddress = (activity as MainActivity).getData_Adress()
@@ -138,6 +152,23 @@ class HomeFragment : Fragment() {
         timerTask = object : java.util.TimerTask() {
             override fun run() {
                 nowTime += 1000
+
+
+                //bf 자세 시간 측정
+                //if(imageCount == lastImageCount){
+                    bft[imageCount]++
+                //}
+                //lastImageCount = imageCount
+
+                //lr 자세 시간 측정
+                //if(imageCount2 == lastImageCount2){
+                    lrt[imageCount2]++
+                //}
+                //lastImageCount2 = imageCount2
+                Log.d("posture","${bft[0]},${bft[1]},${bft[2]},${bft[3]},${bft[4]} ")
+
+
+
                 val wearingTime= (nowTime - startTime)/1000
                 val second = (wearingTime%60)
                 val minute =((wearingTime/60)%60)
@@ -268,6 +299,9 @@ class HomeFragment : Fragment() {
         }
 
 
+
+
+
     }
 
     override fun onAttach(context: Context) {
@@ -341,16 +375,54 @@ class HomeFragment : Fragment() {
 //            colorAnimation.addUpdateListener { animator -> homeLayout.setBackgroundColor(animator.animatedValue as Int) }
 //            colorAnimation.start()
 
-
             val value_split = data.split(",")
-            val x1 = value_split[0].toDouble()
-            val x2 = value_split[1].toDouble()
-            val x3 = value_split[2].toDouble()
+            bf = value_split[0].toDouble() + bf_cor
+            lr = value_split[1].toDouble() + lr_cor
 
-            val y = x1*0.0569 + x2*0.0101 + x3*(-0.0048) + 5.5510
-            val result = (y+0.5).toInt()
-            postureView.text = result.toString()
-            dataList.add(PostureData(x1,x2,x3))
+
+            Log.d("arduino",bf.toString()+", "+lr.toString())
+
+            //앞뒤 기울기
+            if(bf<=80) {
+                imageCount = 3
+                if(bf<=60)
+                    imageCount = 4
+            }
+            else if(bf>=100) {
+                imageCount = 1
+                if(bf>=120)
+                    imageCount =0
+            }
+            else
+                imageCount =2
+
+            //imageCount = 4 - bf.toInt()/36
+
+
+            val data1 = PostureResource(requireContext()).getPostureData(imageCount, true)
+            image_posture.setImageDrawable(data1.drawable)
+            image_posture.setTint(data1.color)
+            instruct_text1.text = data1.instruction
+            image_posture.animation = shake
+
+
+            //양옆 기울기
+
+            if(lr<=85)
+                imageCount2 = 0
+            else if(lr>=95)
+                imageCount2 = 2
+            else
+                imageCount2 = 1
+
+
+
+            //imageCount2 = lr.toInt()/60
+            val data = PostureResource(requireContext()).getPostureData(imageCount2,false)
+            image_posture2.setImageDrawable(data.drawable)
+            image_posture2.setTint(data.color)
+            instruct_text2.text = data.instruction
+            image_posture2.animation = shake
 
 //            img1.visibility=View.INVISIBLE
 //            img2.visibility=View.INVISIBLE
