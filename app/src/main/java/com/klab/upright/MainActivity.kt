@@ -26,6 +26,7 @@ import app.akexorcist.bluetotohspp.library.BluetoothState
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.klab.upright.sharedPreference.PreferenceManager
 import com.klab.upright.ui.guide.GuideActivity
+import com.klab.upright.ui.tutorial.PostureActivity
 import kotlinx.android.synthetic.main.drawer_main.*
 import kotlinx.android.synthetic.main.drawer_main_header.view.*
 import java.util.*
@@ -109,6 +110,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.action_version -> {
                     Toast.makeText(this, "Version : 1.0.0", Toast.LENGTH_SHORT).show()
+                }
+                R.id.action_set_posture -> {
+                    val intent = Intent(this, PostureActivity::class.java)
+                    startActivity(intent)
                 }
             }
             return@setNavigationItemSelectedListener false

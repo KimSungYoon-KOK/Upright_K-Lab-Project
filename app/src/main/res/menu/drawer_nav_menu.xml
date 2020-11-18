@@ -20,4 +20,7 @@
     <item
         android:id="@+id/action_version"
         android:title="Version" />
+    <item
+        android:id="@+id/action_set_posture"
+        android:title="Set Postrue" />
 </menu>

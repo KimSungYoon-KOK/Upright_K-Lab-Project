@@ -60,6 +60,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.2.2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.firebase:firebase-database:19.3.0'
+    implementation 'androidx.wear:wear:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -69,6 +70,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     //time picker
     implementation 'com.akexorcist:snap-time-picker:1.0.0'
+    compileOnly 'com.google.android.wearable:wearable:2.6.0'
     //databinding
 //    kapt 'com.android.databinding:compiler:3.5.3'
 
