@@ -166,7 +166,7 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:id="@+id/instruct_text1"
-                            android:text="instruct1"/>
+                            android:text="Good Balance"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -190,7 +190,7 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:id="@+id/instruct_text2"
-                            android:text="instruct2"/>
+                            android:text="Good Balance"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

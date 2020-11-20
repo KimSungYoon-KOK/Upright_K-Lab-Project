@@ -9,14 +9,14 @@ import com.klab.upright.R
 class PostureResource(val context: Context){
 
     var instructList = arrayListOf(
-        "instruct1",
-        "instruct2",
-        "instruct3",
-        "instruct4",
-        "instruct5",
-        "instruct6",
-        "instruct7",
-        "instruct8")
+        "Try not to sway back! Straighten your back.",
+        "Try not to sway back! Straighten your back.",
+        "Good Balance",
+        "Try not to slouch! Straighten your back.",
+        "Try not to slouch! Straighten your back.",
+        "You are leaning to the left. Straighten your posture!",
+        "Good Balance",
+        "You are leaning to the right. Straighten your posture!")
 
     fun getPostureData(index:Int, isUpDown:Boolean):Data{
         if(isUpDown){

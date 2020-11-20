@@ -71,7 +71,6 @@ class ChartAdapter(val context:Context, val itemList: ArrayList<Time>, val memoL
 
                 view = inflater.inflate(R.layout.layout_chart2,null)
                 val pieChart = view.pieChart1
-                pieChart.visibility = INVISIBLE
                 pieChart.apply {
                     isDrawHoleEnabled = true
                     setHoleColor(Color.WHITE)
