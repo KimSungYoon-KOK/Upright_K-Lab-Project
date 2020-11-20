@@ -26,6 +26,7 @@ import app.akexorcist.bluetotohspp.library.BluetoothState
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.klab.upright.sharedPreference.PreferenceManager
 import com.klab.upright.ui.guide.GuideActivity
+import com.klab.upright.ui.home.HomeFragment
 import com.klab.upright.ui.tutorial.PostureActivity
 import kotlinx.android.synthetic.main.drawer_main.*
 import kotlinx.android.synthetic.main.drawer_main_header.view.*
@@ -216,12 +217,6 @@ class MainActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         Toast.makeText(this,"location permission",Toast.LENGTH_SHORT).show()
-    }
-    fun getStatusBarHeight():Int{
-        var result = 0
-        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
-        if (resourceId > 0) result = resources.getDimensionPixelSize(resourceId)
-        return result
     }
 
     fun getData_Name():String = deviceName

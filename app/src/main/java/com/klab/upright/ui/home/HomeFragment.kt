@@ -114,7 +114,6 @@ class HomeFragment : Fragment() {
                             setPositiveButton("초기화") { _, _ ->
                                 bf_cor = 90.0 - bf
                                 lr_cor = 90.0 - lr
-
                                 updateConnectionState(R.string.connected)
                                 isConnectedView(true)
                             }
@@ -123,6 +122,7 @@ class HomeFragment : Fragment() {
                         builder.create()
                     }
                     alertDialog?.show()
+
                 }
                 BluetoothLeService.ACTION_GATT_DISCONNECTED -> {
                     mConnected = false
@@ -179,27 +179,18 @@ class HomeFragment : Fragment() {
                 //lastImageCount2 = imageCount2
                 Log.d("posture","${bft[0]},${bft[1]},${bft[2]},${bft[3]},${bft[4]} ")
 
-
-
                 val wearingTime= (nowTime - startTime)/1000
                 val second = (wearingTime%60)
                 val minute =((wearingTime/60)%60)
                 val hour = (wearingTime/3600)
 
                 var s=""; var m=""; var h=""
-                s = if(second < 10L)
-                    "0$second"
-                else
-                    second.toString()
-                m = if(minute < 10L)
-                    "0$minute"
-                else
-                    minute.toString()
-                h = if(hour < 10L)
-                    "0$hour"
-                else
-                    hour.toString()
-
+                s = if(second < 10L) "0$second"
+                    else second.toString()
+                m = if(minute < 10L) "0$minute"
+                    else minute.toString()
+                h = if(hour < 10L) "0$hour"
+                    else hour.toString()
                 val str = "$h : $m : $s"
 
                 Log.d(TAG, "startTime : $startTime, nowTime : $nowTime")
@@ -218,7 +209,6 @@ class HomeFragment : Fragment() {
             startTime = System.currentTimeMillis()
             nowTime = startTime
             timer.schedule(timerTask,0,1000)
-
         }else{
             wearingTrue.visibility = GONE
             wearingFalse.visibility = VISIBLE
@@ -259,7 +249,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun init() {
-        if(deviceName.isNotEmpty()){
+        if(deviceName.isNotEmpty()) {
             //GATT Intent
             val gattServiceIntent = Intent(requireContext(), BluetoothLeService::class.java)
             activity?.bindService(gattServiceIntent, serviceConnection, AppCompatActivity.BIND_AUTO_CREATE)
@@ -269,7 +259,7 @@ class HomeFragment : Fragment() {
             if (bluetoothLeService != null) {
                 val result: Boolean = bluetoothLeService!!.connect(deviceAddress)
                 Log.d(TAG, "Connect request result=$result")
-            }else{
+            } else {
                 Log.d(TAG, "Connect request result=null")
             }
         }
@@ -279,7 +269,6 @@ class HomeFragment : Fragment() {
         super.onAttach(context)
         Log.d(TAG, "onAttach")
         isFragmentAttach = true
-
     }
 
     private fun clearUI() {
@@ -351,7 +340,7 @@ class HomeFragment : Fragment() {
             lr = value_split[1].toDouble() + lr_cor
 
 
-            Log.d("arduino",bf.toString()+", "+lr.toString())
+            Log.d("arduino", "$bf, $lr")
 
             //앞뒤 기울기
             if(bf<=80) {
@@ -556,11 +545,7 @@ class HomeFragment : Fragment() {
                 characteristic, true
             )
         }
-
     }
-
-
-
 
     companion object {
         const val EXTRAS_DEVICE_NAME = "DEVICE_NAME"
