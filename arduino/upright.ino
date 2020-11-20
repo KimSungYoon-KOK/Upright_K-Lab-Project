@@ -42,9 +42,9 @@ void setup() {
 
 
 // 각 센서별로 XYZ값을 저장할 변수
-float accel_x, accel_y, accel_z;
 int timePeriod = 1000;       //업데이트 주기 (ms단위)
-double angelAcX,angelAcY,angelAcZ;
+float accel_x,accel_y,accel_z;
+double bf,lr;
 void loop() {
   BLEDevice central = BLE.central();
 
@@ -70,20 +70,40 @@ void updateAccelscope() {
   if (IMU.accelerationAvailable()) {
     IMU.readAcceleration(accel_x, accel_y, accel_z);
     
-    angelAcY = atan(-accel_x / sqrt(pow(accel_y,2) + pow(accel_z,2)));
-    angelAcY *= RADIAN_TO_DEGREE;
-    angelAcX = atan(accel_y / sqrt(pow(accel_x, 2) + pow(accel_z,2)));
-    angelAcX *= RADIAN_TO_DEGREE;
+    //String accelPacket = String(accel_x) + "," + String(accel_y) + "," + String(accel_z);
+    //accelPacket.toCharArray(buf,32);
+    //Serial.println(accelPacket);
 
-    angelAcZ = atan(accel_z / sqrt(pow(accel_x,2) + pow(accel_y,2)));
-    angelAcZ *= RADIAN_TO_DEGREE;
+    if(abs(pow(accel_x,2)+pow(accel_y,2)+pow(accel_z,2) - 1)< 0.2){
 
     
-    String accelPacket = String(angelAcX) + "," + String(angelAcY) + "," + String(angelAcZ);
-    accelPacket.toCharArray(buf,32);
-    Serial.println(accelPacket);
+      if(accel_z>1){
+        accel_z = 1;
+      }
+      if(accel_z<-1){
+        accel_z = -1;
+      }
+      bf = acos(accel_z);
+      bf *= RADIAN_TO_DEGREE;
 
+
+      double lrv = accel_y / sqrt(pow(accel_x,2)+pow(accel_y,2));
+      if(lrv>1){
+        lrv = 1;
+      }
+      if(lrv<-1){
+        lrv = -1;
+      }
+      lr = acos(lrv);
+      lr *= RADIAN_TO_DEGREE;
+
+      String accelPacket = String(bf)+","+String(lr);
+      accelPacket.toCharArray(buf,32);
+      Serial.println(accelPacket);
+      accelscopeChar.writeValue(buf, 32);
+    }
+    //Serial.println(String(accel_x)+", "+String(accel_y)+", "+String(accel_z));
   // 문자열을 블루투스 신호로 보냅니다.
-    accelscopeChar.writeValue(buf, 32);
+    //accelscopeChar.writeValue(buf, 32);
   }
 }
