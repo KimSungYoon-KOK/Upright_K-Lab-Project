@@ -1,5 +1,6 @@
 package com.klab.upright.ui.home
 
+import android.app.AlertDialog
 import android.bluetooth.BluetoothGattCharacteristic
 import android.bluetooth.BluetoothGattService
 import android.content.*
@@ -103,8 +104,25 @@ class HomeFragment : Fragment() {
             when(intent.action) {
                 BluetoothLeService.ACTION_GATT_CONNECTED -> {
                     mConnected = true
-                    updateConnectionState(R.string.connected)
-                    isConnectedView(true)
+
+                    //자세 보정 다이얼로그
+                    val alertDialog: AlertDialog? = context.let {
+                        val builder = AlertDialog.Builder(it)
+                        builder.apply {
+                            setMessage("바른 자세로 앉고 자세를 초기화해주세요")
+                            setTitle("자세 초기화")
+                            setPositiveButton("초기화") { _, _ ->
+                                bf_cor = 90.0 - bf
+                                lr_cor = 90.0 - lr
+
+                                updateConnectionState(R.string.connected)
+                                isConnectedView(true)
+                            }
+                            setNegativeButton("취소", null)
+                        }
+                        builder.create()
+                    }
+                    alertDialog?.show()
                 }
                 BluetoothLeService.ACTION_GATT_DISCONNECTED -> {
                     mConnected = false
@@ -134,12 +152,6 @@ class HomeFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-
-        button.setOnClickListener{
-            bf_cor = 90.0-bf
-            lr_cor = 90.0-lr
-        }
 
         //BLEConnectActivity 로 부터 intent 받기
         deviceName = (activity as MainActivity).getData_Name()
@@ -175,28 +187,27 @@ class HomeFragment : Fragment() {
                 val hour = (wearingTime/3600)
 
                 var s=""; var m=""; var h=""
-                if(second < 10L)
-                    s = "0"+second.toString()
+                s = if(second < 10L)
+                    "0$second"
                 else
-                    s = second.toString()
-                if(minute < 10L)
-                    m =  "0"+minute.toString()
+                    second.toString()
+                m = if(minute < 10L)
+                    "0$minute"
                 else
-                    m = minute.toString()
-                if(hour < 10L)
-                    h =  "0"+hour.toString()
+                    minute.toString()
+                h = if(hour < 10L)
+                    "0$hour"
                 else
-                    h = hour.toString()
+                    hour.toString()
 
-                val str = h+" : "+m+" : "+s
+                val str = "$h : $m : $s"
 
-                Log.d(TAG,"startTime : "+startTime+", nowTime : "+nowTime)
+                Log.d(TAG, "startTime : $startTime, nowTime : $nowTime")
                 if(isFragmentAttach)
                     time_wearing.text = str
             }
         }
         testImage()
-        savePostureData()
         shakeImage()
     }
 
@@ -218,44 +229,9 @@ class HomeFragment : Fragment() {
     private fun shakeImage(){
        shake = AnimationUtils.loadAnimation(requireContext(), R.anim.shakeanimation)
     }
-    private fun savePostureData() {
-//        reset.setOnClickListener {
-//            dataList.clear()
-//            Toast.makeText(requireContext(),"reset",Toast.LENGTH_SHORT).show()
-//
-//        }
-//        save.setOnClickListener {
-//            if(dataList.isNotEmpty()){
-////                val os = resources.openRawResource(R.raw.data) as OutputStream
-////                val stream = OutputStreamWriter(os,"utf-8")
-////                val file = getResources().openRawResource(R.raw.data);
-////                val f = File(file)
-////                val fw = FileWriter(file)
-////                print("fw : "+fw.toString())
-//
-//                var text = ""
-//                for(data in dataList){
-//                    val str = data.x.toString()+","+data.y.toString()+","+data.z.toString()+"\n"
-//                    text += str
-//                }
-//
-//                val bw =
-//                    BufferedWriter(FileWriter( activity?.filesDir.toString()+"data.txt"))
-//                bw.write(text)
-//                bw.close()
-//                Log.d("textsave",text)
-//
-//                Toast.makeText(requireContext(),"save "+text,Toast.LENGTH_SHORT).show()
-//            }else{
-//                Toast.makeText(requireContext(),"empty!",Toast.LENGTH_SHORT).show()
-//
-//            }
-//        }
-    }
 
 
-
-    private fun testImage(){
+    private fun testImage() {
         image_posture.setOnClickListener {
             imageCount++
             if(imageCount == 5)
@@ -278,7 +254,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    fun ImageView.setTint(@ColorRes colorRes: Int) {
+    private fun ImageView.setTint(@ColorRes colorRes: Int) {
         ImageViewCompat.setImageTintList(this, ColorStateList.valueOf(ContextCompat.getColor(context, colorRes)))
     }
 
@@ -297,11 +273,6 @@ class HomeFragment : Fragment() {
                 Log.d(TAG, "Connect request result=null")
             }
         }
-
-
-
-
-
     }
 
     override fun onAttach(context: Context) {
