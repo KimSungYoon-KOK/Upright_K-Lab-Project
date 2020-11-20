@@ -1,23 +1,31 @@
 package com.klab.upright
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.DashPathEffect
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.PagerAdapter
+import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.IFillFormatter
-import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import com.github.mikephil.charting.utils.ColorTemplate
+import com.github.mikephil.charting.utils.MPPointF
 import com.klab.upright.ui.analysis.Time
 import com.klab.upright.ui.memo.MemoData
 import kotlinx.android.synthetic.main.layout_chart.view.*
 import kotlinx.android.synthetic.main.layout_chart2.view.*
 import kotlinx.android.synthetic.main.layout_chart3.view.*
+import com.github.mikephil.charting.formatter.ValueFormatter as ValueFormatter1
+
 
 class ChartAdapter(val context:Context, val itemList: ArrayList<Time>, val memoList:ArrayList<MemoData>) : PagerAdapter()
 {
@@ -35,9 +43,169 @@ class ChartAdapter(val context:Context, val itemList: ArrayList<Time>, val memoL
         val inflater = LayoutInflater.from(container.context)
         val view: View
         when(position){
-            0->{
+            0->{ // 클래스별 시간
+                var classList = arrayListOf<Int>(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
+                var nameList1 = arrayListOf<String>("Very Backward","Backward","Balanced","Forward","Very Forward")
+                var nameList2 = arrayListOf<String>("Left","Balanced","Right")
+                for(item in itemList){
+                    classList[0] += item.c1
+                    classList[1] += item.c2
+                    classList[2] += item.c3
+                    classList[3] += item.c4
+                    classList[4] += item.c5
+                    classList[5] += item.c6
+                    classList[6] += item.c7
+                    classList[7] += item.c8
+                    classList[8] += item.c9
+                    classList[9] += item.c10
+                    classList[10] += item.c11
+                    classList[11] += item.c12
+                    classList[12] += item.c13
+                    classList[13] += item.c14
+                    classList[14] += item.c15
+                }
+                var total = 0
+                for(num in classList)
+                    total+=num
+                val entries = arrayListOf<PieEntry>()
+
                 view = inflater.inflate(R.layout.layout_chart2,null)
-                val chart = view.pieChart
+                val pieChart = view.pieChart1
+                pieChart.visibility = INVISIBLE
+                pieChart.apply {
+                    isDrawHoleEnabled = true
+                    setHoleColor(Color.WHITE)
+                    setTransparentCircleAlpha(110);
+
+                    holeRadius = 50f
+                    transparentCircleRadius = 61f
+                    setDrawCenterText(true);
+                    rotationAngle = 0f
+                    // enable rotation of the chart by touch
+                    isRotationEnabled = false
+                    isHighlightPerTapEnabled = true
+
+                    highlightValues(null)
+                    invalidate()
+                    description = null
+                    legend.isEnabled = false
+                    centerText = "Vertical"
+                    setCenterTextSize(15f)
+                    animateY(1400, Easing.EaseInOutQuad)
+                    setEntryLabelColor(ContextCompat.getColor(context,R.color.level9_blue))
+                }
+
+
+                for (i in 0 until 5) {
+                    entries.add(
+                        PieEntry(
+                            (classList[i*3]+classList[i*3+1]+classList[i*3+2]).toFloat(),
+                            nameList1[i]
+                        )
+                    )
+                }
+
+                val dataSet = PieDataSet(entries, "Election Results")
+
+                dataSet.setDrawIcons(false)
+
+                dataSet.sliceSpace = 5f
+                dataSet.iconsOffset = MPPointF(0f, 40f)
+                dataSet.selectionShift = 5f
+
+                val colors = ArrayList<Int>()
+                colors.add(ContextCompat.getColor(context,R.color.level1_blue))
+                colors.add(ContextCompat.getColor(context,R.color.level2_blue))
+                colors.add(ContextCompat.getColor(context,R.color.level3_blue))
+                colors.add(ContextCompat.getColor(context,R.color.level4_blue))
+                colors.add(ContextCompat.getColor(context,R.color.level5_blue))
+                colors.add(ContextCompat.getColor(context,R.color.level6_blue))
+                colors.add(ContextCompat.getColor(context,R.color.level7_blue))
+                colors.add(ContextCompat.getColor(context,R.color.level8_blue))
+                colors.add(ContextCompat.getColor(context,R.color.level9_blue))
+
+                dataSet.colors = colors
+
+                val data = PieData(dataSet)
+                data.apply {
+                    setValueTextSize(13f)
+                    setValueTextColor(ContextCompat.getColor(context,R.color.level9_blue))
+                    setValueFormatter(object : ValueFormatter1(){
+                        override fun getFormattedValue(value: Float): String {
+                            return ((value/total)*100).toInt().toString()+"%"
+                        }
+                    })
+                }
+                pieChart.data = data
+
+
+                val pieChart2 = view.pieChart2
+                pieChart2.apply {
+                    isDrawHoleEnabled = true
+                    setHoleColor(Color.WHITE)
+//                    setTransparentCircleColor(ContextCompat.getColor(context,R.color.level9_green))
+                    setTransparentCircleAlpha(110);
+
+                    holeRadius = 50f
+                    transparentCircleRadius = 61f
+                    setDrawCenterText(true);
+                    rotationAngle = 0f
+                    // enable rotation of the chart by touch
+                    isRotationEnabled = false
+                    isHighlightPerTapEnabled = true
+
+                    highlightValues(null)
+                    invalidate()
+                    description = null
+                    legend.isEnabled = false
+                    centerText = "Horizontal"
+                    setCenterTextSize(15f)
+                    animateY(1400, Easing.EaseInOutQuad)
+                    setEntryLabelColor(ContextCompat.getColor(context,R.color.level9_green))
+                }
+
+                val entries2 = arrayListOf<PieEntry>()
+                for (i in 0 until 3) {
+                    entries2.add(
+                        PieEntry(
+                            (classList[i%3]+classList[i%3+3]+classList[i%3+6]+classList[i%3+9]+classList[i%3+12]).toFloat(),
+                            nameList2[i]
+                        )
+                    )
+                }
+
+                val dataSet2 = PieDataSet(entries2, "Election Results")
+
+                dataSet2.setDrawIcons(false)
+                dataSet2.sliceSpace = 5f
+                dataSet2.iconsOffset = MPPointF(0f, 40f)
+                dataSet2.selectionShift = 5f
+
+                val colors2 = ArrayList<Int>()
+                colors2.add(ContextCompat.getColor(context,R.color.level1_green))
+                colors2.add(ContextCompat.getColor(context,R.color.level2_green))
+                colors2.add(ContextCompat.getColor(context,R.color.level3_green))
+                colors2.add(ContextCompat.getColor(context,R.color.level4_green))
+                colors2.add(ContextCompat.getColor(context,R.color.level5_green))
+                colors2.add(ContextCompat.getColor(context,R.color.level6_green))
+                colors2.add(ContextCompat.getColor(context,R.color.level7_green))
+                colors2.add(ContextCompat.getColor(context,R.color.level8_green))
+                colors2.add(ContextCompat.getColor(context,R.color.level9_green))
+
+                dataSet2.colors = colors2
+
+                val data2 = PieData(dataSet2)
+                data2.apply {
+                    setValueTextSize(13f)
+                    setValueTextColor(ContextCompat.getColor(context,R.color.level9_green))
+                    setValueFormatter(object : ValueFormatter1(){
+                        override fun getFormattedValue(value: Float): String {
+                            return ((value/total)*100).toInt().toString()+"%"
+                        }
+                    })
+                }
+                pieChart2.data = data2
+
             }
             1->{ // 날짜별 착용 시간
                 val dateList = arrayListOf<String>()
@@ -60,8 +228,7 @@ class ChartAdapter(val context:Context, val itemList: ArrayList<Time>, val memoL
                     setTouchEnabled(false)
                     isDragEnabled = false
                     legend.isEnabled = false
-                    animateX(1000)
-
+                    animateY(1500)
                 }
 
 
@@ -80,7 +247,7 @@ class ChartAdapter(val context:Context, val itemList: ArrayList<Time>, val memoL
                     values.add(Entry(i.toFloat(),totalList[i].toFloat(),ContextCompat.getDrawable(context, R.drawable.button_shadow_purple)))
                 }
 
-                xAxis.valueFormatter = object : ValueFormatter() {
+                xAxis.valueFormatter = object : ValueFormatter1() {
                     override fun getFormattedValue(value: Float): String {
                         if(dateList.size > value.toInt()){
                             return dateList[value.toInt()]
@@ -105,8 +272,8 @@ class ChartAdapter(val context:Context, val itemList: ArrayList<Time>, val memoL
                         setDrawIcons(false)
 
                         // black line and point
-                        color = ContextCompat.getColor(context,R.color.colorPrimary)
-                        setCircleColor(ContextCompat.getColor(context,R.color.colorPrimary))
+                        color = ContextCompat.getColor(context,R.color.level4_purple)
+                        setCircleColor(ContextCompat.getColor(context,R.color.level4_purple))
 
 
                         lineWidth=2f
@@ -126,7 +293,7 @@ class ChartAdapter(val context:Context, val itemList: ArrayList<Time>, val memoL
                         setMode(LineDataSet.Mode.CUBIC_BEZIER)
 
                         setDrawFilled(true)
-                        fillColor = ContextCompat.getColor(context,R.color.purple_light_background)
+                        fillColor = ContextCompat.getColor(context,R.color.level2_purple)
                         fillFormatter =
                             IFillFormatter { dataSet, dataProvider -> lineChart.axisLeft.axisMinimum }
                     }
@@ -162,7 +329,8 @@ class ChartAdapter(val context:Context, val itemList: ArrayList<Time>, val memoL
                     setTouchEnabled(false)
                     isDragEnabled = false
                     legend.isEnabled = false
-                    animateX(1000)
+                    animateY(1000)
+//                    animateXY(1000,1000)
                 }
 
                 val xAxis = barChart.xAxis
@@ -180,7 +348,7 @@ class ChartAdapter(val context:Context, val itemList: ArrayList<Time>, val memoL
                     values.add(BarEntry(i.toFloat(),memoList[i].pain.toFloat(),ContextCompat.getDrawable(context, R.drawable.button_shadow_purple)))
                 }
 
-                xAxis.valueFormatter = object : ValueFormatter() {
+                xAxis.valueFormatter = object : ValueFormatter1() {
                     override fun getFormattedValue(value: Float): String {
                         if(dateList.size > value.toInt()){
                             return dateList[value.toInt()]
@@ -202,11 +370,11 @@ class ChartAdapter(val context:Context, val itemList: ArrayList<Time>, val memoL
                     set1 = BarDataSet(values,"Dataset 1")
 
                     val colorList = arrayListOf<Int>(
-                        ContextCompat.getColor(context,R.color.level1_purple),
-                        ContextCompat.getColor(context,R.color.level2_purple),
-                        ContextCompat.getColor(context,R.color.level3_purple),
-                        ContextCompat.getColor(context,R.color.level4_purple),
-                        ContextCompat.getColor(context,R.color.level5_purple)
+                        ContextCompat.getColor(context,R.color.level1_red),
+                        ContextCompat.getColor(context,R.color.level2_red),
+                        ContextCompat.getColor(context,R.color.level3_red),
+                        ContextCompat.getColor(context,R.color.level4_red),
+                        ContextCompat.getColor(context,R.color.level5_red)
                     )
 
                     set1.apply {

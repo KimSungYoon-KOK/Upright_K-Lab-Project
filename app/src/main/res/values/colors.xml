@@ -40,5 +40,31 @@
     <color name="level4_purple">#903DF4</color>
     <color name="level5_purple">#6200EE</color>
 
+    <color name="level1_blue">#DEEAFE</color>
+    <color name="level2_blue">#BED3FE</color>
+    <color name="level3_blue">#9EBBFE</color>
+    <color name="level4_blue">#86A7FE</color>
+    <color name="level5_blue">#5E86FE</color>
+    <color name="level6_blue">#4466DA</color>
+    <color name="level7_blue">#2F4AB6</color>
+    <color name="level8_blue">#1D3293</color>
+    <color name="level9_blue">#122179</color>
+
+    <color name="level1_green">#ECFFE7</color>
+    <color name="level2_green">#D6FFCF</color>
+    <color name="level3_green">#BBFFB7</color>
+    <color name="level4_green">#A5FFA8</color>
+    <color name="level5_green">#88ff97</color>
+    <color name="level6_green">#63DB7D</color>
+    <color name="level7_green">#44B768</color>
+    <color name="level8_green">#2B9355</color>
+    <color name="level9_green">#1A7A49</color>
+
+    <color name="level1_red">#FFE5D7</color>
+    <color name="level2_red">#FFC4B0</color>
+    <color name="level3_red">#FF9D88</color>
+    <color name="level4_red">#FF786B</color>
+    <color name="level5_red">#FF3A3A</color>
+
 
 </resources>
