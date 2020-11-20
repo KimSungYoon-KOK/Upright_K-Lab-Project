@@ -142,11 +142,7 @@ class MainActivity : AppCompatActivity() {
             if (resultCode == Activity.RESULT_OK) {
                 deviceName = data?.getStringExtra(EXTRAS_DEVICE_NAME)!!
                 deviceAddress = data.getStringExtra(EXTRAS_DEVICE_ADDRESS)!!
-                Toast.makeText(
-                    this
-                    , deviceName+","+deviceAddress
-                    , Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(this, "$deviceName,$deviceAddress", Toast.LENGTH_SHORT).show()
             }
         }
         else if (requestCode == BluetoothState.REQUEST_CONNECT_DEVICE) {
