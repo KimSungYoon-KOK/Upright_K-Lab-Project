@@ -24,7 +24,7 @@ class GuideViewPagerAdapter(private val context: Context): PagerAdapter() {
     }
 
     override fun getCount(): Int {
-        return 5
+        return 4
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
@@ -50,11 +50,6 @@ class GuideViewPagerAdapter(private val context: Context): PagerAdapter() {
                 child.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT)
                 layout.addView(child)
             }
-            3->{
-                val child = (layoutInflater!!.inflate(R.layout.item_guide4, null)).findViewById<LinearLayout>(R.id.guide4)
-                child.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT)
-                layout.addView(child)
-            }
             else->{
                 val child = (layoutInflater!!.inflate(R.layout.item_guide5, null)).findViewById<LinearLayout>(R.id.guide5)
                 child.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT)
@@ -68,6 +63,7 @@ class GuideViewPagerAdapter(private val context: Context): PagerAdapter() {
                 }
                 layout.addView(child)
             }
+
         }
         val vp = container as ViewPager
         vp.addView(v, 0)
