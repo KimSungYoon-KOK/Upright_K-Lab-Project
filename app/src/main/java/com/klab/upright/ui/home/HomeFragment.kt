@@ -109,15 +109,15 @@ class HomeFragment : Fragment() {
                     val alertDialog: AlertDialog? = context.let {
                         val builder = AlertDialog.Builder(it)
                         builder.apply {
-                            setMessage("바른 자세로 앉고 자세를 초기화해주세요")
-                            setTitle("자세 초기화")
-                            setPositiveButton("초기화") { _, _ ->
+                            setMessage("Sit in the right position and reset your posture.")
+                            setTitle("Initializing Posture")
+                            setPositiveButton("Initializing") { _, _ ->
                                 bf_cor = 90.0 - bf
                                 lr_cor = 90.0 - lr
                                 updateConnectionState(R.string.connected)
                                 isConnectedView(true)
                             }
-                            setNegativeButton("취소", null)
+                            setNegativeButton("Cancel", null)
                         }
                         builder.create()
                     }
