@@ -33,13 +33,13 @@
                 android:layout_marginEnd="5dp"
                 android:text="May 17"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="diary"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="20sp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -67,7 +67,7 @@
                     android:gravity="center"
                     android:text="Exercise Time"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:textSize="20sp"
                     android:layout_marginBottom="10dp"
                     android:textStyle="bold"/>
                 <TextView
@@ -76,7 +76,7 @@
                     android:gravity="center"
                     android:text="Exercise Type"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:textSize="20sp"
                     android:layout_marginBottom="10dp"
                     android:textStyle="bold"/>
                 <TextView
@@ -85,7 +85,7 @@
                     android:gravity="center"
                     android:text="Pain"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"/>
             </LinearLayout>
             <LinearLayout
@@ -100,7 +100,7 @@
                     android:text="30분"
                     android:textColor="@color/black"
                     android:id="@+id/timeText"
-                    android:textSize="16sp"
+                    android:textSize="20sp"
                     android:layout_marginBottom="10dp" />
                 <TextView
                     android:layout_width="match_parent"
@@ -109,7 +109,7 @@
                     android:text="달리기"
                     android:id="@+id/typeText"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
+                    android:textSize="20sp"
                     android:layout_marginBottom="10dp" />
                 <TextView
                     android:layout_width="match_parent"
@@ -118,7 +118,7 @@
                     android:id="@+id/painText"
                     android:text="5"
                     android:textColor="@color/black"
-                    android:textSize="16sp"/>
+                    android:textSize="20sp"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -131,7 +131,7 @@
             android:layout_height="wrap_content"
             android:text="오늘은 어제 보다 운동 시간을 조금 줄이고 허리 근력 강화에 신경을 썼더니 좋다"
             android:id="@+id/contentText"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:layout_marginBottom="10dp"
             android:textColor="@color/black"/>
     </LinearLayout>

@@ -110,6 +110,7 @@ class AnalysisFragment : Fragment() {
                 }
 
             val builder = DatePickerDialog(requireContext(),datePickerListener,startDate.get(Calendar.YEAR),startDate.get(Calendar.MONTH),startDate.get(Calendar.DATE))
+            builder.setTitle("statDate")
             builder.show()
         }
 

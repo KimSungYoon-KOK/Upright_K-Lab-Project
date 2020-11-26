@@ -76,8 +76,8 @@ class ChartAdapter(val context:Context, val itemList: ArrayList<Time>, val memoL
                     setHoleColor(Color.WHITE)
                     setTransparentCircleAlpha(110);
 
-                    holeRadius = 50f
-                    transparentCircleRadius = 61f
+                    holeRadius = 55f
+                    transparentCircleRadius = 65f
                     setDrawCenterText(true);
                     rotationAngle = 0f
                     // enable rotation of the chart by touch
@@ -89,7 +89,7 @@ class ChartAdapter(val context:Context, val itemList: ArrayList<Time>, val memoL
                     description = null
                     legend.isEnabled = false
                     centerText = "Vertical"
-                    setCenterTextSize(15f)
+                    setCenterTextSize(17f)
                     animateY(1400, Easing.EaseInOutQuad)
                     setEntryLabelColor(ContextCompat.getColor(context,R.color.level9_blue))
                 }
@@ -127,7 +127,7 @@ class ChartAdapter(val context:Context, val itemList: ArrayList<Time>, val memoL
 
                 val data = PieData(dataSet)
                 data.apply {
-                    setValueTextSize(13f)
+                    setValueTextSize(15f)
                     setValueTextColor(ContextCompat.getColor(context,R.color.level9_blue))
                     setValueFormatter(object : ValueFormatter1(){
                         override fun getFormattedValue(value: Float): String {
@@ -145,8 +145,8 @@ class ChartAdapter(val context:Context, val itemList: ArrayList<Time>, val memoL
 //                    setTransparentCircleColor(ContextCompat.getColor(context,R.color.level9_green))
                     setTransparentCircleAlpha(110);
 
-                    holeRadius = 50f
-                    transparentCircleRadius = 61f
+                    holeRadius = 55f
+                    transparentCircleRadius = 65f
                     setDrawCenterText(true);
                     rotationAngle = 0f
                     // enable rotation of the chart by touch
@@ -158,7 +158,7 @@ class ChartAdapter(val context:Context, val itemList: ArrayList<Time>, val memoL
                     description = null
                     legend.isEnabled = false
                     centerText = "Horizontal"
-                    setCenterTextSize(15f)
+                    setCenterTextSize(17f)
                     animateY(1400, Easing.EaseInOutQuad)
                     setEntryLabelColor(ContextCompat.getColor(context,R.color.level9_green))
                 }
@@ -195,7 +195,7 @@ class ChartAdapter(val context:Context, val itemList: ArrayList<Time>, val memoL
 
                 val data2 = PieData(dataSet2)
                 data2.apply {
-                    setValueTextSize(13f)
+                    setValueTextSize(15f)
                     setValueTextColor(ContextCompat.getColor(context,R.color.level9_green))
                     setValueFormatter(object : ValueFormatter1(){
                         override fun getFormattedValue(value: Float): String {

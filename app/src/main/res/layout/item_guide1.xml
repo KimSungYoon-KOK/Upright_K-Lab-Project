@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="Use the menu navigation to see the pages"
-        android:textSize="20sp"
+        android:textSize="22sp"
         android:layout_marginBottom="20dp"
         android:textStyle="bold" />
 
@@ -55,7 +55,7 @@
             android:padding="10dp"
             android:layout_weight="1"
             android:text="You can see the current state and your posture"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -89,7 +89,7 @@
             android:padding="10dp"
             android:layout_weight="1"
             android:text="You can see the analysis and set from time to time on day, week"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -125,7 +125,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="write today's exercise records and treatment journals"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
     </LinearLayout>
 
 <!--    <LinearLayout-->
