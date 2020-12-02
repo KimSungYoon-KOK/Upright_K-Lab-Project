@@ -3,6 +3,8 @@
 ✔️ We developed device and android application :hammer: 📱
 
 ## Introduction
+**Android Application**
+
 1. :walking: You can see the current state and your posture.
 
 2. :date: You can see the analysis and set from time to time on day, week.
