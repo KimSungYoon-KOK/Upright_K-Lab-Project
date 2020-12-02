@@ -1,6 +1,6 @@
 # K-Lab Project
 ✔️ This project was carried out with Dutch students for a year 👫  
-✔️ We developed iot device and android application :hammer: 📱
+✔️ We developed device and android application :hammer: 📱
 
 ## Introduction
 1. :walking: You can see the current state and your posture.
