@@ -3,7 +3,6 @@
 ✔️ We developed iot device and android application :hammer: 📱
 
 ## Introduction
-<img src="https://user-images.githubusercontent.com/54172475/94287269-09530d00-ff91-11ea-92e2-aad4d66f857d.png" width="25px"/>    **Android Application**
 1. :walking: You can see the current state and your posture.
 
 2. :date: You can see the analysis and set from time to time on day, week.
