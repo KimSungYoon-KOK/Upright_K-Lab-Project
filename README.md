@@ -1,13 +1,13 @@
 # K-Lab Project
 ✔️ This project was carried out with Dutch students for a year 👫  
-✔️ We developed iot device and android application 📱
+✔️ We developed iot device and android application :hammer: 📱
 
 ## Introduction
 <img src="https://user-images.githubusercontent.com/54172475/94287269-09530d00-ff91-11ea-92e2-aad4d66f857d.png" width="25px"/>  
-1. You can see the current state and your posture.
-2. You can see the analysis and set from time to time on day, week.
-3. You can write today's exercise records and treatment journals.
-4. Enjoy Product ❗
+1. :walking: You can see the current state and your posture.
+2. :date: You can see the analysis and set from time to time on day, week.
+3. :pencil2: You can write today's exercise records and treatment journals.
+4. :full_moon_with_face: Enjoy Product ❗
 
 ## Development Environment
 - Kotlin
