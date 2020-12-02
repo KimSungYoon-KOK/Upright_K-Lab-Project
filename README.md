@@ -15,7 +15,7 @@
 
 1. :seat: You can correct your posture wearing it.
 
-2. :heavy_exclamation_mark: You can recognize the wrong posture through vibration sensors.
+2. :heavy_exclamation_mark:  You can recognize the wrong posture through vibration sensors.
 
 ## Development Environment
 - Kotlin
